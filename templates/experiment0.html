@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Experiment 0 - Data Analysis and Visualization</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #2c3e50;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 顶部导航栏 */
+    .top-bar {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-item-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    .menu-item {
+      padding: 10px 15px;
+      cursor: pointer;
+      background-color: #e0e0e0;
+      color: black;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+
+    .menu-item:hover {
+      background-color: #ccc;
+    }
+
+    .user-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .username {
+      font-weight: bold;
+    }
+
+    /* 内容样式 */
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    header p {
+      color: #7f8c8d;
+    }
+
+    .accordion {
+      margin: 20px 0;
+    }
+
+    details {
+      background: #fff;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 15px;
+      background: #f5f5f5;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    summary:hover {
+      background: #e0e0e0;
+    }
+
+    .panel {
+      padding: 10px 20px;
+    }
+
+    .panel-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    .panel-item:last-child {
+      border-bottom: none;
+    }
+
+    .panel-item:hover {
+        text-decoration: underline;
+    }
+
+    .panel-item span.icon {
+      font-size: 16px;
+    }
+
+    .run-button {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: #27ae60;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .run-button:hover {
+        background-color: #2ecc71;
+    }
+
+    /* Styles for flashed messages */
+    .flash-messages {
+        list-style-type: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+
+    .flash-messages li {
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .flash-messages .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .flash-messages .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .back-button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-bottom: 20px;
+    }
+
+    .back-button:hover {
+      background: #2980b9;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #95a5a6;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部导航栏 -->
+  <div class="top-bar">
+    <div class="menu-item-container">
+      <div class="menu-item" onclick="window.location.href='/home';">Home</div>
+      <div class="menu-item" onclick="window.location.href='/flora_dashboard';">Filter Flora</div>
+      <div class="menu-item" onclick="window.location.href='/fauna_dashboard';">Filter Fauna</div>
+      <div class="menu-item" onclick="window.location.href='/report';">Report</div>
+      <div class="menu-item" onclick="window.location.href='/map';">View Map</div>
+      <div class="menu-item" onclick="window.location.href='/statistics';">Statistics</div>
+      <div class="menu-item" onclick="window.location.href='/update_data';">Update Data</div>
+    </div>
+
+    <div class="user-container">
+      <div class="username">{{ username }}</div>
+      <div class="hamburger-menu">&#9776;</div>
+    </div>
+  </div>
+
+  <!-- 实验内容 -->
+  <div class="container">
+    <header>
+      <h1>Experiment 0 - Data Analysis and Visualization</h1>
+      <p>Species Survey Analysis and Data Processing</p>
+    </header>
+
+    <button class="back-button" onclick="window.location.href='/report';">← Back to Reports</button>
+
+    <!-- Display flashed messages (e.g., success or error after running script) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flash-messages">
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <div class="accordion">
+      <!-- ================== EXPERIMENT 0 SECTION ================== -->
+      <details open> <!-- The 'open' attribute makes it expanded by default -->
+        <summary>Experiment 0 - Species Survey Analysis</summary>
+        <div class="panel">
+          <!-- Link that triggers the Python script execution -->
+          <a class="run-button" href="{{ url_for('run_experiment_0') }}">
+            ► Run Species Survey Analysis
+          </a>
+          
+          <hr>
+
+          <!-- This section will dynamically list the generated files -->
+          {% if exp0_files %}
+            <h4>Generated Outputs:</h4>
+            {% for file in exp0_files %}
+              <!-- Each file links to the /outputs/<filename> URL -->
+              <a class="panel-item" href="{{ url_for('serve_output_file', filename=file.name) }}" target="_blank">
+                <span class="icon">{{ file.icon }}</span> {{ file.name }}
+              </a>
+            {% endfor %}
+          {% else %}
+            <div class="panel-item">
+                <span class="icon">ℹ️</span> No output files found. Click the run button to generate them.
+            </div>
+          {% endif %}
+        </div>
+      </details>
+      <!-- ================== END OF EXPERIMENT 0 SECTION ================== -->
+    </div>
+
+    <footer>
+      © 2024 Biogeo Database Management System - University of Sydney Capstone Project
+    </footer>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+Species Name,Family,Genus,Local Status,Fire Traits
+Test Species 1,,,,"{'plant_tolerance_fire': 'tolerant', 'post_fire_recruitment': 'post_fire_recruitment', 'resprouting_capacity': 'resprouts'}"
+Test Species 2,,,,"{'plant_tolerance_fire': 'intolerant', 'post_fire_recruitment': 'absent', 'resprouting_capacity': 'fire_killed'}"

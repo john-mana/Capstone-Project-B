@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🔥 Fire Experiment Results Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #f5f7fa 20%, #ffffff 100%);
+    }
+
+    header {
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: white;
+      text-align: center;
+      padding: 30px 15px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    header p {
+      margin-top: 8px;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .tab-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 25px 0;
+    }
+
+    .tab-container button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab-container button:hover {
+      background-color: #2c3e50;
+    }
+
+    .tab-container button.active {
+      background-color: #1abc9c;
+    }
+
+    iframe {
+      width: 100vw;           
+      height: calc(100vh - 220px); 
+      border: none;
+      display: none;
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      box-shadow: none;
+      overflow: hidden;      
+    }
+    
+    
+
+    iframe.active {
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #555;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🔥 Fire Experiment Results Dashboard</h1>
+    <p>Explore interactive maps for fire-related plant trait experiments</p>
+  </header>
+
+  <div class="tab-container">
+    <button class="tab active" data-id="risk" onclick="showMap('risk', this)">🔥 Fire Risk Distribution</button>
+    <button class="tab" data-id="recovery" onclick="showMap('recovery', this)">⏱️ Fire Recovery Time</button>
+    <button class="tab" data-id="resprouting" onclick="showMap('resprouting', this)">🌿 Resprouting Capacity</button>
+    <button class="tab" data-id="recruitment" onclick="showMap('recruitment', this)">🌱 Post-Fire Recruitment</button>
+  </div>
+
+  <!-- Use Flask's url_for to reference subroutes -->
+  <iframe id="map-risk" class="active" src="{{ url_for('fire_experiment_risk') }}"></iframe>
+  <iframe id="map-recovery" src="{{ url_for('fire_experiment_recovery') }}"></iframe>
+  <iframe id="map-resprouting" src="{{ url_for('fire_experiment_resprouting') }}"></iframe>
+  <iframe id="map-recruitment" src="{{ url_for('fire_experiment_recruitment') }}"></iframe>
+
+  <footer>
+    © 2025 Fire Trait Experiment | Built with Flask, Leaflet.js & OpenStreetMap
+  </footer>
+
+  <script>
+    function showMap(id, btn) {
+      // hide all iframes
+      document.querySelectorAll("iframe").forEach(frame => frame.classList.remove("active"));
+      // show selected iframe
+      document.getElementById(`map-${id}`).classList.add("active");
+
+      // reset all buttons
+      document.querySelectorAll(".tab-container button").forEach(b => b.classList.remove("active"));
+      // activate clicked button
+      btn.classList.add("active");
+    }
+  </script>
+
+</body>
+</html>

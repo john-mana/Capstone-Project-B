@@ -1,0 +1,12 @@
+Trait Name,Description,Species with Data,Coverage %,Unique Values,V-Marked Count,Most Common Values
+post_fire_recruitment,Post-fire recruitment - ability to establish new individuals after fire,1040/2103,49.5%,16,43,"['post_fire_recruitment (1)', 'post_fire_recruitment (f)', 'post_fire_recruitment (2)']"
+post_fire_flowering,Post-fire flowering - flowering response after fire events,86/2103,4.1%,6,1,"['fire_enhanced_flowering (f)', 'fire_enhanced_flowering (1)', 'fire_suppressed_flowering (1)']"
+resprouting_capacity,Resprouting capacity - ability to regrow from surviving plant parts after fire,1425/2103,67.8%,42,339,"['resprouts (V)', 'resprouts (1)', 'fire_killed (V)']"
+resprouting_capacity_non_fire_disturbance,Resprouting capacity for non-fire disturbances,976/2103,46.4%,11,0,"['resprouts_non_fire_disturbance (f)', 'resprouts_non_fire_disturbance (1)', 'resprouts_non_fire_disturbance (2)']"
+resprouting_capacity_juvenile,Resprouting capacity of juvenile plants,837/2103,39.8%,10,1,"['juvenile_fire_killed (f)', 'juvenile_fire_killed (1)', 'juvenile_resprout (f)']"
+resprouting_capacity_proportion_individuals,Proportion of individuals that can resprout,182/2103,8.7%,20,15,"['1 (f)', '1 (3)', '0 (V)']"
+fire_time_from_fire_to_flowering,Time from fire to flowering - how long after fire before flowering,828/2103,39.4%,382,31,"['12 (f)', '12 (1)', '12 (V)']"
+fire_time_from_fire_to_fruiting,Time from fire to fruiting - how long after fire before fruiting,412/2103,19.6%,123,4,"['10 (1)', '8.83720930232558 (1)', '11.3953488372093 (1)']"
+fire_time_from_fire_to_flowering_decline,Time from fire to flowering decline,2/2103,0.1%,1,0,['72 (1)']
+fire_time_from_fire_to_peak_flowering,Time from fire to peak flowering,85/2103,4.0%,15,0,"['36 (1); 60 (1)', '48 (1); 72 (1)', '48 (1)']"
+fire_time_from_fire_to_50_percent_flowering,Time from fire to 50% flowering,13/2103,0.6%,11,0,"['20 (1)', '24.1860465116279 (1)', '11.3953488372093 (1)']"
