@@ -90,4 +90,19 @@ CREATE TABLE occurrences (
         FOREIGN KEY (pct_id) REFERENCES pcts(pct_id)
         ON UPDATE CASCADE
         ON DELETE SET NULL
-)
+);
+
+CREATE TABLE pct_species (
+    pct_species_id INT AUTO_INCREMENT PRIMARY KEY,
+    pct_id INT NOT NULL,
+    species_id INT NOT NULL,
+    CONSTRAINT fk_pct_species_pct
+        FOREIGN KEY (pct_id) REFERENCES pcts(pct_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_pct_species_species
+        FOREIGN KEY (species_id) REFERENCES species(species_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT uq_pct_species UNIQUE (pct_id, species_id)
+);
