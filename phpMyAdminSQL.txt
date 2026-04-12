@@ -1,0 +1,108 @@
+CREATE TABLE datasets (
+    dataset_id INT AUTO_INCREMENT PRIMARY KEY,
+    source_name VARCHAR(100) NOT NULL,
+    dataset_name VARCHAR(150) NOT NULL,
+    most_recent_download_date DATETIME NULL
+);
+
+CREATE TABLE taxonomy (
+    txonomy_id INT AUTO_INCREMENT PRIMARY KEY,
+    kingdom VARCHAR(100),
+    phylum VARCHAR(100),
+    class_name VARCHAR(100),
+    order_name VARCHAR(100),
+    family VARCHAR(100),
+    genus VARCHAR(100),
+    species_epithet VARCHAR(100)
+    );
+
+CREATE TABLE species (
+    species_id INT AUTO_INCREMENT PRIMARY KEY,
+    taxonomy_id INT NULL,# a FK from taxonomy
+    scientific_name VARCHAR(100),
+    vernacular_name VARCHAR(100),
+    native_flag TINYINT(1) DEFAULT NULL,
+    engangered_status_code VARCHAR(100),
+    #define constraint - fk from taxonomy
+    CONSTRAINT fk_species_taxonomy
+    	FOREIGN KEY (taxonomy_id) REFERENCES taxonomy(taxonomy_id)
+    	ON UPDATE CASCADE #If PK value from the parent table is chaged, than child table fk is also changed
+		ON DELETE SET NULL # If PK is deleted from the parent table, set child table fk to NULL value
+    );
+
+CREATE TABLE synonyms (
+    synonym_id INT AUTO_INCREMENT PRIMARY KEY,
+    species_id INT,
+    synonym_name VARCHAR(100),
+    source_species_name VARCHAR(100),
+    current_ala_name VARCHAR(100),
+    CONSTRAINT fk_synonyms_species
+    FOREIGN KEY (species_id) REFERENCES species(species_id)
+    ON UPDATE CASCADE #If PK value from the parent table is chaged, than child table fk is also changed
+    ON DELETE CASCADE #If species is deleted, synonym also delted -> CASCADE
+	);
+
+CREATE TABLE reserves (
+    reserve_id INT AUTO_INCREMENT PRIMARY KEY,
+    asset_name VARCHAR(100),
+    location VARCHAR(100),
+    asset_type VARCHAR(100),
+    asset_class VARCHAR(100),
+    shape_file_name VARCHAR(100),
+    shape_file_path VARCHAR(500) #set it longer as it's a file path
+	);
+    
+CREATE TABLE pcts (
+    pct_id INT AUTO_INCREMENT PRIMARY KEY,
+    pct_code VARCHAR(100),
+    pct_name VARCHAR(100),
+    vegetation_form VARCHAR(255),
+    form_pct VARCHAR(255)
+    );
+    
+CREATE TABLE occurrences (
+    occurrence_id BIGINT AUTO_INCREMENT PRIMARY KEY, #in case the number goes too big, used BIGINT
+    dataset_id INT NULL,
+    species_id INT NULL,
+    reserve_id INT NULL,
+    pct_id INT NULL,
+    scientific_name VARCHAR(255),
+    decimal_latitude DECIMAL(10,7),
+    decimal_longitude DECIMAL(10,7),
+    event_date DATETIME,
+    recorded_by VARCHAR(255),
+    most_recent_flag TINYINT(1) DEFAULT 0,
+    data_generalisation TEXT,
+    dynamic_properties JSON,
+    CONSTRAINT fk_occurrences_dataset
+        FOREIGN KEY (dataset_id) REFERENCES datasets(dataset_id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL, #even parent PK is gone, records still alive with NULLs in it
+    CONSTRAINT fk_occurrences_species
+        FOREIGN KEY (species_id) REFERENCES species(species_id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_occurrences_reserve
+        FOREIGN KEY (reserve_id) REFERENCES reserves(reserve_id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
+    CONSTRAINT fk_occurrences_pct
+        FOREIGN KEY (pct_id) REFERENCES pcts(pct_id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+);
+
+CREATE TABLE pct_species (
+    pct_species_id INT AUTO_INCREMENT PRIMARY KEY,
+    pct_id INT NOT NULL,
+    species_id INT NOT NULL,
+    CONSTRAINT fk_pct_species_pct
+        FOREIGN KEY (pct_id) REFERENCES pcts(pct_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_pct_species_species
+        FOREIGN KEY (species_id) REFERENCES species(species_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT uq_pct_species UNIQUE (pct_id, species_id)
+);
