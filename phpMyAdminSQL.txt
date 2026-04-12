@@ -106,3 +106,25 @@ CREATE TABLE pct_species (
         ON DELETE CASCADE,
     CONSTRAINT uq_pct_species UNIQUE (pct_id, species_id)
 );
+
+CREATE TABLE traits (
+    trait_id INT AUTO_INCREMENT PRIMARY KEY,
+    trait_type_name VARCHAR(100),
+    trait_name VARCHAR(100) NOT NULL,
+    trait_info TEXT,
+    trait_unit VARCHAR(50),
+    trait_type VARCHAR(20),
+    trait_label VARCHAR(150),
+    column_number INT
+);
+
+CREATE TABLE trait_categories (
+    trait_category_id INT AUTO_INCREMENT PRIMARY KEY,
+    trait_id INT,
+    category_value VARCHAR(100),
+    category_description TEXT,
+    CONSTRAINT fk_trait_categories_trait
+        FOREIGN KEY (trait_id) REFERENCES traits(trait_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
