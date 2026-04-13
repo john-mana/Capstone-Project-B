@@ -72,7 +72,7 @@ CREATE TABLE occurrences (
     event_date DATETIME,
     recorded_by VARCHAR(255),
     most_recent_flag TINYINT(1) DEFAULT 0,
-    data_generalisation TEXT,
+    data_generalisations TEXT,
     dynamic_properties JSON,
     CONSTRAINT fk_occurrences_dataset
         FOREIGN KEY (dataset_id) REFERENCES datasets(dataset_id)
