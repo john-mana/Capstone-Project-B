@@ -274,7 +274,7 @@ def view_traits():
                         if trait in species_traits_dict:
                             group_data[trait] = species_traits_dict[trait]
                         else:
-                            group_data[trait] = "nan"
+                            pass
                     # Always include the group, even if all values are nan
                     species_traits[group_name] = group_data
                 species_data[species] = species_traits
