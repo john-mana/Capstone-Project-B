@@ -113,3 +113,7 @@ CREATE TABLE trait_categories (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
+
+***initialized tables and added a new constraint
+ALTER TABLE species
+ADD CONSTRAINT uq_species_scientific_name UNIQUE (scientific_name)
