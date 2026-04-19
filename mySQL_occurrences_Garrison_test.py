@@ -10,7 +10,7 @@ SHEET_NAME = ""                       # only used if INPUT_TYPE == "xlsx"
 OUTPUT_SQL = "Garrison_import.sql"     # output name
 
 SOURCE_NAME = "ALA"
-DATASET_NAME = "Garrison-records-2026-04-14"   # change this for each import file
+DATASET_NAME = "Garrison-Records"   # change this for each import file
 
 # HELPERS TO CLEAN UP THE DATASET
 
@@ -199,7 +199,7 @@ lines.append("")
 for scientific_name, vernacular_name, tax in species_rows:
     kingdom, phylum, class_name, order_name, family, genus, epithet = tax
     lines.append(
-        "INSERT INTO species "
+        "INSERT IGNORE INTO species "
         "(taxonomy_id, scientific_name, vernacular_name, native_flag, endangered_status_code) "
         "VALUES ("
         " (SELECT taxonomy_id FROM taxonomy "
