@@ -12,6 +12,3 @@ __pycache__/
 .DS_Store
 
 # Traits data source
-*.xlsx
-*.csv
-*.xls
