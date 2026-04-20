@@ -1,0 +1,455 @@
+occurrence_id,scientific_name,decimal_latitude,decimal_longitude,reserve_id,pct_id,missing_reserve,missing_pct
+1,Acacia falcata,-33.899658,150.984603,430.0,9.0,False,False
+2,Acacia linifolia,-33.899186,150.982436,430.0,9.0,False,False
+3,Aristida ramosa,-33.899757,150.984406,430.0,9.0,False,False
+4,Asperula conferta,-33.899071,150.984486,430.0,9.0,False,False
+5,Breynia oblongifolia,-33.899097,150.982483,430.0,9.0,False,False
+6,Brunoniella australis,-33.900075,150.984912,430.0,9.0,False,False
+7,Caladenia carnea,-33.9,150.983333,430.0,9.0,False,False
+8,Caladenia catenata,-33.9,150.983333,430.0,9.0,False,False
+9,Callistemon citrinus,-33.9,150.983333,430.0,9.0,False,False
+10,Centella asiatica,-33.899932,150.985222,430.0,9.0,False,False
+11,Corybas fimbriatus,-33.9,150.983333,430.0,9.0,False,False
+12,Cyanicula caerulea,-33.9,150.983333,430.0,9.0,False,False
+13,Dendrobium kingianum,-33.9,150.983333,430.0,9.0,False,False
+14,Dichelachne micrantha,-33.899053,150.983442,430.0,9.0,False,False
+15,Dipodium punctatum,-33.9,150.983333,430.0,9.0,False,False
+16,Dipodium punctatum,-33.9,150.983333,430.0,9.0,False,False
+17,Dipodium punctatum,-33.9,150.983333,430.0,9.0,False,False
+18,Diuris maculata,-33.9,150.983333,430.0,9.0,False,False
+19,Diuris sulphurea,-33.9,150.983333,430.0,9.0,False,False
+20,Echinopogon ovatus,-33.899053,150.983442,430.0,9.0,False,False
+21,Eucalyptus longifolia,-33.9,150.983333,430.0,9.0,False,False
+22,Eucalyptus sideroxylon,-33.9,150.983333,430.0,9.0,False,False
+23,Exocarpos cupressiformis,-33.89944,150.984851,430.0,9.0,False,False
+24,Glochidion ferdinandi,-33.899896,150.983135,430.0,9.0,False,False
+25,Glycine microphylla,-33.9,150.983333,430.0,9.0,False,False
+26,Hardenbergia violacea,-33.899382,150.985076,430.0,9.0,False,False
+27,Indigofera australis,-33.899053,150.983442,430.0,9.0,False,False
+28,Lepidium,-33.899759,150.985494,430.0,9.0,False,False
+29,Lepidium bonariense,-33.899927,150.985469,430.0,9.0,False,False
+30,Lepidium bonariense,-33.899587,150.985426,430.0,9.0,False,False
+31,Lepidium bonariense,-33.899799,150.98549,430.0,9.0,False,False
+32,Lepidosperma laterale,-33.9,150.983333,430.0,9.0,False,False
+33,Lobelia purpurascens,-33.89977,150.984242,430.0,9.0,False,False
+34,Lyperanthus suaveolens,-33.9,150.983333,430.0,9.0,False,False
+35,Melaleuca decora,-33.9,150.983333,430.0,9.0,False,False
+36,Mentha,-33.899995,150.985263,430.0,9.0,False,False
+37,Murraya paniculata,-33.900808,150.983943,,1.0,True,False
+38,Oxalis,-33.89987,150.984641,430.0,9.0,False,False
+39,Panicum simile,-33.899053,150.983442,430.0,9.0,False,False
+40,Polymeria calycina,-33.89993,150.985059,430.0,9.0,False,False
+41,Poranthera microphylla,-33.899936,150.985359,430.0,9.0,False,False
+42,Pterostylis mutica,-33.9,150.983333,430.0,9.0,False,False
+43,Pterostylis mutica,-33.9,150.983333,430.0,9.0,False,False
+44,Pyrorchis nigricans,-33.9,150.983333,430.0,9.0,False,False
+45,Rhinerrhiza divitiflora,-33.9,150.983333,430.0,9.0,False,False
+46,Sarcochilus falcatus,-33.9,150.983333,430.0,9.0,False,False
+47,Senecio hispidulus,-33.899731,150.984437,430.0,9.0,False,False
+48,Sisymbrium,-33.899108,150.984505,430.0,9.0,False,False
+49,Thelymitra pauciflora,-33.9,150.983333,430.0,9.0,False,False
+50,Vittadinia cuneata,-33.899582,150.98537,430.0,9.0,False,False
+51,Vittadinia cuneata,-33.899634,150.985024,430.0,9.0,False,False
+52,Vittadinia sulcata,-33.9,150.983333,430.0,9.0,False,False
+53,Wahlenbergia stricta,-33.899918,150.98537,430.0,9.0,False,False
+54,Quercus robur,-33.909043,150.975567,535.0,1.0,False,False
+55,Commelina cyanea,-33.907253,150.973542,535.0,4.0,False,False
+56,Solenogyne bellioides,-33.908623,150.980591,530.0,9.0,False,False
+57,Pittosporum undulatum,-33.909813,150.979538,530.0,9.0,False,False
+58,Pavonia,-33.909608,150.98018,530.0,9.0,False,False
+59,Goodenia hederacea,-33.909599,150.980194,530.0,9.0,False,False
+60,Eremophila debilis,-33.90969,150.980681,530.0,9.0,False,False
+61,Daviesia ulicifolia,-33.909801,150.980725,,1.0,True,False
+62,Oxalis perennans,-33.909474,150.980417,530.0,9.0,False,False
+63,Daviesia ulicifolia,-33.909702,150.980392,530.0,9.0,False,False
+64,Sida rhombifolia,-33.909447,150.976853,535.0,21.0,False,False
+65,Asparagus asparagoides,-33.909805,150.97995,530.0,9.0,False,False
+66,Phragmites australis,-33.907075,150.979478,530.0,4.0,False,False
+67,Passiflora morifolia,-33.910137,150.9776,,1.0,True,False
+68,Dillwynia sieberi,-33.909416,150.980929,530.0,9.0,False,False
+69,Glycine tabacina,-33.909588,150.97724,530.0,1.0,False,False
+70,Caesia parviflora var. vittata,-33.909113,150.979741,530.0,9.0,False,False
+71,Themeda triandra,-33.909528,150.980208,530.0,9.0,False,False
+72,Acacia podalyriifolia,-33.908645,150.980595,530.0,9.0,False,False
+73,Cymbopogon refractus,-33.909386,150.980856,530.0,9.0,False,False
+74,Brunoniella australis,-33.909307,150.979956,530.0,9.0,False,False
+75,Wahlenbergia gracilis,-33.90915,150.980589,530.0,9.0,False,False
+76,Alternanthera denticulata,-33.908742,150.975372,535.0,4.0,False,False
+77,Sida rhombifolia,-33.910076,150.974762,535.0,1.0,False,False
+78,Calotis lappulacea,-33.909668,150.980295,530.0,9.0,False,False
+79,Lomandra multiflora,-33.909702,150.980392,530.0,9.0,False,False
+80,Brunoniella australis,-33.909485,150.980121,530.0,9.0,False,False
+81,Arthropodium,-33.909775,150.980316,530.0,9.0,False,False
+82,Vittadinia,-33.909485,150.980362,530.0,9.0,False,False
+83,Rumex crispus,-33.910168,150.974808,535.0,1.0,False,False
+84,Asperula conferta,-33.909443,150.980301,530.0,9.0,False,False
+85,Erythrina crista-galli,-33.910076,150.974762,535.0,1.0,False,False
+86,Soliva sessilis,-33.909523,150.97525,535.0,1.0,False,False
+87,Calotis lappulacea,-33.909438,150.979319,530.0,9.0,False,False
+88,Cardiospermum grandiflorum,-33.909528,150.976913,530.0,4.0,False,False
+89,Leptinella longipes,-33.910267,150.974854,535.0,1.0,False,False
+90,Cassinia,-33.909775,150.980316,530.0,9.0,False,False
+91,Poaceae,-33.910082,150.9788,530.0,9.0,False,False
+92,Bossiaea prostrata,-33.909603,150.980804,530.0,9.0,False,False
+93,Melaleuca hypericifolia,-33.909414,150.98058,530.0,9.0,False,False
+94,Goodenia hederacea,-33.909668,150.980257,530.0,9.0,False,False
+95,Cheilanthes sieberi,-33.909568,150.980352,530.0,9.0,False,False
+96,Polymeria calycina,-33.909647,150.980163,530.0,9.0,False,False
+97,Calotis lappulacea,-33.909574,150.980222,530.0,9.0,False,False
+98,Eremophila debilis,-33.909491,150.977137,530.0,4.0,False,False
+99,Scutellaria,-33.907757,150.98168,530.0,1.0,False,False
+100,Aristida,-33.909027,150.979721,530.0,9.0,False,False
+101,Microlaena stipoides,-33.909493,150.980391,530.0,9.0,False,False
+102,Dichelachne micrantha,-33.909168,150.981015,530.0,9.0,False,False
+103,Euchiton sphaericus,-33.90892,150.980743,530.0,9.0,False,False
+104,Caesia parviflora var. vittata,-33.909588,150.97724,530.0,1.0,False,False
+105,Eucalyptus,-33.90959,150.980226,530.0,9.0,False,False
+106,Wahlenbergia gracilis,-33.909229,150.980698,530.0,9.0,False,False
+107,Magnoliopsida,-33.908856,150.980839,530.0,9.0,False,False
+108,Eremophila debilis,-33.908822,150.981091,530.0,9.0,False,False
+109,Eucalyptus,-33.907355,150.980195,530.0,1.0,False,False
+110,Podranea ricasoliana,-33.909358,150.977355,530.0,4.0,False,False
+111,Aristida vagans,-33.909072,150.979781,530.0,9.0,False,False
+112,Afrohybanthus stellarioides,-33.909328,150.980706,530.0,9.0,False,False
+113,Cardiospermum grandiflorum,-33.909338,150.977387,530.0,4.0,False,False
+114,Einadia hastata,-33.909139,150.980604,530.0,9.0,False,False
+115,Arundo donax,-33.907967,150.98143,530.0,1.0,False,False
+116,Eucalyptus,-33.90723,150.973884,535.0,4.0,False,False
+117,Aegiceras corniculatum,-33.906983,150.979387,530.0,21.0,False,False
+118,Casuarina glauca,-33.908203,150.975478,,21.0,True,False
+119,Tracheophyta,-33.909537,150.980509,530.0,9.0,False,False
+120,Brunoniella australis,-33.909557,150.979723,530.0,9.0,False,False
+121,Tricoryne,-33.90976,150.980163,530.0,9.0,False,False
+122,Melaleuca linariifolia,-33.909599,150.979324,530.0,9.0,False,False
+123,Arthropodium,-33.909167,150.980343,530.0,9.0,False,False
+124,Opercularia diphylla,-33.909608,150.980302,530.0,9.0,False,False
+125,Myrtaceae,-33.908608,150.980576,530.0,9.0,False,False
+126,Acacia parramattensis,-33.90684,150.981518,530.0,1.0,False,False
+127,Ficus rubiginosa,-33.909058,150.977858,530.0,1.0,False,False
+128,Capsella bursa-pastoris,-33.909439,150.975266,535.0,1.0,False,False
+129,Eucalyptus eugenioides,-33.909775,150.978186,530.0,1.0,False,False
+130,Goodenia hederacea,-33.909144,150.980956,530.0,9.0,False,False
+131,Melia azedarach,-33.908623,150.980579,530.0,9.0,False,False
+132,Acacia falcata,-33.909607,150.980222,530.0,9.0,False,False
+133,Pavonia hastata,-33.909669,150.980356,530.0,9.0,False,False
+134,Eremophila debilis,-33.90958,150.980266,530.0,9.0,False,False
+135,Leptospermum petersonii,-33.909682,150.980042,530.0,9.0,False,False
+136,Glycine,-33.909505,150.980403,530.0,9.0,False,False
+137,Aristida vagans,-33.90968,150.980562,530.0,9.0,False,False
+138,Plantae,-33.909742,150.979803,530.0,9.0,False,False
+139,Dichelachne,-33.90976,150.980163,530.0,9.0,False,False
+140,Erythrina crista-galli,-33.909999,150.974628,535.0,4.0,False,False
+141,Alphitonia excelsa,-33.909449,150.980152,530.0,9.0,False,False
+142,Avicennia marina,-33.906887,150.979417,530.0,21.0,False,False
+143,Modiola caroliniana,-33.909351,150.975189,535.0,1.0,False,False
+144,Solanum pseudocapsicum,-33.908488,150.978225,,21.0,True,False
+145,Eremophila debilis,-33.910177,150.979105,,9.0,True,False
+146,Bursaria spinosa,-33.909647,150.980262,530.0,9.0,False,False
+147,Eremophila debilis,-33.909056,150.97981,530.0,9.0,False,False
+148,Tricoryne elatior,-33.90903,150.980022,530.0,9.0,False,False
+149,Bidens pilosa,-33.907573,150.973541,535.0,4.0,False,False
+150,Paronychia brasiliana,-33.909534,150.975616,535.0,4.0,False,False
+151,Eucalyptus moluccana,-33.90979,150.980354,530.0,9.0,False,False
+152,Calotis lappulacea,-33.9095,150.980248,530.0,9.0,False,False
+153,Commelina cyanea,-33.908958,150.975783,,1.0,True,False
+154,Solanum prinophyllum,-33.9093,150.979733,530.0,9.0,False,False
+155,Chloris ventricosa,-33.909634,150.979996,530.0,9.0,False,False
+156,Melia azedarach,-33.909786,150.979767,530.0,9.0,False,False
+157,Persicaria decipiens,-33.907078,150.981475,530.0,1.0,False,False
+158,Richardia stellaris,-33.908623,150.980591,530.0,9.0,False,False
+159,Brachychiton populneus,-33.909723,150.978936,530.0,9.0,False,False
+160,Ozothamnus diosmifolius,-33.909828,150.980164,530.0,9.0,False,False
+161,Canna indica,-33.909466,150.97493,535.0,1.0,False,False
+162,Commelina cyanea,-33.908263,150.981475,530.0,1.0,False,False
+163,Paspalidium distans,-33.908876,150.980361,530.0,9.0,False,False
+164,Chloris,-33.909551,150.980285,530.0,9.0,False,False
+165,Plantago lanceolata,-33.910076,150.974762,535.0,1.0,False,False
+166,Solenogyne dominii,-33.908623,150.980591,530.0,9.0,False,False
+167,Breynia oblongifolia,-33.909599,150.979324,530.0,9.0,False,False
+168,Lomandra longifolia,-33.909577,150.980358,530.0,9.0,False,False
+169,Bossiaea prostrata,-33.909714,150.980515,530.0,9.0,False,False
+170,Eremophila debilis,-33.909583,150.980226,530.0,9.0,False,False
+171,Eucalyptus baueriana,-33.906906,150.978891,,,True,True
+172,Bidens pilosa,-33.908945,150.978103,530.0,1.0,False,False
+173,Opercularia diphylla,-33.909701,150.980252,530.0,9.0,False,False
+174,Melaleuca linariifolia,-33.909466,150.980139,530.0,9.0,False,False
+175,Indigofera australis,-33.909599,150.979324,530.0,9.0,False,False
+176,Paspalidium distans,-33.909507,150.98036,530.0,9.0,False,False
+177,Acacia parvipinnula,-33.909611,150.980652,530.0,9.0,False,False
+178,Alphitonia excelsa,-33.909599,150.979324,530.0,9.0,False,False
+179,Entolasia stricta,-33.909651,150.980151,530.0,9.0,False,False
+180,Asperula conferta,-33.90896,150.979842,530.0,9.0,False,False
+181,Senna pendula var. glabrata,-33.909599,150.979324,530.0,9.0,False,False
+182,Mentha satureioides,-33.909588,150.97724,530.0,1.0,False,False
+183,Acacia parvipinnula,-33.908735,150.979978,530.0,9.0,False,False
+184,Brachychiton populneus,-33.908147,150.9785,530.0,21.0,False,False
+185,Casuarina glauca,-33.909172,150.980045,530.0,9.0,False,False
+186,Asperula conferta,-33.908539,150.981231,530.0,9.0,False,False
+187,Megathyrsus maximus,-33.910022,150.976897,535.0,1.0,False,False
+188,Rumex sagittatus,-33.90902,150.9758,,1.0,True,False
+189,Megathyrsus maximus,-33.909627,150.97899,530.0,9.0,False,False
+190,Dillwynia sieberi,-33.909171,150.980427,530.0,9.0,False,False
+191,Phyllanthus virgatus,-33.908799,150.979939,530.0,9.0,False,False
+192,Dysphania,-33.909534,150.975616,535.0,4.0,False,False
+193,Indigofera australis,-33.909687,150.97902,530.0,9.0,False,False
+194,Arthropodium,-33.909323,150.980251,530.0,9.0,False,False
+195,Lomandra longifolia,-33.909612,150.980183,530.0,9.0,False,False
+196,Afrohybanthus stellarioides,-33.909283,150.980885,530.0,9.0,False,False
+197,Arthropodium,-33.908905,150.980632,530.0,9.0,False,False
+198,Centella asiatica,-33.910076,150.974762,535.0,1.0,False,False
+199,Eucalyptus moluccana,-33.908604,150.980583,530.0,9.0,False,False
+200,Persicaria lapathifolia,-33.907483,150.97377,535.0,4.0,False,False
+201,Alphitonia excelsa,-33.909682,150.979464,530.0,9.0,False,False
+202,Senecio,-33.909369,150.980953,530.0,9.0,False,False
+203,Cheilanthes sieberi,-33.909702,150.980392,530.0,9.0,False,False
+204,Acacia fimbriata,-33.909637,150.979828,530.0,9.0,False,False
+205,Alphitonia excelsa,-33.909459,150.979847,530.0,9.0,False,False
+206,Dianella caerulea,-33.909208,150.980471,530.0,9.0,False,False
+207,Tradescantia fluminensis,-33.909337,150.977355,530.0,4.0,False,False
+208,Aegiceras corniculatum,-33.909047,150.9758,,1.0,True,False
+209,Cardiospermum grandiflorum,-33.910076,150.974762,535.0,1.0,False,False
+210,Erythrina crista-galli,-33.907572,150.980864,530.0,4.0,False,False
+211,Jacaranda mimosifolia,-33.909775,150.980316,530.0,9.0,False,False
+212,Chloris gayana,-33.909897,150.9747,535.0,4.0,False,False
+213,Myrtaceae,-33.90802,150.979553,530.0,1.0,False,False
+214,Cirsium vulgare,-33.909786,150.979767,530.0,9.0,False,False
+215,Arctotheca calendula,-33.909618,150.97525,535.0,1.0,False,False
+216,Polyscias sambucifolia,-33.909797,150.979183,530.0,9.0,False,False
+217,Glycine tabacina,-33.909522,150.980339,530.0,9.0,False,False
+218,Breynia oblongifolia,-33.909131,150.980585,530.0,9.0,False,False
+219,Phragmites australis,-33.908237,150.978408,530.0,21.0,False,False
+220,Acacia decurrens,-33.909828,150.980164,530.0,9.0,False,False
+221,Dichondra repens,-33.909351,150.975189,535.0,1.0,False,False
+222,Aristida,-33.909111,150.980835,530.0,9.0,False,False
+223,Arthropodium,-33.90976,150.980163,530.0,9.0,False,False
+224,Celtis australis,-33.909389,150.979748,530.0,9.0,False,False
+225,Dichondra repens,-33.909646,150.980325,530.0,9.0,False,False
+226,Arthropodium,-33.908982,150.979682,530.0,9.0,False,False
+227,Acacia podalyriifolia,-33.908611,150.98056,530.0,9.0,False,False
+228,Ligustrum lucidum,-33.908829,150.980637,530.0,9.0,False,False
+229,Polycarpon tetraphyllum,-33.909351,150.975189,535.0,1.0,False,False
+230,Acacia fimbriata,-33.908624,150.980595,530.0,9.0,False,False
+231,Acacia falcata,-33.909465,150.98026,530.0,9.0,False,False
+232,Solanum seaforthianum,-33.90931,150.977872,530.0,1.0,False,False
+233,Eremophila debilis,-33.909443,150.980301,530.0,9.0,False,False
+234,Polymeria calycina,-33.909423,150.980255,530.0,9.0,False,False
+235,Lomandra multiflora,-33.909624,150.980238,530.0,9.0,False,False
+236,Euchiton sphaericus,-33.908928,150.980764,530.0,9.0,False,False
+237,Asperula conferta,-33.909416,150.980902,530.0,9.0,False,False
+238,Melia azedarach,-33.909952,150.979285,530.0,9.0,False,False
+239,Avicennia marina,-33.907646,150.974597,535.0,4.0,False,False
+240,Eragrostis curvula,-33.90976,150.980163,530.0,9.0,False,False
+241,Acacia fimbriata,-33.909827,150.979759,530.0,9.0,False,False
+242,Solanum seaforthianum,-33.909437,150.976837,535.0,21.0,False,False
+243,Cheilanthes sieberi,-33.909633,150.980253,530.0,9.0,False,False
+244,Solanum nigrum,-33.90728,150.973604,535.0,4.0,False,False
+245,Themeda triandra,-33.909828,150.980164,530.0,9.0,False,False
+246,Brunoniella australis,-33.90882,150.981281,530.0,9.0,False,False
+247,Dillwynia sieberi,-33.909256,150.980587,530.0,9.0,False,False
+248,Einadia hastata,-33.909523,150.97525,535.0,1.0,False,False
+249,Senecio madagascariensis,-33.909828,150.980164,530.0,9.0,False,False
+250,Aegiceras corniculatum,-33.910267,150.974854,535.0,1.0,False,False
+251,Melaleuca armillaris,-33.909465,150.980857,530.0,9.0,False,False
+252,Eucalyptus,-33.907922,150.98047,530.0,1.0,False,False
+253,Bacopa monnieri,-33.910267,150.974854,535.0,1.0,False,False
+254,Goodenia hederacea,-33.909344,150.980669,530.0,9.0,False,False
+255,Stackhousia viminea,-33.909268,150.980879,530.0,9.0,False,False
+256,Eucalyptus,-33.908158,150.974395,535.0,1.0,False,False
+257,Aristida,-33.909209,150.980555,530.0,9.0,False,False
+258,Bossiaea prostrata,-33.909567,150.980356,530.0,9.0,False,False
+259,Chloris ventricosa,-33.909069,150.97987,530.0,9.0,False,False
+260,Anredera cordifolia,-33.909612,150.976928,530.0,4.0,False,False
+261,Schinus molle var. areira,-33.907248,150.974049,535.0,21.0,False,False
+262,Ozothamnus diosmifolius,-33.909565,150.980349,530.0,9.0,False,False
+263,Solanum seaforthianum,-33.908478,150.978195,,21.0,True,False
+264,Melaleuca,-33.909371,150.980482,530.0,9.0,False,False
+265,Plumbago auriculata,-33.909842,150.97934,530.0,9.0,False,False
+266,Oxalis latifolia,-33.908611,150.98056,530.0,9.0,False,False
+267,Opercularia diphylla,-33.909775,150.980316,530.0,9.0,False,False
+268,Melia azedarach,-33.909442,150.976883,530.0,21.0,False,False
+269,Calotis cuneifolia,-33.909573,150.980484,530.0,9.0,False,False
+270,Nothoscordum gracile,-33.907513,150.980255,530.0,1.0,False,False
+271,Calotis cuneifolia,-33.909489,150.980583,530.0,9.0,False,False
+272,Acacia parramattensis,-33.906772,150.981567,530.0,1.0,False,False
+273,Senecio pterophorus,-33.909775,150.978387,530.0,9.0,False,False
+274,Solanum seaforthianum,-33.909438,150.976853,535.0,21.0,False,False
+275,Caesia parviflora var. vittata,-33.90976,150.980163,530.0,9.0,False,False
+276,Eriobotrya japonica,-33.909813,150.979538,530.0,9.0,False,False
+277,Asparagus aethiopicus,-33.910267,150.974854,535.0,1.0,False,False
+278,Acacia fimbriata,-33.908611,150.98056,530.0,9.0,False,False
+279,Daviesia ulicifolia,-33.909481,150.980441,530.0,9.0,False,False
+280,Calotis lappulacea,-33.909733,150.978897,530.0,9.0,False,False
+281,Acacia decurrens,-33.909813,150.979538,530.0,9.0,False,False
+282,Oxalis,-33.90937,150.977372,530.0,4.0,False,False
+283,Calotis lappulacea,-33.909252,150.980968,530.0,9.0,False,False
+284,Senecio pterophorus,-33.909344,150.978745,530.0,9.0,False,False
+285,Tetragonia tetragonoides,-33.908997,150.980809,530.0,9.0,False,False
+286,Daviesia ulicifolia,-33.909235,150.979991,530.0,9.0,False,False
+287,Aristida vagans,-33.909495,150.980396,530.0,9.0,False,False
+288,Nassella neesiana,-33.91,150.98,530.0,9.0,False,False
+289,Nassella neesiana,-33.91,150.98,530.0,9.0,False,False
+290,Opuntia monacantha,-33.91,150.98,530.0,9.0,False,False
+291,Sagittaria platyphylla,-33.91,150.98,530.0,9.0,False,False
+292,Asparagus aethiopicus,-33.91,150.98,530.0,9.0,False,False
+293,Asparagus virgatus,-33.91,150.98,530.0,9.0,False,False
+294,Persicaria chinensis,-33.91,150.98,530.0,9.0,False,False
+295,Nassella neesiana,-33.91,150.98,530.0,9.0,False,False
+296,Nassella neesiana,-33.91,150.98,530.0,9.0,False,False
+297,Senecio madagascariensis,-33.91,150.98,530.0,9.0,False,False
+298,Alternanthera philoxeroides,-33.91,150.98,530.0,9.0,False,False
+299,Ludwigia peruviana,-33.91,150.98,530.0,9.0,False,False
+300,Opuntia dillenii,-33.91,150.98,530.0,9.0,False,False
+301,Nassella neesiana,-33.91,150.98,530.0,9.0,False,False
+302,Sagittaria platyphylla,-33.91,150.98,530.0,9.0,False,False
+303,Cestrum parqui,-33.91,150.98,530.0,9.0,False,False
+304,Senecio madagascariensis,-33.91,150.98,530.0,9.0,False,False
+305,Asparagus aethiopicus,-33.91,150.98,530.0,9.0,False,False
+306,Rubus fruticosus,-33.91,150.98,530.0,9.0,False,False
+307,Sagittaria platyphylla,-33.91,150.98,530.0,9.0,False,False
+308,Alternanthera philoxeroides,-33.91,150.98,530.0,9.0,False,False
+309,Asparagus aethiopicus,-33.91,150.98,530.0,9.0,False,False
+310,Cestrum parqui,-33.91,150.98,530.0,9.0,False,False
+311,Ludwigia peruviana,-33.91,150.98,530.0,9.0,False,False
+312,Asparagus aethiopicus,-33.91,150.98,530.0,9.0,False,False
+313,Nassella neesiana,-33.91,150.98,530.0,9.0,False,False
+314,Sagittaria platyphylla,-33.91,150.98,530.0,9.0,False,False
+315,Opuntia monacantha,-33.91,150.98,530.0,9.0,False,False
+316,Asparagus aethiopicus,-33.91,150.98,530.0,9.0,False,False
+317,Lantana camara,-33.91,150.98,530.0,9.0,False,False
+318,Lantana camara,-33.91,150.98,530.0,9.0,False,False
+319,Bauhinia,-33.909,150.976639,,,True,True
+320,Leontodon saxatilis,-33.909506,150.979817,530.0,9.0,False,False
+321,Rytidosperma tenuius,-33.909909,150.979481,530.0,9.0,False,False
+322,Araujia sericifera,-33.908598,150.974971,535.0,1.0,False,False
+323,Acacia falcata,-33.909909,150.979481,530.0,9.0,False,False
+324,Morus alba,-33.908598,150.974971,535.0,1.0,False,False
+325,Lomandra longifolia,-33.908406,150.980748,530.0,1.0,False,False
+326,Ozothamnus diosmifolius,-33.909909,150.979481,530.0,9.0,False,False
+327,Eremophila debilis,-33.909909,150.979481,530.0,9.0,False,False
+328,Modiola caroliniana,-33.908598,150.974971,535.0,1.0,False,False
+329,Araujia sericifera,-33.908406,150.980748,530.0,1.0,False,False
+330,Microlaena stipoides,-33.908598,150.974971,535.0,1.0,False,False
+331,Paspalum dilatatum,-33.908406,150.980748,530.0,1.0,False,False
+332,Alternanthera pungens,-33.908598,150.974971,535.0,1.0,False,False
+333,Themeda triandra,-33.909506,150.979817,530.0,9.0,False,False
+334,Dichondra repens,-33.909909,150.979481,530.0,9.0,False,False
+335,Senecio madagascariensis,-33.909506,150.979817,530.0,9.0,False,False
+336,Casuarina glauca,-33.908598,150.974971,535.0,1.0,False,False
+337,Einadia polygonoides,-33.908598,150.974971,535.0,1.0,False,False
+338,Bidens pilosa,-33.909506,150.979817,530.0,9.0,False,False
+339,Goodenia radicans,-33.908598,150.974971,535.0,1.0,False,False
+340,Megathyrsus maximus,-33.909909,150.979481,530.0,9.0,False,False
+341,Rytidosperma racemosum var. racemosum,-33.909506,150.979817,530.0,9.0,False,False
+342,Eragrostis leptostachya,-33.909506,150.979817,530.0,9.0,False,False
+343,Dianella longifolia var. longifolia,-33.909909,150.979481,530.0,9.0,False,False
+344,Bromus catharticus,-33.908598,150.974971,535.0,1.0,False,False
+345,Poa labillardierei var. labillardierei,-33.909506,150.979817,530.0,9.0,False,False
+346,Chloris ventricosa,-33.909506,150.979817,530.0,9.0,False,False
+347,Oxalis exilis,-33.909506,150.979817,530.0,9.0,False,False
+348,Cheilanthes sieberi subsp. sieberi,-33.909506,150.979817,530.0,9.0,False,False
+349,Glycine tabacina,-33.909909,150.979481,530.0,9.0,False,False
+350,Epilobium hirtigerum,-33.908598,150.974971,535.0,1.0,False,False
+351,Zoysia macrantha,-33.908598,150.974971,535.0,1.0,False,False
+352,Triglochin striata,-33.908598,150.974971,535.0,1.0,False,False
+353,Microlaena stipoides var. stipoides,-33.909909,150.979481,530.0,9.0,False,False
+354,Cynodon dactylon,-33.908598,150.974971,535.0,1.0,False,False
+355,Senecio madagascariensis,-33.908598,150.974971,535.0,1.0,False,False
+356,Apium prostratum,-33.908598,150.974971,535.0,1.0,False,False
+357,Sida rhombifolia,-33.909909,150.979481,530.0,9.0,False,False
+358,Acacia decurrens,-33.909506,150.979817,530.0,9.0,False,False
+359,Ehrharta erecta,-33.908598,150.974971,535.0,1.0,False,False
+360,Sonchus oleraceus,-33.909506,150.979817,530.0,9.0,False,False
+361,Lepidium bonariense,-33.908598,150.974971,535.0,1.0,False,False
+362,Sida rhombifolia,-33.908598,150.974971,535.0,1.0,False,False
+363,Melia azedarach,-33.908598,150.974971,535.0,1.0,False,False
+364,Hypochaeris radicata,-33.909506,150.979817,530.0,9.0,False,False
+365,Anredera cordifolia,-33.908598,150.974971,535.0,1.0,False,False
+366,Eucalyptus tereticornis,-33.909506,150.979817,530.0,9.0,False,False
+367,Solanum nigrum,-33.908598,150.974971,535.0,1.0,False,False
+368,Themeda triandra,-33.909506,150.979817,530.0,9.0,False,False
+369,Eucalyptus moluccana,-33.909506,150.979817,530.0,9.0,False,False
+370,Taraxacum,-33.909909,150.979481,530.0,9.0,False,False
+371,Dichelachne parva,-33.909506,150.979817,530.0,9.0,False,False
+372,Dianella longifolia var. longifolia,-33.909506,150.979817,530.0,9.0,False,False
+373,Solanum pseudocapsicum,-33.908598,150.974971,535.0,1.0,False,False
+374,Anthosachne scabra,-33.91,150.98,530.0,9.0,False,False
+375,Asparagus aethiopicus,-33.908598,150.974971,535.0,1.0,False,False
+376,Oxalis perennans,-33.909909,150.979481,530.0,9.0,False,False
+377,Lomandra multiflora subsp. multiflora,-33.909909,150.979481,530.0,9.0,False,False
+378,Polycarpon tetraphyllum,-33.908598,150.974971,535.0,1.0,False,False
+379,Asparagus aethiopicus,-33.909506,150.979817,530.0,9.0,False,False
+380,Eragrostis curvula,-33.909909,150.979481,530.0,9.0,False,False
+381,Pavonia hastata,-33.909506,150.979817,530.0,9.0,False,False
+382,Pavonia hastata,-33.909909,150.979481,530.0,9.0,False,False
+383,Modiola caroliniana,-33.908406,150.980748,530.0,1.0,False,False
+384,Einadia hastata,-33.908598,150.974971,535.0,1.0,False,False
+385,Asparagus aethiopicus,-33.909909,150.979481,530.0,9.0,False,False
+386,Brachychiton populneus,-33.90917,150.98064,530.0,9.0,False,False
+387,Echinopogon ovatus,-33.908598,150.974971,535.0,1.0,False,False
+388,Gamochaeta purpurea,-33.908598,150.974971,535.0,1.0,False,False
+389,Eragrostis curvula,-33.908406,150.980748,530.0,1.0,False,False
+390,Eucalyptus moluccana,-33.909506,150.979817,530.0,9.0,False,False
+391,Cynodon dactylon,-33.908406,150.980748,530.0,1.0,False,False
+392,Brachychiton populneus,-33.90917,150.98064,530.0,9.0,False,False
+393,Cynodon dactylon,-33.909909,150.979481,530.0,9.0,False,False
+394,Aristida ramosa,-33.90917,150.98064,530.0,9.0,False,False
+395,Vittadinia cuneata var. cuneata,-33.909909,150.979481,530.0,9.0,False,False
+396,Pavonia hastata,-33.909506,150.979817,530.0,9.0,False,False
+397,Phragmites australis,-33.908598,150.974971,535.0,1.0,False,False
+398,Sida rhombifolia,-33.909506,150.979817,530.0,9.0,False,False
+399,Asparagus asparagoides,-33.909909,150.979481,530.0,9.0,False,False
+400,Dichondra repens,-33.909506,150.979817,530.0,9.0,False,False
+401,Brunoniella australis,-33.909909,150.979481,530.0,9.0,False,False
+402,Araujia sericifera,-33.909909,150.979481,530.0,9.0,False,False
+403,Rytidosperma tenuius,-33.90917,150.98064,530.0,9.0,False,False
+404,Tetragonia tetragonoides,-33.908598,150.974971,535.0,1.0,False,False
+405,Cenchrus clandestinus,-33.908598,150.974971,535.0,1.0,False,False
+406,Dichelachne rara,-33.909506,150.979817,530.0,9.0,False,False
+407,Paspalum dilatatum,-33.909506,150.979817,530.0,9.0,False,False
+408,Bursaria spinosa subsp. spinosa,-33.909909,150.979481,530.0,9.0,False,False
+409,Aristida ramosa,-33.909506,150.979817,530.0,9.0,False,False
+410,Brunoniella australis,-33.909506,150.979817,530.0,9.0,False,False
+411,Juncus kraussii subsp. australiensis,-33.908598,150.974971,535.0,1.0,False,False
+412,Cardiospermum grandiflorum,-33.908598,150.974971,535.0,1.0,False,False
+413,Plantago lanceolata,-33.909506,150.979817,530.0,9.0,False,False
+414,Chloris ventricosa,-33.909909,150.979481,530.0,9.0,False,False
+415,Sida rhombifolia,-33.909506,150.979817,530.0,9.0,False,False
+416,Sporobolus creber,-33.909506,150.979817,530.0,9.0,False,False
+417,Casuarina glauca,-33.908406,150.980748,530.0,1.0,False,False
+418,Cestrum parqui,-33.908598,150.974971,535.0,1.0,False,False
+419,Setaria parviflora,-33.909506,150.979817,530.0,9.0,False,False
+420,Poranthera microphylla,-33.909506,150.979817,530.0,9.0,False,False
+421,Erigeron sumatrensis,-33.909506,150.979817,530.0,9.0,False,False
+422,Microlaena stipoides var. stipoides,-33.909506,150.979817,530.0,9.0,False,False
+423,Acacia decurrens,-33.909909,150.979481,530.0,9.0,False,False
+424,Wahlenbergia gracilis,-33.909506,150.979817,530.0,9.0,False,False
+425,Cassinia aculeata,-33.909909,150.979481,530.0,9.0,False,False
+426,Bidens pilosa,-33.908406,150.980748,530.0,1.0,False,False
+427,Einadia hastata,-33.909506,150.979817,530.0,9.0,False,False
+428,Bidens pilosa,-33.909909,150.979481,530.0,9.0,False,False
+429,Einadia hastata,-33.909909,150.979481,530.0,9.0,False,False
+430,Eucalyptus tereticornis,-33.908406,150.980748,530.0,1.0,False,False
+431,Plantago lanceolata,-33.909909,150.979481,530.0,9.0,False,False
+432,Eucalyptus tereticornis,-33.909506,150.979817,530.0,9.0,False,False
+433,Eragrostis leptostachya,-33.909909,150.979481,530.0,9.0,False,False
+434,Linum marginale,-33.908598,150.974971,535.0,1.0,False,False
+435,Aristida ramosa,-33.909909,150.979481,530.0,9.0,False,False
+436,Sporobolus creber,-33.909909,150.979481,530.0,9.0,False,False
+437,Microlaena stipoides var. stipoides,-33.909506,150.979817,530.0,9.0,False,False
+438,Rytidosperma caespitosum,-33.909909,150.979481,530.0,9.0,False,False
+439,Glycine tabacina,-33.909506,150.979817,530.0,9.0,False,False
+440,Themeda triandra,-33.909909,150.979481,530.0,9.0,False,False
+441,Tradescantia fluminensis,-33.908598,150.974971,535.0,1.0,False,False
+442,Desmodium varians,-33.909909,150.979481,530.0,9.0,False,False
+443,Eucalyptus tereticornis,-33.909909,150.979481,530.0,9.0,False,False
+444,Aristida vagans,-33.909909,150.979481,530.0,9.0,False,False
+445,Sida rhombifolia,-33.908406,150.980748,530.0,1.0,False,False
+446,Eucalyptus moluccana,-33.909909,150.979481,530.0,9.0,False,False
+447,Aristida vagans,-33.909506,150.979817,530.0,9.0,False,False
+448,Cheilanthes sieberi subsp. sieberi,-33.909909,150.979481,530.0,9.0,False,False
+449,Callistemon viminalis,-33.908406,150.980748,530.0,1.0,False,False
+450,Olea europaea subsp. cuspidata,-33.908406,150.980748,530.0,1.0,False,False
+451,Avicennia marina subsp. australasica,-33.908598,150.974971,535.0,1.0,False,False
+452,Chloris ventricosa,-33.90917,150.98064,530.0,9.0,False,False
+453,Lysimachia arvensis,-33.909506,150.979817,530.0,9.0,False,False
+454,Indigofera australis,-33.909909,150.979481,530.0,9.0,False,False
