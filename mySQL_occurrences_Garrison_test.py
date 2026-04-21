@@ -84,7 +84,7 @@ if INPUT_TYPE.lower() == "xlsx":
 elif INPUT_TYPE.lower() == "csv":
     df = pd.read_csv(INPUT_PATH, low_memory=False)
 
-    # ALA direct download column names -> project column names
+    # ALA direct download column names (if the file is in ALA lagacy format) -> project column names
     df = df.rename(columns={
         'Scientific Name (intepreted)': 'scientific_name',
         'Vernacular name': 'vernacular_name',
