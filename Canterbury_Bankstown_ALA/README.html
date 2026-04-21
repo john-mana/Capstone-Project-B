@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://www.ala.org.au/commonui-bs3-2019/css/ala-styles.css" rel="stylesheet"
+          media="screen,print"/>
+    <!--<title>Title</title>-->
+    <style>
+        /* The only override we need from ala-styles.css */
+
+        body {
+            padding-top: 0px;
+        }
+
+        /* DOI - taken from GBIF */
+        .doi {
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 4px 6px;
+            white-space:nowrap;
+            white-space:nowrap;
+        }
+        .doi-sm {
+            font-size: 13px;
+            padding: 2px 0;
+        }
+        .doi span:first-of-type {
+            -webkit-transition: all .3s ease;
+            transition: all .3s ease;
+            background: #D5502A ;
+            /*#09c;*/
+            padding: 4px 6px;
+            /*border-radius: 5px 0 0 5px;*/
+            color: #fff;
+            border-right-width: 0;
+            border-color:#D5502A;
+            /*#09c;*/
+        }
+        .doi span:last-of-type {
+            color: #333;
+            background: #fff;
+            text-decoration: none;
+            padding: 4px 6px;
+            /*border-radius: 0 5px 5px 0;*/
+            border-left-width: 0;
+        }
+        .doi span {
+            border: 1px solid #adadad;
+        }
+        .doi:hover span:first-of-type {
+            background: #D5502A;
+            /*#004d66; */
+            border-color: #D5502A;
+            /*#004d66;*/
+        }
+        .doi:hover span:last-of-type {
+            background: #f9f9f9;
+        }
+
+    </style>
+</head>
+<body>
+When using this dataset please use the following citation:<br><br>
+<cite>Atlas of Living Australia occurrence download at <a href='https://biocache.ala.org.au/occurrences/search?&q=taxa%3A%22Canterbury+Bankstown%22&fq=species_group%3A%22Plants%22&disableAllQualityFilters=true&fq=-basisOfRecord%3A%22FOSSIL_SPECIMEN%22+AND+-%28basisOfRecord%3A%22MATERIAL_SAMPLE%22+AND+contentTypes%3A%22Environmental+DNA%22%29&fq=-%28duplicate_status%3A%22ASSOCIATED%22+AND+duplicateType%3A%22DIFFERENT_DATASET%22%29&fq=-degreeOfEstablishment%3A%22cultivated%22+AND+-degreeOfEstablishment%3A%22captive%22&fq=-assertions%3ATAXON_MATCH_NONE+AND+-assertions%3AINVALID_SCIENTIFIC_NAME+AND+-assertions%3ATAXON_HOMONYM+AND+-assertions%3AUNKNOWN_KINGDOM+AND+-assertions%3ATAXON_SCOPE_MISMATCH&fq=-occurrenceStatus%3AABSENT&fq=-identificationVerificationStatus%3A%22needs_id%22&fq=-year%3A%5B*+TO+1700%5D&fq=-userAssertions%3A50001+AND+-userAssertions%3A50005&fq=-decimalLatitude%3A0+AND+-decimalLongitude%3A0+AND+-assertions%3A%22PRESUMED_SWAPPED_COORDINATE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_STATEPROVINCE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_COUNTRY%22+AND+-assertions%3A%22PRESUMED_NEGATED_LATITUDE%22+AND+-assertions%3A%22PRESUMED_NEGATED_LONGITUDE%22&fq=-outlierLayerCount%3A%5B3+TO+*%5D&fq=-spatiallyValid%3A%22false%22&fq=-coordinateUncertaintyInMeters%3A%5B10001+TO+*%5D&qc=-_nest_parent_%3A*'>https://biocache.ala.org.au/occurrences/search?&q=taxa%3A%22Canterbury+Bankstown%22&fq=species_group%3A%22Plants%22&disableAllQualityFilters=true&fq=-basisOfRecord%3A%22FOSSIL_SPECIMEN%22+AND+-%28basisOfRecord%3A%22MATERIAL_SAMPLE%22+AND+contentTypes%3A%22Environmental+DNA%22%29&fq=-%28duplicate_status%3A%22ASSOCIATED%22+AND+duplicateType%3A%22DIFFERENT_DATASET%22%29&fq=-degreeOfEstablishment%3A%22cultivated%22+AND+-degreeOfEstablishment%3A%22captive%22&fq=-assertions%3ATAXON_MATCH_NONE+AND+-assertions%3AINVALID_SCIENTIFIC_NAME+AND+-assertions%3ATAXON_HOMONYM+AND+-assertions%3AUNKNOWN_KINGDOM+AND+-assertions%3ATAXON_SCOPE_MISMATCH&fq=-occurrenceStatus%3AABSENT&fq=-identificationVerificationStatus%3A%22needs_id%22&fq=-year%3A%5B*+TO+1700%5D&fq=-userAssertions%3A50001+AND+-userAssertions%3A50005&fq=-decimalLatitude%3A0+AND+-decimalLongitude%3A0+AND+-assertions%3A%22PRESUMED_SWAPPED_COORDINATE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_STATEPROVINCE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_COUNTRY%22+AND+-assertions%3A%22PRESUMED_NEGATED_LATITUDE%22+AND+-assertions%3A%22PRESUMED_NEGATED_LONGITUDE%22&fq=-outlierLayerCount%3A%5B3+TO+*%5D&fq=-spatiallyValid%3A%22false%22&fq=-coordinateUncertaintyInMeters%3A%5B10001+TO+*%5D&qc=-_nest_parent_%3A*</a> accessed on 21 April 2026 at 3:22:19 PM.</cite> <br><br>
+The DOI for this download is available at <a href='https://doi.org/10.26197/ala.4d8373f2-9d02-484e-a038-ef14472d4713'>https://doi.org/10.26197/ala.4d8373f2-9d02-484e-a038-ef14472d4713</a><br><br>
+Data contributed by the following providers:<br>
+<ul><li>Records provided by Australia's Virtual Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/dp36</li><li>Records provided by Otago Regional Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co256</li><li>Records provided by John T. Waterhouse Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co66</li><li>Records provided by Dame Ella Campbell Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co254</li><li>Records provided by Centre for Australian National Biodiversity Research (CANB) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr15860</li><li>Records provided by The University of Melbourne Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co64</li><li>Records provided by University of Canterbury Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co250</li><li>Records provided by Australian Museum Entomology Collection, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co9</li><li>Records provided by Herbarium of the Museum of New Zealand Te Papa Tongarewa, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co216</li><li>Records provided by Landcare Research NZ Ltd, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in92</li><li>Records provided by Allan Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co214</li><li>Records provided by University of Otago, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in120</li><li>Records provided by University of New South Wales, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in63</li><li>Records provided by Australian Museum provider for OZCAM, accessed through ALA website. (Creative Commons Attribution (Australia) (CC-BY 3.0 (Au)) Australian Museum,https://australian.museum/ Creative Commons Attribution (Australia) (CC-BY 3.0 (Au) 3.0)). For more information: https://collections.ala.org.au/public/show/dr340</li><li>Records provided by Royal Botanic Gardens Victoria, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in21</li><li>Records provided by The University of Melbourne, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in26</li><li>Records provided by National Herbarium of Victoria, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co55</li><li>Records provided by Australian National Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co12</li><li>Records provided by OZCAM (Online Zoological Collections of Australian Museums) Provider, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/dp20</li><li>Records provided by John T. Waterhouse Herbarium (UNSW) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr14787</li><li>New Zealand National Herbarium Network (2014-)  New Zealand Virtual Herbarium - specimen data from members of the New Zealand National Herbarium Network. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License. New Zealand National Herbarium Network (2014-)  New Zealand Virtual Herbarium - specimen data from members of the New Zealand National Herbarium Network.). For more information: https://collections.ala.org.au/public/show/dr2153</li><li>Records provided by Massey University, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in118</li><li>Records provided by Auckland War Memorial Museum  Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co249</li><li>Records provided by Dame Ella Campbell Herbarium (MPN) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int))). For more information: https://collections.ala.org.au/public/show/dr30948</li><li>Records provided by Auckland Museum Botany Collection, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int))). For more information: https://collections.ala.org.au/public/show/dr26650</li><li>Records provided by Australian Museum, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in4</li><li>Records provided by Museum of New Zealand Te Papa Tongarewa, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in82</li><li>Records provided by Allan Herbarium, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int))). For more information: https://collections.ala.org.au/public/show/dr27654</li><li>Records provided by National Herbarium of Victoria (MEL) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr376</li><li>Records provided by Centre for Australian National Biodiversity Research, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in5</li><li>Records provided by WELT Herbarium at Museum of New Zealand Te Papa Tongarewa, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int))). For more information: https://collections.ala.org.au/public/show/dr26642</li><li>Records provided by University of Otago Herbarium (OTA) AVH data, accessed through ALA website. (other). For more information: https://collections.ala.org.au/public/show/dr31676</li><li>Records provided by Auckland War Memorial Museum, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in113</li><li>Records provided by University of Canterbury, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in114</li><li>Records provided by Australian Plant Image Index, accessed through ALA website. (Creative Commons Attribution (Australia) (CC-BY 3.0 (Au)) How to cite the APII is given at: http://www.anbg.gov.au/citation.html
+For further information, contact the APII Photograph Curator. 
+        Creative Commons Attribution (Australia) (CC-BY 3.0 (Au) 3.0) 
+        Creative Commons Attribution (Australia) (CC-BY 3.0 (Au) 3.0)). For more information: https://collections.ala.org.au/public/show/dr413</li><li>Records provided by The University of Melbourne Herbarium (MELU) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr13282</li></ul><br>
+More information can be found at <a href="https://support.ala.org.au/support/solutions/articles/6000261662-citing-the-ala">citing the ALA</a>.<br><br>
+</body>
+</html>
+For more information about the fields that are being downloaded please consult <a href='headings.csv'>Download Fields</a>.

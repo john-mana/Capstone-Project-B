@@ -4,13 +4,13 @@ from pathlib import Path
 
 # INITIAL CONFIGURATION
 
-INPUT_PATH = "Garrison-records-2026-04-14.csv"      # need to chage when the source is different
+INPUT_PATH = "Canterbury_Bankstown_ALA/Canterbury_Bankstown.csv"      # need to chage when the source is different
 INPUT_TYPE = "csv"                         # "xlsx" or "csv"
 SHEET_NAME = ""                       # only used if INPUT_TYPE == "xlsx"
-OUTPUT_SQL = "Garrison_import.sql"     # output name
+OUTPUT_SQL = "ALA_main_to_import.sql"     # output name
 
 SOURCE_NAME = "ALA"
-DATASET_NAME = "Garrison-Records"   # change this for each import file
+DATASET_NAME = "ALA_main_records"   # change this for each import file
 
 # HELPERS TO CLEAN UP THE DATASET
 
@@ -82,7 +82,19 @@ def find_col(df, candidates):
 if INPUT_TYPE.lower() == "xlsx":
     df = pd.read_excel(INPUT_PATH, sheet_name=SHEET_NAME)
 elif INPUT_TYPE.lower() == "csv":
-    df = pd.read_csv(INPUT_PATH)
+    df = pd.read_csv(INPUT_PATH, low_memory=False)
+
+    # ALA direct download column names -> project column names
+    df = df.rename(columns={
+        'Scientific Name (intepreted)': 'scientific_name',
+        'Vernacular name': 'vernacular_name',
+        'Decimal latitude (WGS84)': 'decimal_latitude',
+        'Decimal longitude (WGS84)': 'decimal_longitude',
+        'Event Date': 'event_date'
+    })
+
+    print("Check column names if there is an error df.columns.tolist()")
+    
 else:
     raise ValueError("INPUT_TYPE must be either 'xlsx' or 'csv'")
 
