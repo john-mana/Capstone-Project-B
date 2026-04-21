@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://www.ala.org.au/commonui-bs3-2019/css/ala-styles.css" rel="stylesheet"
+          media="screen,print"/>
+    <!--<title>Title</title>-->
+    <style>
+        /* The only override we need from ala-styles.css */
+
+        body {
+            padding-top: 0px;
+        }
+
+        /* DOI - taken from GBIF */
+        .doi {
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 4px 6px;
+            white-space:nowrap;
+            white-space:nowrap;
+        }
+        .doi-sm {
+            font-size: 13px;
+            padding: 2px 0;
+        }
+        .doi span:first-of-type {
+            -webkit-transition: all .3s ease;
+            transition: all .3s ease;
+            background: #D5502A ;
+            /*#09c;*/
+            padding: 4px 6px;
+            /*border-radius: 5px 0 0 5px;*/
+            color: #fff;
+            border-right-width: 0;
+            border-color:#D5502A;
+            /*#09c;*/
+        }
+        .doi span:last-of-type {
+            color: #333;
+            background: #fff;
+            text-decoration: none;
+            padding: 4px 6px;
+            /*border-radius: 0 5px 5px 0;*/
+            border-left-width: 0;
+        }
+        .doi span {
+            border: 1px solid #adadad;
+        }
+        .doi:hover span:first-of-type {
+            background: #D5502A;
+            /*#004d66; */
+            border-color: #D5502A;
+            /*#004d66;*/
+        }
+        .doi:hover span:last-of-type {
+            background: #f9f9f9;
+        }
+
+    </style>
+</head>
+<body>
+When using this dataset please use the following citation:<br><br>
+<cite>Atlas of Living Australia occurrence download at <a href='https://biocache.ala.org.au/occurrences/search?&q=species_group%3APlants+AND+state%3A%22New+South+Wales%22+AND+country%3AAustralia+AND+cl959%3A%22Canterbury+%28C%29%22&disableAllQualityFilters=true&fq=-basisOfRecord%3A%22FOSSIL_SPECIMEN%22+AND+-%28basisOfRecord%3A%22MATERIAL_SAMPLE%22+AND+contentTypes%3A%22Environmental+DNA%22%29&fq=-%28duplicate_status%3A%22ASSOCIATED%22+AND+duplicateType%3A%22DIFFERENT_DATASET%22%29&fq=-degreeOfEstablishment%3A%22cultivated%22+AND+-degreeOfEstablishment%3A%22captive%22&fq=-assertions%3ATAXON_MATCH_NONE+AND+-assertions%3AINVALID_SCIENTIFIC_NAME+AND+-assertions%3ATAXON_HOMONYM+AND+-assertions%3AUNKNOWN_KINGDOM+AND+-assertions%3ATAXON_SCOPE_MISMATCH&fq=-occurrenceStatus%3AABSENT&fq=-identificationVerificationStatus%3A%22needs_id%22&fq=-year%3A%5B*+TO+1700%5D&fq=-userAssertions%3A50001+AND+-userAssertions%3A50005&fq=-decimalLatitude%3A0+AND+-decimalLongitude%3A0+AND+-assertions%3A%22PRESUMED_SWAPPED_COORDINATE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_STATEPROVINCE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_COUNTRY%22+AND+-assertions%3A%22PRESUMED_NEGATED_LATITUDE%22+AND+-assertions%3A%22PRESUMED_NEGATED_LONGITUDE%22&fq=-outlierLayerCount%3A%5B3+TO+*%5D&fq=-spatiallyValid%3A%22false%22&fq=-coordinateUncertaintyInMeters%3A%5B10001+TO+*%5D&qc=-_nest_parent_%3A*'>https://biocache.ala.org.au/occurrences/search?&q=species_group%3APlants+AND+state%3A%22New+South+Wales%22+AND+country%3AAustralia+AND+cl959%3A%22Canterbury+%28C%29%22&disableAllQualityFilters=true&fq=-basisOfRecord%3A%22FOSSIL_SPECIMEN%22+AND+-%28basisOfRecord%3A%22MATERIAL_SAMPLE%22+AND+contentTypes%3A%22Environmental+DNA%22%29&fq=-%28duplicate_status%3A%22ASSOCIATED%22+AND+duplicateType%3A%22DIFFERENT_DATASET%22%29&fq=-degreeOfEstablishment%3A%22cultivated%22+AND+-degreeOfEstablishment%3A%22captive%22&fq=-assertions%3ATAXON_MATCH_NONE+AND+-assertions%3AINVALID_SCIENTIFIC_NAME+AND+-assertions%3ATAXON_HOMONYM+AND+-assertions%3AUNKNOWN_KINGDOM+AND+-assertions%3ATAXON_SCOPE_MISMATCH&fq=-occurrenceStatus%3AABSENT&fq=-identificationVerificationStatus%3A%22needs_id%22&fq=-year%3A%5B*+TO+1700%5D&fq=-userAssertions%3A50001+AND+-userAssertions%3A50005&fq=-decimalLatitude%3A0+AND+-decimalLongitude%3A0+AND+-assertions%3A%22PRESUMED_SWAPPED_COORDINATE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_STATEPROVINCE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_COUNTRY%22+AND+-assertions%3A%22PRESUMED_NEGATED_LATITUDE%22+AND+-assertions%3A%22PRESUMED_NEGATED_LONGITUDE%22&fq=-outlierLayerCount%3A%5B3+TO+*%5D&fq=-spatiallyValid%3A%22false%22&fq=-coordinateUncertaintyInMeters%3A%5B10001+TO+*%5D&qc=-_nest_parent_%3A*</a> accessed on 21 April 2026 at 4:14:16 PM.</cite> <br><br>
+The DOI for this download is available at <a href='https://doi.org/10.26197/ala.4bc57bd3-8380-4183-9c13-518f5292542c'>https://doi.org/10.26197/ala.4bc57bd3-8380-4183-9c13-518f5292542c</a><br><br>
+Data contributed by the following providers:<br>
+<ul><li>Records provided by John T. Waterhouse Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co66</li><li>Records provided by N.C.W. Beadle Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co65</li><li>Records provided by Questagame, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/dp52</li><li>Records provided by Tasmanian Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co60</li><li>Records provided by ClimateWatch, accessed through ALA website. (Data accessed from ClimateWatch can be cited in the following format:
+ClimateWatch <YEAR> <SPECIES> <START DATE> - <END DATE> 
+Data set accessed <DATE> http://www.climatewatch.org.au.). For more information: https://collections.ala.org.au/public/show/dr1010</li><li>Records provided by La Trobe University, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in70</li><li>NSW Department of Primary Industries (2024) and Regional Development. Weed location data collected by Local Control Authorities for Weeds under Section 371(e) of the NSW Biosecurity Act 2015 and submitted to NSW Department of Primary Industries and Regional Development into the Biosecurity Information System (BIS - Weeds) in line with the NSW BIS Weeds Data Standard (November 2021) (Creative Commons Attribution-Noncommercial (International) (CC-BY-NC 4.0 (Int))). For more information: https://collections.ala.org.au/public/show/dr27665</li><li>Records provided by University of New South Wales, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in63</li><li>iNaturalist.org: iNaturalist Research-grade Observations. doi:10.15468/ab3s5x
+Accessed via http://www.gbif.org/dataset/50c9509d-22c7-4a22-a47d-8c48425ef4a7 on 2017-03-16 (). For more information: https://collections.ala.org.au/public/show/dr1411</li><li>Records provided by BioCollect, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/dp3903</li><li>WCPS Bird Survey Project (https://biocollect.ala.org.au/acsa/project/index/abdd9f05-a757-420b-85a6-3e8ae31c2d4f) (Creative Commons Attribution (Australia) (CC-BY 3.0 (Au))). For more information: https://collections.ala.org.au/public/show/dr5018</li><li>Records provided by University of New England, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in65</li><li>Records provided by Royal Botanic Gardens Victoria, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in21</li><li>Records provided by Australian Tropical Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in67</li><li>Records provided by Tasmanian Museum and Art Gallery, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in25</li><li>Records provided by Australian Seed Bank Partnership, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/dp47</li><li>Records provided by National Herbarium of Victoria, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co55</li><li>Records provided by Australian National Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co12</li><li>Records provided by Janet Cosh Herbarium (WOLL) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr15772</li><li>Records provided by Global Biodiversity Information Facility, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/dp42</li><li>Records provided by National Herbarium of New South Wales, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co54</li><li>Records provided by ClimateWatch, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/dp2048</li><li>Records provided by Centre for Australian National Biodiversity Research, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in5</li><li>Records provided by The Royal Botanic Gardens & Domain Trust, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in50</li><li>Records provided by Australian PlantBank, accessed through ALA website. (Creative Commons Attribution (Australia) (CC-BY 3.0 (Au)) Creative Commons Attribution (Australia) (CC-BY 3.0 (Au) 3.0) 
+        Creative Commons Attribution (Australia) (CC-BY 3.0 (Au) 3.0) 
+        Creative Commons Attribution (Australia) (CC-BY 3.0 (Au) 3.0) 
+        Creative Commons Attribution (Australia) (CC-BY 3.0 (Au) 3.0) 
+        Creative Commons Attribution (Australia) (CC-BY 3.0 (Au) 3.0)). For more information: https://collections.ala.org.au/public/show/dr23110</li><li>Records provided by National Herbarium of Victoria (MEL) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr376</li><li>Records provided by Earth Guardians Weekly Feed, accessed through ALA website. (Creative Commons Attribution-Noncommercial (International) (CC-BY-NC 4.0 (Int))). For more information: https://collections.ala.org.au/public/show/dr1902</li><li>Crofton weed gall fly: Australian BioControl Hub (2026) Crofton weed gall fly dataset
+Crofton weed leaf-spot fungus : Australian BioControl Hub (2026) Crofton weed leaf-spot fungus dataset
+Crofton weed rust fungus: Australian BioControl Hub (2026) Crofton weed rust fungus dataset
+ (Creative Commons Attribution (Australia) (CC-BY 3.0 (Au))). For more information: https://collections.ala.org.au/public/show/dr16072</li><li>Records provided by Australian Tropical Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co17</li><li>Records provided by Australia's Virtual Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/dp36</li><li>Records provided by NSW AVH feed, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a
+            Creative Commons Attribution (CC-BY) 4.0 License
+             .). For more information: https://collections.ala.org.au/public/show/dr15861</li><li>Records provided by Department of Planning, Industry and Environment representing the State of New South Wales, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/dp34</li><li>Records provided by Centre for Australian National Biodiversity Research (CANB) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr15860</li><li>Records provided by Australian Tropical Herbarium (CNS) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr15867</li><li>Tasmanian Herbarium, Tasmanian Museum and Art Gallery. PO Box 5058, UTAS LPO, Sandy Bay 7005, Tasmania, Australia. https://www.tmag.tas.gov.au/ (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) You are licensed to use, reproduce, distribute, publish or otherwise make available the Data, or to use or adapt the Data to create derivative works.
+
+In any reproduction, distribution or publication of the Data, you must attribute the source of the Data as Australia's Virtual Herbarium (AVH).
+
+In any use or adaptation of the Data to create derivative works, you must acknowledge the use of the Data in the derivative work and attribute the source of the Data as Australia's Virtual Herbarium (AVH).
+
+You acknowledge that the Data may contain errors and omissions and that you employ the Data at your own risk.
+
+Neither the Council of Heads of Australasian Herbaria (CHAH) nor any other Data Custodian will accept liability for any loss, damage, cost or expenses that you may incur as a result of the use of or reliance upon the Data.
+
+You should use the current Data from the ALA portal and not rely on material you have previously printed or downloaded.). For more information: https://collections.ala.org.au/public/show/dr10574</li><li>Records provided by AD AVH Data, accessed through ALA website. (This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr15865</li><li>AFFOUARD A, JOLY A, LOMBARDO J, CHAMP J, GOEAU H, CHOUET M, GRESSE H, BOTELLA C, BONNET P (2023). Pl@ntNet automatically identified occurrences. Version 1.8. Pl@ntNet. Occurrence dataset https://doi.org/10.15468/mma2ec accessed via GBIF.org on 2024-12-19. (CC BY). For more information: https://collections.ala.org.au/public/show/dr22512</li><li>Records provided by La Trobe University Herbarium (LTB) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr15869</li><li>Records provided by BRI AVH Data and Images, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution (CC-BY) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr2287</li><li>Records provided by WeedScan, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int))). For more information: https://collections.ala.org.au/public/show/dr29794</li><li>Records provided by Queensland Department of the Environment, Tourism, Science and Innovation, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in42</li><li>BioNet Species Sightings occurrence data held by the NSW Office of Environment and Heritage (OEH).   The BioNet repository holds data from a number of sources and custodians. (Accessed through ALA Data Portal,<Date of Access>). (Creative Commons Attribution (International) (CC-BY 4.0 (Int))). For more information: https://collections.ala.org.au/public/show/dr368</li><li>Records provided by Department for Environment and Water, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in41</li><li>Individual sighting: Atlas of Living Australia (2025) Individual sighting dataset
+Test sighting: Atlas of Living Australia (2025) Test sighting dataset
+ (CC-BY). For more information: https://collections.ala.org.au/public/show/dr364</li><li>Records provided by University of Wollongong, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/in47</li><li>NE-db (year). N.C.W. Beadle Herbarium (NE) database (NE-db), https://ncw-beadleherbarium.une.edu.au/, accessed [day month year].
+ 
+And/or acknowledge use of the data as follows:
+ 
+I/we acknowledge access and use of data from the N.C.W. Beadle Herbarium (NE) database (NE-db). (This work is licensed under a Creative Commons Attribution (CC-BY 4.0) License.). For more information: https://collections.ala.org.au/public/show/dr15870</li><li>Records provided by State Herbarium of South Australia, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co48</li><li>Records provided by Queensland Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co49</li><li>Records provided by La Trobe University Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co33</li><li>Royal Botanic Gardens, Kew (2024). Royal Botanic Gardens, Kew - Herbarium Specimens. Occurrence dataset https://doi.org/10.15468/ly60bx accessed via GBIF.org on 2024-12-12. (CC BY). For more information: https://collections.ala.org.au/public/show/dr22525</li><li>Records provided by John T. Waterhouse Herbarium (UNSW) AVH data, accessed through ALA website. (Creative Commons Attribution (International) (CC-BY 4.0 (Int)) This work is licensed under a Creative Commons Attribution Non Commercial (CC-BY-NC) 4.0 License.). For more information: https://collections.ala.org.au/public/show/dr14787</li><li>Records provided by The Janet Cosh Herbarium, accessed through ALA website. (). For more information: https://collections.ala.org.au/public/show/co72</li><li>Dead Tree Detective: Western Sydney University (2025) Dead Tree Detective dataset
+ (other). For more information: https://collections.ala.org.au/public/show/dr30985</li></ul><br>
+More information can be found at <a href="https://support.ala.org.au/support/solutions/articles/6000261662-citing-the-ala">citing the ALA</a>.<br><br>
+</body>
+</html>
+For more information about the fields that are being downloaded please consult <a href='headings.csv'>Download Fields</a>.
