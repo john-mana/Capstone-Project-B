@@ -1,29 +1,29 @@
 pct_id,pct_code,pct_name,vegetation_form,form_pct
-1,0.0,Not native vegetation,Not native vegetation,
-2,3592.0,Sydney Coastal Enriched Sandstone Forest,Dry Sclerophyll Forests (Shrubby sub-formation),
-3,4091.0,Grey Mangrove-River Mangrove Forest,Saline Wetlands,
-4,4024.0,Cumberland Blue Box Riverflat Forest,Forested Wetlands,
-5,3040.0,Sydney Coastal Foreshores Gully Rainforest,Rainforests,
-6,3136.0,Blue Gum High Forest,Wet Sclerophyll Forests (Shrubby sub-formation),
-7,3259.0,Sydney Coastal Shale-Sandstone Forest,Wet Sclerophyll Forests (Grassy sub-formation),
-8,3262.0,Sydney Turpentine Ironbark Forest,Wet Sclerophyll Forests (Grassy sub-formation),
-9,3320.0,Cumberland Shale Plains Woodland,Grassy Woodlands,
-10,3448.0,Castlereagh Ironbark Forest,Dry Sclerophyll Forests (Shrub/grass sub-formation),
-11,3594.0,Sydney Coastal Sandstone Foreshores Forest,Dry Sclerophyll Forests (Shrubby sub-formation),
-12,3595.0,Sydney Coastal Sandstone Gully Forest,Dry Sclerophyll Forests (Shrubby sub-formation),
-13,3615.0,Sydney Hinterland Apple-Blackbutt Gully Forest,Dry Sclerophyll Forests (Shrubby sub-formation),
-14,3619.0,Sydney Hinterland Enriched Sandstone Bloodwood Forest,Dry Sclerophyll Forests (Shrubby sub-formation),
-15,3813.0,Sydney Hinterland Dwarf Apple Low Woodland,Heathlands,
-16,3814.0,Woronora Plateau Heath-Mallee,Heathlands,
-17,3963.0,Estuarine Reedland,Freshwater Wetlands,
-18,3972.0,Sydney Creekflat Wetland,Freshwater Wetlands,
-19,4006.0,Northern Paperbark-Swamp Mahogany Saw-sedge Forest,Forested Wetlands,
-20,4027.0,Estuarine Swamp Oak-Mangrove Forest,Forested Wetlands,
-21,4028.0,Estuarine Swamp Oak Twig-rush Forest,Forested Wetlands,
-22,4057.0,Sydney Creekflat Swamp Mahogany-Paperbark Forest,Forested Wetlands,
-23,4097.0,Samphire Saltmarsh,Saline Wetlands,
-24,32767.0,Unattributed,Unattributed,
-25,3628.0,Castlereagh Shrubby Swamp Woodland,Dry Sclerophyll Forests (Shrubby sub-formation),
-26,3629.0,Castlereagh Scribbly Gum Woodland,Dry Sclerophyll Forests (Shrubby sub-formation),
-27,3985.0,Coastal Floodplain Swamp Paperbark Scrub,Forested Wetlands,
-28,4023.0,Coastal Valleys Swamp Oak Riparian Forest,Forested Wetlands,
+1,0.0,Not native vegetation,Not native vegetation,(Not native vegetation) Not native vegetation
+2,3592.0,Sydney Coastal Enriched Sandstone Forest,Dry Sclerophyll Forests (Shrubby sub-formation),(Dry Sclerophyll Forests (Shrubby sub-formation)) Sydney Coastal Enriched Sandstone Forest
+3,4091.0,Grey Mangrove-River Mangrove Forest,Saline Wetlands,(Saline Wetlands) Grey Mangrove-River Mangrove Forest
+4,4024.0,Cumberland Blue Box Riverflat Forest,Forested Wetlands,(Forested Wetlands) Cumberland Blue Box Riverflat Forest
+5,3040.0,Sydney Coastal Foreshores Gully Rainforest,Rainforests,(Rainforests) Sydney Coastal Foreshores Gully Rainforest
+6,3136.0,Blue Gum High Forest,Wet Sclerophyll Forests (Shrubby sub-formation),(Wet Sclerophyll Forests (Shrubby sub-formation)) Blue Gum High Forest
+7,3259.0,Sydney Coastal Shale-Sandstone Forest,Wet Sclerophyll Forests (Grassy sub-formation),(Wet Sclerophyll Forests (Grassy sub-formation)) Sydney Coastal Shale-Sandstone Forest
+8,3262.0,Sydney Turpentine Ironbark Forest,Wet Sclerophyll Forests (Grassy sub-formation),(Wet Sclerophyll Forests (Grassy sub-formation)) Sydney Turpentine Ironbark Forest
+9,3320.0,Cumberland Shale Plains Woodland,Grassy Woodlands,(Grassy Woodlands) Cumberland Shale Plains Woodland
+10,3448.0,Castlereagh Ironbark Forest,Dry Sclerophyll Forests (Shrub/grass sub-formation),(Dry Sclerophyll Forests (Shrub/grass sub-formation)) Castlereagh Ironbark Forest
+11,3594.0,Sydney Coastal Sandstone Foreshores Forest,Dry Sclerophyll Forests (Shrubby sub-formation),(Dry Sclerophyll Forests (Shrubby sub-formation)) Sydney Coastal Sandstone Foreshores Forest
+12,3595.0,Sydney Coastal Sandstone Gully Forest,Dry Sclerophyll Forests (Shrubby sub-formation),(Dry Sclerophyll Forests (Shrubby sub-formation)) Sydney Coastal Sandstone Gully Forest
+13,3615.0,Sydney Hinterland Apple-Blackbutt Gully Forest,Dry Sclerophyll Forests (Shrubby sub-formation),(Dry Sclerophyll Forests (Shrubby sub-formation)) Sydney Hinterland Apple-Blackbutt Gully Forest
+14,3619.0,Sydney Hinterland Enriched Sandstone Bloodwood Forest,Dry Sclerophyll Forests (Shrubby sub-formation),(Dry Sclerophyll Forests (Shrubby sub-formation)) Sydney Hinterland Enriched Sandstone Bloodwood Forest
+15,3813.0,Sydney Hinterland Dwarf Apple Low Woodland,Heathlands,(Heathlands) Sydney Hinterland Dwarf Apple Low Woodland
+16,3814.0,Woronora Plateau Heath-Mallee,Heathlands,(Heathlands) Woronora Plateau Heath-Mallee
+17,3963.0,Estuarine Reedland,Freshwater Wetlands,(Freshwater Wetlands) Estuarine Reedland
+18,3972.0,Sydney Creekflat Wetland,Freshwater Wetlands,(Freshwater Wetlands) Sydney Creekflat Wetland
+19,4006.0,Northern Paperbark-Swamp Mahogany Saw-sedge Forest,Forested Wetlands,(Forested Wetlands) Northern Paperbark-Swamp Mahogany Saw-sedge Forest
+20,4027.0,Estuarine Swamp Oak-Mangrove Forest,Forested Wetlands,(Forested Wetlands) Estuarine Swamp Oak-Mangrove Forest
+21,4028.0,Estuarine Swamp Oak Twig-rush Forest,Forested Wetlands,(Forested Wetlands) Estuarine Swamp Oak Twig-rush Forest
+22,4057.0,Sydney Creekflat Swamp Mahogany-Paperbark Forest,Forested Wetlands,(Forested Wetlands) Sydney Creekflat Swamp Mahogany-Paperbark Forest
+23,4097.0,Samphire Saltmarsh,Saline Wetlands,(Saline Wetlands) Samphire Saltmarsh
+24,32767.0,Unattributed,Unattributed,(Unattributed) Unattributed
+25,3628.0,Castlereagh Shrubby Swamp Woodland,Dry Sclerophyll Forests (Shrubby sub-formation),(Dry Sclerophyll Forests (Shrubby sub-formation)) Castlereagh Shrubby Swamp Woodland
+26,3629.0,Castlereagh Scribbly Gum Woodland,Dry Sclerophyll Forests (Shrubby sub-formation),(Dry Sclerophyll Forests (Shrubby sub-formation)) Castlereagh Scribbly Gum Woodland
+27,3985.0,Coastal Floodplain Swamp Paperbark Scrub,Forested Wetlands,(Forested Wetlands) Coastal Floodplain Swamp Paperbark Scrub
+28,4023.0,Coastal Valleys Swamp Oak Riparian Forest,Forested Wetlands,(Forested Wetlands) Coastal Valleys Swamp Oak Riparian Forest
