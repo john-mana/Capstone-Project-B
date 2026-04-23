@@ -23,9 +23,17 @@ DIAGNOSTICS_CSV = OUTPUT_DIR / 'occurrence_mapping_diagnostics.csv'  # what rows
 
 #read three files
 def load_inputs():
-    occurrences = pd.read_csv(OCCURRENCES_CSV) #need to export the file from db
-    reserves_gdf = gpd.read_file(RESERVE_SHP) #shapefile has to be ready
-    pct_gdf = gpd.read_file(PCT_SHP) #shapefile has to be ready
+    occurrences = pd.read_csv(OCCURRENCES_CSV)
+
+    reserves_gdf = None
+    pct_gdf = None
+
+    if RESERVE_SHP.exists():
+        reserves_gdf = gpd.read_file(RESERVE_SHP)
+
+    if PCT_SHP.exists():
+        pct_gdf = gpd.read_file(PCT_SHP)
+
     return occurrences, reserves_gdf, pct_gdf
 
 #read shapefile (Created csv form to import it to reserves table)
@@ -52,8 +60,10 @@ def build_reserves_import(reserves_gdf: gpd.GeoDataFrame) -> pd.DataFrame:
     out = pd.DataFrame({
         'reserve_id': range(1, len(reserves_df) + 1),
         'asset_name': reserves_df['ASSET_NAME'] if 'ASSET_NAME' in reserves_df.columns else None,
-        'location': location_series,
+        'location': reserves_df['LOCATION'] if 'LOCATION' in reserves_df.columns else None,
+        'suburb': reserves_df['SUBURB'] if 'SUBURB' in reserves_df.columns else None,
         'asset_type': reserves_df['ASSET_TYPE'] if 'ASSET_TYPE' in reserves_df.columns else None,
+        'asset_sub_type': reserves_df['ASSET_SUB_'] if 'ASSET_SUB_' in reserves_df.columns else None,
         'asset_class': reserves_df['ASSET_CLAS'] if 'ASSET_CLAS' in reserves_df.columns else None,
         'shape_file_name': RESERVE_SHP.name,
         'shape_file_path': str(RESERVE_SHP)
@@ -70,14 +80,15 @@ def build_pcts_import(pct_gdf: gpd.GeoDataFrame) -> pd.DataFrame:
     pct_df = pct_gdf.copy()
 
     #extract necessary columns only
-    cols = ['PCTID', 'PCTName', 'vegForm']
+    cols = ['PCTID', 'PCTName', 'vegForm', 'form_PCT']
     available = [c for c in cols if c in pct_df.columns]
     lookup = pct_df[available].copy()
 
     rename_map = {
         'PCTID': 'pct_code',
         'PCTName': 'pct_name',
-        'vegForm': 'vegetation_form'
+        'vegForm': 'vegetation_form',
+        'form_PCT': 'form_pct'
     }
     lookup = lookup.rename(columns=rename_map)
 
@@ -88,7 +99,9 @@ def build_pcts_import(pct_gdf: gpd.GeoDataFrame) -> pd.DataFrame:
     #no duplicated pct_code in db
     lookup = lookup.drop_duplicates(subset=['pct_code']).reset_index(drop=True)
     lookup.insert(0, 'pct_id', range(1, len(lookup) + 1))
-    lookup['form_pct'] = None
+    if 'form_pct' not in lookup.columns:
+        lookup['form_pct'] = None
+
     #final outcome columns
     return lookup[['pct_id', 'pct_code', 'pct_name', 'vegetation_form', 'form_pct']]
 
@@ -191,35 +204,56 @@ def write_mapping_temp_csv(mapping: pd.DataFrame, output_path: Path) -> None:
 #***CP to keep the order***
 def main():
     occurrences, reserves_gdf, pct_gdf = load_inputs()
-
-    reserves_import = build_reserves_import(reserves_gdf)
-    pcts_import = build_pcts_import(pct_gdf)
     occ_gdf = build_occurrence_points(occurrences)
 
-    reserve_map = map_to_reserves(occ_gdf, reserves_gdf, reserves_import)
-    pct_map = map_to_pcts(occ_gdf, pct_gdf, pcts_import)
+    reserves_import = pd.DataFrame()
+    pcts_import = pd.DataFrame()
+    reserve_map = occurrences[['occurrence_id']].copy()
+    pct_map = occurrences[['occurrence_id']].copy()
 
-    mapping = occurrences[['occurrence_id']].copy().merge(reserve_map, on='occurrence_id', how='left')
-    mapping = mapping.merge(pct_map, on='occurrence_id', how='left')
+    if reserves_gdf is not None:
+        reserves_import = build_reserves_import(reserves_gdf)
+        reserve_map = map_to_reserves(occ_gdf, reserves_gdf, reserves_import)
+
+    if pct_gdf is not None:
+        pcts_import = build_pcts_import(pct_gdf)
+        pct_map = map_to_pcts(occ_gdf, pct_gdf, pcts_import)
+
+    mapping = occurrences[['occurrence_id']].copy()
+
+    if 'reserve_id' in reserve_map.columns:
+        mapping = mapping.merge(reserve_map, on='occurrence_id', how='left')
+    else:
+        mapping['reserve_id'] = None
+
+    if 'pct_id' in pct_map.columns:
+        mapping = mapping.merge(pct_map, on='occurrence_id', how='left')
+    else:
+        mapping['pct_id'] = None
 
     diagnostics = build_diagnostics(occurrences, mapping)
 
-    reserves_import.to_csv(RESERVES_IMPORT_CSV, index=False)
-    pcts_import.to_csv(PCTS_IMPORT_CSV, index=False)
+    if not reserves_import.empty:
+        reserves_import.to_csv(RESERVES_IMPORT_CSV, index=False)
+
+    if not pcts_import.empty:
+        pcts_import.to_csv(PCTS_IMPORT_CSV, index=False)
+
     write_mapping_temp_csv(mapping, MAPPING_TEMP_CSV)
     diagnostics.to_csv(DIAGNOSTICS_CSV, index=False)
 
     print('Done.')
-    print(f'Reserves rows: {len(reserves_import)}')
-    print(f'PCT rows: {len(pcts_import)}')
     print(f'Occurrence mapping rows: {len(mapping)}')
     print(f'Reserve matched: {mapping["reserve_id"].notna().sum()} / {len(mapping)}')
     print(f'PCT matched: {mapping["pct_id"].notna().sum()} / {len(mapping)}')
-    print(f'Wrote: {RESERVES_IMPORT_CSV}')
-    print(f'Wrote: {PCTS_IMPORT_CSV}')
+
+    if not reserves_import.empty:
+        print(f'Wrote: {RESERVES_IMPORT_CSV}')
+    if not pcts_import.empty:
+        print(f'Wrote: {PCTS_IMPORT_CSV}')
+
     print(f'Wrote: {MAPPING_TEMP_CSV}')
     print(f'Wrote: {DIAGNOSTICS_CSV}')
-
 
 if __name__ == '__main__':
     main()

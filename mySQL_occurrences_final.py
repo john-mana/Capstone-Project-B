@@ -90,7 +90,8 @@ elif INPUT_TYPE.lower() == "csv":
         'Vernacular name': 'vernacular_name',
         'Decimal latitude (WGS84)': 'decimal_latitude',
         'Decimal longitude (WGS84)': 'decimal_longitude',
-        'Event Date': 'event_date'
+        'Event Date': 'event_date',
+        'dataGeneralizations': 'data_generalisations'
     })
 
     print("Check column names if there is an error df.columns.tolist()")
