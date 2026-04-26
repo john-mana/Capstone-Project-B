@@ -2292,3 +2292,102 @@ def ping():
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8000))
     app.run(debug=True, host='0.0.0.0', port=port)
+
+@app.route('/query_builder', methods=['GET', 'POST'])
+@login_required
+def query_builder():
+    # Pagination parameters
+    page_num = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 25))
+
+    # Collect filter values from POST or default to empty
+    filters = {
+        'species':          request.form.get('species', '').strip()          if request.method == 'POST' else '',
+        'vernacular_name':  request.form.get('vernacular_name', '').strip()  if request.method == 'POST' else '',
+        'reserve':          request.form.get('reserve', '').strip()          if request.method == 'POST' else '',
+        'native':           request.form.get('native', '').strip()           if request.method == 'POST' else '',
+        'rare':             request.form.get('rare', '').strip()             if request.method == 'POST' else '',
+        'start_year':       request.form.get('start_year', '').strip()       if request.method == 'POST' else '',
+        'end_year':         request.form.get('end_year', '').strip()         if request.method == 'POST' else '',
+        'dataset':          request.form.get('dataset', '').strip()          if request.method == 'POST' else '',
+        'locality':         request.form.get('locality', '').strip()         if request.method == 'POST' else '',
+        'habitat':          request.form.get('habitat', '').strip()          if request.method == 'POST' else '',
+        'basis':            request.form.get('basis', '').strip()            if request.method == 'POST' else '',
+    }
+
+    results = []
+    total_results = 0
+    total_pages = 1
+
+    if request.method == 'POST':
+        # Build base query using existing query.py function
+        q = query.get_observations_query(
+            db_session       = db.session,
+            species          = filters['species']    or None,
+            dataset          = filters['dataset']    or None,
+            reserve          = filters['reserve']    or None,
+            locality         = filters['locality']   or None,
+            habitat          = filters['habitat']    or None,
+            basis_of_record  = filters['basis']      or None,
+            planted_native   = filters['native']     or None,
+            rare             = filters['rare']       or None,
+            start_year       = filters['start_year'] or None,
+            end_year         = filters['end_year']   or None,
+        )
+
+        # Apply common name filter (vernacular_name) — joins Species table
+        if filters['vernacular_name']:
+            q = q.filter(Species.vernacular_name.ilike(f"%{filters['vernacular_name']}%"))
+
+        # Count total before pagination
+        total_results = q.count()
+        total_pages   = max(1, -(-total_results // per_page))  # ceiling division
+
+        # Apply pagination
+        offset  = (page_num - 1) * per_page
+        records = q.offset(offset).limit(per_page).all()
+
+        # Build result rows — flat dicts combining Occurrence + Species fields
+        for occ in records:
+            species_obj = db.session.query(Species).filter_by(
+                scientific_name=occ.scientific_name
+            ).first()
+            results.append({
+                'scientific_name':         occ.scientific_name,
+                'vernacular_name':         species_obj.vernacular_name         if species_obj else None,
+                'exotic':                  species_obj.exotic                  if species_obj else None,
+                'threatened_species_status': species_obj.threatened_species_status if species_obj else None,
+                'reserve_name':            occ.reserve_name,
+                'year':                    occ.year,
+                'month':                   occ.month,
+                'day':                     occ.day,
+                'dataset_name':            occ.dataset_name,
+                'decimal_latitude':        occ.decimal_latitude,
+                'decimal_longitude':       occ.decimal_longitude,
+                'locality':                occ.locality,
+                'habitat':                 occ.habitat,
+                'basis_of_record':         occ.basis_of_record,
+                'recorded_by':             occ.recorded_by,
+                'occurrence_remarks':      occ.occurrence_remarks,
+            })
+
+    # Load filter dropdown options
+    options = query.get_options_occurrences(db.session)
+
+    return render_template(
+        'query_builder.html',
+        filters          = filters,
+        results          = results,
+        total_results    = total_results,
+        page_num         = page_num,
+        per_page         = per_page,
+        total_pages      = total_pages,
+        species_options  = options['speciesOptions'],
+        reserve_options  = options['reserveOptions'],
+        dataset_options  = options['datasetOptions'],
+        locality_options = options['localityOptions'],
+        habitat_options  = options['habitatOptions'],
+        basis_options    = options['basisOptions'],
+        username         = current_user.email,
+        is_admin         = current_user.is_admin(),
+    )
