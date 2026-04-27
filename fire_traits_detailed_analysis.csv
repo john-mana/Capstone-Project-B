@@ -1,7 +1,0 @@
-Trait,Value,Count,Is V-Marked,Percentage
-plant_tolerance_fire,tolerant,1,False,50.0
-plant_tolerance_fire,intolerant,1,False,50.0
-post_fire_recruitment,post_fire_recruitment,1,False,50.0
-post_fire_recruitment,absent,1,False,50.0
-resprouting_capacity,resprouts,1,False,50.0
-resprouting_capacity,fire_killed,1,False,50.0
