@@ -8,4 +8,5 @@ services:
       - .env
     volumes:
       - .:/app
-    command: ./run.sh
+    working_dir: /app
+    command: sh /app/run.sh
