@@ -1,22 +1,23 @@
-## Setup Instructions
+To run the app locally (updated 27/APR/2026)
 
-1. Clone the Repository
+1. Pull the latest branch first from Github
+#Github main branch is updated. Please see.
+2. Make sure you are in the project root folder to run the app
+#cd Capstone-Project-B (depends on your root folder location on your device)
+3. Run the app with Doceker. 
+#Use 'docker compose up --build'
+4. Open the app in your browser
+#Use 'http://localhost:3000/'
+5. There is also a temporary DB test route, but not working for some reason (I already email Rod about db denying extrenal access)
+#Use 'http://localhost:3000/db-test'
 
-2.  **Set up Environment Variables:**
-    Your application requires several environment variables for configuration and security.
-    Create a `.env` file in the root of your project by copying the example:
-    ```bash
-    cp .env.example .env
-    ```
-    Now, open `.env` and fill in the necessary values:
-    * **`POSTGRES_USER` / `POSTGRES_PASSWORD` / `DATABASE_URL`**: For local development, these should match your `docker-compose.yml` `db` service. For deployment (e.g., Render), the `DATABASE_URL` will be the `Internal Connection String` provided by your cloud database.
-    * **`SECRET_KEY` / `SECURITY_PASSWORD_SALT`**: Generate long, random strings for these for security.
-    * **`MAIL_*` variables**: Configure your email sending service details. For Gmail, you might need an App Password.
-    * **`SECRET_INITIAL_PASSWORD`**: A temporary password for initial user creation. **Change this immediately after use!**
+At the moment, the Flask app itself runs in Docker. 
+DB has a bit of problem. VPS is responding when ping, but direct access to the db extrenally seems blocked. Emailed Rod, so this will be resolved soon. Better focus on UI development for now.
 
-    **Important:** The `.env` file is excluded from Git for security reasons.
-
-3.  **Run with Docker Compose (Local Development):**
-    ```bash
-    docker-compose up --build
-    ```
+__init__.py: Create Flask app
+routes.py: define URL pages
+db.py: MariaDB connection functions
+templates/ : HTML files
+static/ : CSS, IMAGES
+run.py: Starting point of running the app
+.env: private setting/info for db,etc

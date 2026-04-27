@@ -3,7 +3,6 @@ from .db import get_connection
 
 main = Blueprint("main", __name__)
 
-
 @main.route("/")
 def index():
     return "Flask app is running."
