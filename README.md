@@ -21,3 +21,5 @@ templates/ : HTML files
 static/ : CSS, IMAGES
 run.py: Starting point of running the app
 .env: private setting/info for db,etc
+
+Please do not modify the files related to MariaDB (mySQL... / phpMyAdminSQL / PCT / etc)
