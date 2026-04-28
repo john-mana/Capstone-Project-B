@@ -134,3 +134,14 @@ JOIN occurrence_mapping_temp m
 ON o.occurrence_id = m.occurrence_id
 SET o.reserve_id = m.reserve_id,
 o.pct_id = m.pct_id;
+
+***updated users table***
+CREATE TABLE user (
+	user_id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NUT NULL,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    role ENUM('admin','viewer') NOT NULL DEFAULT 'viewer'
+);
