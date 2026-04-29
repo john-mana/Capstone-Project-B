@@ -1,25 +1,53 @@
-from flask import Blueprint
-from .db import get_connection
+from flask import Blueprint, render_template, request
+import mysql.connector
 
 main = Blueprint("main", __name__)
 
+
 @main.route("/")
-def index():
+def home():
     return "Flask app is running."
 
 
-@main.route("/db-test")
-def db_test():
-    try:
-        conn = get_connection()
+@main.route("/map")
+def map_view():
+    species = request.args.get("species")
+    date = request.args.get("date")
 
-        with conn.cursor() as cursor:
-            cursor.execute("SELECT COUNT(*) AS total FROM occurrences")
-            result = cursor.fetchone()
+    conn = mysql.connector.connect(
+        host="db",
+        user="root",
+        password="root",
+        database="flora_project"
+    )
 
-        conn.close()
+    cursor = conn.cursor(dictionary=True)
 
-        return f"Database connected successfully. Total occurrences: {result['total']}"
+    query = """
+        SELECT 
+            scientific_name,
+            decimal_latitude,
+            decimal_longitude,
+            event_date
+        FROM occurrences
+        WHERE decimal_latitude IS NOT NULL
+        AND decimal_longitude IS NOT NULL
+    """
 
-    except Exception as e:
-        return f"Database connection failed: {e}"
+    params = []
+
+    if species:
+        query += " AND scientific_name LIKE %s"
+        params.append(f"%{species}%")
+
+    if date:
+        query += " AND DATE(event_date) = %s"
+        params.append(date)
+
+    cursor.execute(query, params)
+    data = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("map.html", data=data, species=species, date=date)
