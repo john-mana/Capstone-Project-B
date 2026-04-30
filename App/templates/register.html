@@ -2,50 +2,87 @@
 <html>
 <head>
     <title>Bio GeoDA Register</title>
-    <link rel="stylesheet" href="/static/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<body class="register-body">
+<body>
 
-    <nav>
-        <a href="login.html">Home</a>
-        <a href="register.html">Register</a>
-        <a href="login.html">Main</a>
-    </nav>
+    <div class="page">
 
-    <div class="register-card">
-        <h1>Sign Up</h1>
 
-        <form action="#">
-            <label>Full Name</label>
-            <input type="text" name="name" placeholder="John Smith" required>
+        <header class="header">
 
-            <label>Email</label>
-            <input type="email" name="email" placeholder="your@gmail.com" required>
+            
 
-            <label>Password</label>
-            <input type="password" name="password" placeholder="********" required>
-
-            <label>Date of Birth</label>
-            <input type="date" name="dob" required>
-
-            <label>Gender</label>
-            <select name="gender" required>
-                <option value="">Select</option>
-                <option>Male</option>
-                <option>Female</option>
-                <option>Other</option>
-            </select>
-
-            <div class="terms">
-                <input type="checkbox" required>
-                <span>I agree to the Terms of Service</span>
+            <div class="logo-box">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="BIO GEODA Logo">
             </div>
 
-            <button type="submit" class="register-btn">Register</button>
+            <div class="header-text">
+                <h1>Bio Geographic Data Analysts</h1>
+                <p>ABN 579 423 418 07</p>
+                <h2>🔒 This is a private site, available to approved users only</h2>
+            </div>
+        </header>
 
-            <p>Already have an account? <a href="login.html">Log in</a></p>
-        </form>
+        <div class="header-divider"></div>
+
+        <main class="register-content">
+
+            <div class="register-card">
+                <h1>Sign Up</h1>
+                <p class="register-subtitle">
+                    Register to access the private Bio GeoDA system.
+                </p>
+
+                <form action="{{ url_for('register') }}" method="POST">
+
+                    <label>Full Name</label>
+                    <input type="text" name="name" placeholder="John Smith" required>
+
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="your@gmail.com" required>
+
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="********" required>
+
+                    <label>Date of Birth</label>
+                    <input type="date" name="dob" required>
+
+                    <label>Gender</label>
+                    <select name="gender" required>
+                        <option value="">Select</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+
+                    <div class="terms">
+                        <input type="checkbox" name="terms" required>
+                        <span>I agree to the Terms of Service</span>
+                    </div>
+
+                    <button type="submit" class="register-btn">REGISTER</button>
+
+                    <p class="login-link">
+                        Already have an account?
+                        <a href="{{ url_for('home') }}">Log in</a>
+                    </p>
+
+                </form>
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <p>Contact Number: +61 000 000 000</p>
+            <p>Email: info@biogeoda.au</p>
+            <p>Bio Geographic Data Analysts © 2026</p>
+        </footer>
+
     </div>
 
 </body>
