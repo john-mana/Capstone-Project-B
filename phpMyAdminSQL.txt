@@ -6,7 +6,7 @@ CREATE TABLE datasets (
 );
 
 CREATE TABLE taxonomy (
-    txonomy_id INT AUTO_INCREMENT PRIMARY KEY,
+    taxonomy_id INT AUTO_INCREMENT PRIMARY KEY,
     kingdom VARCHAR(100),
     phylum VARCHAR(100),
     class_name VARCHAR(100),
@@ -22,7 +22,7 @@ CREATE TABLE species (
     scientific_name VARCHAR(100),
     vernacular_name VARCHAR(100),
     native_flag TINYINT(1) DEFAULT NULL,
-    engangered_status_code VARCHAR(100),
+    endangered_status_code VARCHAR(100),
     #define constraint - fk from taxonomy
     CONSTRAINT fk_species_taxonomy
     	FOREIGN KEY (taxonomy_id) REFERENCES taxonomy(taxonomy_id)
@@ -72,7 +72,7 @@ CREATE TABLE occurrences (
     event_date DATETIME,
     recorded_by VARCHAR(255),
     most_recent_flag TINYINT(1) DEFAULT 0,
-    data_generalisation TEXT,
+    data_generalisations TEXT,
     dynamic_properties JSON,
     CONSTRAINT fk_occurrences_dataset
         FOREIGN KEY (dataset_id) REFERENCES datasets(dataset_id)
@@ -90,21 +90,6 @@ CREATE TABLE occurrences (
         FOREIGN KEY (pct_id) REFERENCES pcts(pct_id)
         ON UPDATE CASCADE
         ON DELETE SET NULL
-);
-
-CREATE TABLE pct_species (
-    pct_species_id INT AUTO_INCREMENT PRIMARY KEY,
-    pct_id INT NOT NULL,
-    species_id INT NOT NULL,
-    CONSTRAINT fk_pct_species_pct
-        FOREIGN KEY (pct_id) REFERENCES pcts(pct_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    CONSTRAINT fk_pct_species_species
-        FOREIGN KEY (species_id) REFERENCES species(species_id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    CONSTRAINT uq_pct_species UNIQUE (pct_id, species_id)
 );
 
 CREATE TABLE traits (
@@ -128,3 +113,24 @@ CREATE TABLE trait_categories (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
+
+***initialized tables and added a new constraint
+ALTER TABLE species
+ADD CONSTRAINT uq_species_scientific_name UNIQUE (scientific_name)
+
+***table to bridge occurrences and pcts & reserves
+DROP TABLE IF EXISTS occurrence_mapping_temp;
+
+CREATE TABLE occurrence_mapping_temp (
+    occurrence_id BIGINT NOT NULL,
+    reserve_id INT NULL,
+    pct_id INT NULL,
+    PRIMARY KEY (occurrence_id)
+);
+
+***to update occurrences table for mapping***
+UPDATE occurrences o
+JOIN occurrence_mapping_temp m
+ON o.occurrence_id = m.occurrence_id
+SET o.reserve_id = m.reserve_id,
+o.pct_id = m.pct_id;

@@ -1,0 +1,578 @@
+reserve_id,asset_name,location,suburb,asset_type,asset_sub_type,asset_class,shape_file_name,shape_file_path
+1,Killara Reserve,"184 Horsley Road, Panania",Panania,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+2,Reliance Reserve,"7 Reliance Avenue, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+3,Ashford Reserve,"272 Milperra Road, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+4,Eather Place Reserve,"1 Weigand Avenue, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+5,Flora Street Reserve,"43 Flora Street, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+6,Archer Reserve,"21 Archer Crescent, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+7,"Unnamed Reserve, 104A Cahors Road","140A Cahors Road, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+8,Hillview Street - Small Park,"Hillview Street, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+9,Douglas Street - Small Park,"Douglas Street, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+10,Edgar Street Reserve,"253 Edgar Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+11,Middleton Park,"41 Smith Street, Yagoona",Yagoona,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+12,Cullens Road Reserve,"25 Cullens Road, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+13,Carbethon Crescent - Small Park,"Rolestone Avenue, Beverly Hills",Beverly Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+14,Hunt Park,"156A Moreton Street, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+15,Carawatha Reserve,"121 Carawatha Street, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+16,Lucas Drain Reserve,"33A Matthews Avenue, East Hills",East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+17,Beverly Grove Reserve,"27 Garema Circuit, Kingsgrove",Kingsgrove,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+18,Roosevelt/Truman Reserve,"13A Roosevelt Avenue, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+19,Judith Reserve,"13 Judith Street, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+20,Whitemore Reserve,"6 Whitemore Avenue, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+21,Gordon Parker Reserve,"2 Auld Avenue, Milperra",Milperra,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+22,Ludgate Street Reserve,"43 Ludgate Street, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+23,Amber Reserve,"231 Johnston Road, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+24,Surrey Reserve,"39 Surrey Avenue, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+25,"Unnamed Reserve, Missouri Place","3 Missouri Place, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+26,Cooks River 7,"2B Thompson Street, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+27,Links Reserve,"9 Links Avenue, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+28,Tracey Reserve,"58A Tracey Street, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+29,Kathleen Reserve,"13A Kathleen Parade, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+30,Broad Street Reserve,"25 President Street, Croydon Park",Croydon Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+31,Bankstown City Sports Complex,"68 High Street, Bankstown",Bankstown,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+32,Northcote Road Drainage Reserve,"28 Northcote Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+33,Railway Parade - Small Park,"Railway Parade, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+34,Wolli Avenue Streetscape,"2B Wolli Avenue, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+35,Carnegie Reserve,"26 Carnegie Road, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+36,Werona Reserve 1,"19 Werona Avenue, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+37,"Unnamed Reserve, 2005 The Grove","2005 The Grove Grove, Padstow Heights",Padstow Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+38,Cantrell Reserve,"79 Glassop Street, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+39,Amberdale Reserve,"26 Amberdale Avenue, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+40,Homedale Culdesac Reserve,"24 Homedale Road, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+41,"Unnamed Reserve, 97 Virginius Street","97 Virginius Street, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+42,"Unnamed Reserve, Bonaparte Street","22 Bonaparte Street, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+43,Milperra Buffer Reserve,"537 Henry Lawson Drive, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+44,"Unnamed Reserve, Parry Avenue","13 Parry Avenue, Narwee",Narwee,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+45,Forshaw Reserve,"1A Forshaw Avenue, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+46,Gundaroo Reserve,"69 Gundaroo Street, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+47,Boat Harbour,"10 Hutton Street, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+48,Eccles Reserve,"42705 Linda Street, Belfield",Belfield,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+49,Eileen Reserve,"26 Eileen Street, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+50,Beatham Reserve,"19 Armentieres Avenue, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+51,Anne Reserve,"57 The River Road, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+52,Gowlland Reserve,"23 Ellesmere Street, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+53,Scahill Street Reserve,"73 Scahill Street, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+54,Smail Reserve,"131 Cooper Road, Potts Hill",,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+55,Frappel Reserve,"105 Hannans Road, Narwee",Narwee,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+56,Harold Bull Reserve,"120A Dennis Street, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+57,Rudelle Reserve,"4 Rudelle Crescent, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+58,"Unnamed Reserve, 540 Henry Lawson Drive","540 Henry Lawson Drive, East Hills",East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+59,Beaumont Park,"221-223 Bexley Road, Kingsgrove",Kingsgrove,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+60,Binalong Reserve,"7 Binalong Avenue, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+61,Monier Square Villawood,"Monier Square, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+62,Schofield Reserve,"16A-16F Glenview Avenue, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+63,Kareela Reserve,"12 Kareela Crescent, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+64,Stafford Walk,"75A Riverview Road, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+65,McCourt Street Reserve,"41 Mccourt Street, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+66,Lees Park,"5 Harmony Street, Ashbury",Ashbury,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+67,Wattle Reserve,"170 Wattle Street, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+68,Newland Reserve,"5 Newland Avenue, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+69,Saint Mary MacKillop Reserve,"260 Canterbury Road, Canterbury",Canterbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+70,Georges River National Park,"Burrawang Road, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+71,"Unnamed Reserve, Carinya Road","1A Carinya Road, Picnic Point",Picnic Point,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+72,Foley Reserve,"22 Foley Street, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+73,Balmoral Reserve 1,"17A Windsor Avenue, Croydon Park",Croydon Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+74,Salmon Park,"2 Mulga Street, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+75,Swane Reserve,"80 North Terrace, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+76,Bryant Park,"15 Wesley Street, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+77,Phillip Park,"11 Phillip Street, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+78,Yunga Burra Reserve,"11A Yungaburra Street, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+79,Larkview Reserve,"1 Larkview Avenue, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+80,Lark Street Reserve,"10 Lark Street, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+81,Cuthbert Reserve,"4A Cuthbert Crescent, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+82,Thornton Reserve,"2A Thornton Avenue, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+83,Sefton Golf Course,"158-162 Rose Street, Sefton",Sefton,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+84,Vasta Reserve,"4 Peronne Close, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+85,Allison Reserve,"8 Caloola Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+86,Earlwood Oval,"18 Spark Street, Earlwood",Earlwood,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+87,Kennedy Reserve,"37 Apex Avenue, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+88,Hughes Park,"122 Northcote Street, Canterbury",Canterbury,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+89,Manahan Reserve,"45 Manahan Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+90,Derribong Reserve,"47A Yungaburra Street, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+91,Wardell - Keith Link,"4 Keith Street, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+92,Fox Reserve,"151 Howard Road, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+93,Allegra Avenue Reserve,"4A Chapel Street, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+94,Pollock Reserve,"8 Pollock Street, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+95,Sawyer Reserve,"89 Dunstaffenage Street, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+96,Warwick Reserve,"77 Church Street, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+97,Hillard Street Reserve,"36-40 Mccourt Street, Wiley Park",Wiley Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+98,Peace Park,"28 Trevenar Street, Ashbury",Ashbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+99,Redgum Reserve,"2 Redgum Drive, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+100,Lofts Gardens,"73-135 Beamish Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+101,Blanche Barkl Reserve,"111-113 Stansfield Avenue, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+102,Lee Park,"39 Russell Street, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+103,Oxley Reserve,"8 Oxley Avenue, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+104,Greenway Reserve,"102A Carrington Street, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+105,Jim Ring Reserve,"25 Woods Road, Birrong",Birrong,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+106,Craig Street Reserve,"25-51 Wiggs Road, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+107,Treuer Reserve,"1 Treuer Parade, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+108,"Unnamed Reserve, Victoria Road","53 Victoria Road, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+109,Bruce Reserve,"10 Victor Avenue, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+110,"Unnamed Reserve, 2005 Moora Street","2005 Moora Street, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+111,Cooks River 4,"93 Fifth Avenue, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+112,Cleary Avenue - Small Park,"Cleary Avenue, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+113,Roberts Road Reserve,"235 Roberts Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+114,John K Stewart Reserve,"268A King Gerges Road, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+115,Lowana Reserve,"5A Lowana Street, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+116,Rotary Park,"42A Allingham Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+117,"Unnamed Reserve, Diana Avenue","4 Diana Avenue, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+118,Gibson Reserve,"166 Canterbury Road, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+119,Scott Reserve,"1292 Canterbury Road, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+120,"Unnamed Reserve, Prescott Parade","40 Prescott Parade, Milperra",Milperra,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+121,Turrella Reserve,"4 Wavell Parade, Earlwood",Earlwood,"Bushland, Passive",Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+122,Bungalow Road Reserve,"109C Stoddart Street, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+123,Malvern Reserve,"96 Malvern Street, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+124,Fairland Reserve,"8A Fairland Avenue, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+125,Bushland on corner Henry Lawson Drive and Milperra Road,"435 Henry Lawson Drive, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+126,Horsley Reserve,"243 Horsley Road, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+127,Michigan Road Reserve,"4 Michigan Road, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+128,Windermere Reserve,"23 Windermere Crescent, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+129,Cooks River 6,"1 Frederick Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+130,Richardson Reserve,"22 Richardson Avenue, Padstow",Padstow,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+131,Johnsen Square,"89F King Gerges Road, Wiley Park",Wiley Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+132,Railway Parade - Small Park,"Railway Parade, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+133,Prince Reserve,"62 Prince Street, Picnic Point",Picnic Point,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+134,Caroline Reserve,"14A Caroline Crescent, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+135,Prairie Vale Reserve,"28 Prairie Vale Road, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+136,Thompson Reserve,"2A Proyart Avenue, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+137,Neptune Park,"10 Edinburgh Drive, Revesby",Revesby,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+138,Paul Calderon Reserve,"11 Flood Avenue, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+139,Wirega Avenue Landscaped Strip,"26 Maramba Close, Kingsgrove",Kingsgrove,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+140,Neville Reserve,"60 Clarke Street, Bass Hill",Bass Hill,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+141,Sando Reserve,"19 Riverside Road, Croydon Park",Croydon Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+142,Villiers Reserve,"74 Villiers Road, Padstow Heights",Padstow Heights,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+143,Bankstown Memorial Oval,"231 Chapel Road, Bankstown",Bankstown,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+144,Higgins Street Reserve,"374 Marion Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+145,"Unnamed Reserve, Arab Road","49 Arab Road, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+146,Stuart Street Reserve,"16 Stuart Street, Padstow",Padstow,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+147,Rotary Park South,"142 Belmore Road, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+148,Chelmsford Reserve,"33 Chelmsford Avenue, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+149,Ray McCormack Reserve,"1A Macarthur Avenue, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+150,James Folster Reserve,"6 Crieff Street, Ashbury",Ashbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+151,Maxwell Park,"160 William Street, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+152,Marie Street - Small Park,"Marie Street, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+153,"Unnamed Reserve, 2 Ferrier Road","2 Ferrier Road, Birrong",Birrong,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+154,Alkoomie Street - Small Park,"Alkoomie Street, Beverly Hills",Beverly Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+155,"Unnamed Reserve, Biloela Street","131A Biloela Street, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+156,Virginius Reserve,"62 Virginius Street, Revesby",Revesby,"Bushland, Passive",Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+157,Sidings Park,"112-114 Stansfield Avenue, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+158,De Witt Reserve,"13 De Witt Street, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+159,Carl Little Reserve,"132 Cahors Road, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+160,Lesley Muir Reserve,"6 Sugar Road, Canterbury",Canterbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+161,Nugent Park North,"6 Chester Hill Road, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+162,Knox Street Reserve,"50-52 Knox Street, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+163,Joe Poole Reserve,"2A Barre Street, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+164,Albert Park,"2 The Walk, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+165,Pobje Reserve,"13 Pobje Avenue, Birrong",Birrong,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+166,Burton Reserve,"17 Burton Avenue, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+167,Bruce Avenue - Small Park,"Bruce Avenue, Belfield",Belfield,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+168,Cox Reserve,"94A Sandakan Road, Revesby Heights",Revesby Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+169,"Unnamed Reserve, Gibson Avenue","200 Gibson Avenue, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+170,Edzell Reserve,"221B King Gerges Road, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+171,Salt Pan Creek Reserve 3 and Riverwood Community Centre,"48B Wiggs Road, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+172,Jubilee Reserve,"14A Bellevue Avenue, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+173,Raleigh Reserve,"86 Raleigh Road, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+174,Amour Park,"41 Iluka Street, Revesby",Revesby,"Active, Aquatic",Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+175,Belmore Sports Ground,"3B Edison Lane, Belmore",Belmore,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+176,Matthews Reserve,"25 Matthews Avenue, East Hills",East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+177,Alice Park,"60 Reynolds Avenue, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+178,Harcourt Reserve,"56-64 Seventh Avenue, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+179,Ellesmere Reserve,"62 Ellesmere Street, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+180,Norm Nielson Reserve,"239A Roberts Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+181,Abel Reserve,"1B Marco Avenue, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+182,"Unnamed Reserve, Raymond Street","25 Raymond Street, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+183,Burnett Street - Small Park,"Burnett Street, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+184,Canterbury Bowling Club,"15 Close Street, Canterbury",Canterbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+185,Kawana Reserve,"31 Kawana Street, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+186,Lucinda Reserve,"28 Yvonne Crescent, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+187,Illoura Reserve,"36 Bray Avenue, Earlwood",Earlwood,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+188,Stacey Street Reserve,"94 Gardenia Avenue, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+189,Bazentin Street Reserve,"42921 Bazentin Street, Belfield",Belfield,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+190,Alcoomie Reserve,"111B Alcoomie Street, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+191,Deverall Park,"75 Yanderra Street, Condell Park",Condell Park,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+192,Henty Park,"31A Brodie Street, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+193,Gillies Lane Reserve,"59 Quigg Street, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+194,Anne Pringle Reserve,"119A Dennis Street, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+195,"Unnamed Reserve, 2020 Hope Lane","2020 Hope Lane, Regents Park",Regents Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+196,Pullen Reserve,"81 Little Road, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+197,East Hills Park,"564-574 Henry Lawson Drive, East Hills",East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+198,Seidel Reserve,"31 Seidel Avenue, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+199,Collingwood Avenue Reserve,"10A Vimy Street, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+200,Bazentin Street - Small Park,"Bazentin Street, Belfield",Belfield,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+201,Guide Park,"38 Redman Parade, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+202,"Unnamed Reserve, Third Avenue","41 Third Avenue, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+203,Windsor Park,"1A Brunker Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+204,"Montgomery Reserve, Earlwood","11 Karool Avenue, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+205,Clemton Park,"60B Moorefields Road, Kingsgrove",Kingsgrove,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+206,Beauty Point Reserve,"111 Dilke Road, Padstow Heights",Padstow Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+207,Warwick Reserve,"102 Columbine Avenue, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+208,Parkhurst Reserve,"1 Parkhurst Avenue, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+209,Boomerang Reserve,"925 Henry Lawson Drive, Revesby Heights",Revesby Heights,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+210,Cammarlie Reserve,"1A Cammarlie Street, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+211,Willunga Avenue - Small Park,"Willunga Avenue, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+212,Tweedie Park,"9 Lawford Street, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+213,Wanstead Reserve,"18 Wanstead Avenue, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+214,"Unnamed Reserve, Rogers Street","47 Rogers Street, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+215,Stoddard Street - Small Park,"Stoddard Street, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+216,Sutcliffe Reserve,"91 Birdwood Road, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+217,Samoa Reserve,"9A Samoa Avenue, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+218,Anzac Park,"28A Anglo Road, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+219,"Unnamed Reserve, Braesmere Road","53A Braesmere Road, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+220,Hamel Crescent - Small Park,"Hamel Crescent, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+221,Hampden Road Reserve,"44 Hampden Road, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+222,Peppermint Grove Reserve,"6 Peppermint Grove, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+223,Wright Reserve,"13A Wright Close, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+224,Ashcroft Reserve,"30A Ashcroft Street, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+225,Gray Reserve,"56 Alan Street, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+226,Thella Kenway Reserve,"209 Marion Street, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+227,Grace Reserve,"40 Higgins Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+228,Heynes Reserve,"62 Berna Street, Canterbury",Canterbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+229,Laundy Reserve,"26 Sevenoaks Crescent, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+230,Mannell Reserve,"182 Marion Street, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+231,Beatrice Street Reserve,"100 Beatrice Street, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+232,Bellevue Reserve,"16 Bellevue Avenue, Georges Hall",Georges Hall,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+233,Wise Reserve,"176 Bonds Road, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+234,Alison Street - Small Park,"Alison Street, Croydon Park",Croydon Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+235,Waldron Reserve,"52A Waldron Road, Sefton",Sefton,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+236,Inglebar Reserve,"2 Inglebar Street, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+237,McClean St Reserve,"2 Mc Clean Street, Bass Hill",Bass Hill,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+238,McKevitte Reserve,"12 Mc Kevitte Avenue, East Hills",East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+239,Cooks River Reserve 5,"21A Byron Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+240,Fairmount Street Reserve,"31 Fairmount Street, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+241,Jacob Park,"61 Jones Avenue, Potts Hill",Potts Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+242,Moxon Road Reserve,"2 Moxon Road, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+243,"Unnamed Reserve, Roosevelt Avenue Circle 1","13 Roosevelt Avenue, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+244,Albert Road - Small Park,"Albert Street, Croydon Park",Croydon Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+245,Lambeth Reserve,"760 Henry Lawson Drive, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+246,"Unnamed Reserve, 2020 Berkley Road","2020 Berkley Road, Padstow Heights",Padstow Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+247,Ethyl Pyers Reserve,"85A Wilbur Street, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+248,Rose Park,"84A Woods Road, Sefton",Sefton,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+249,Marden Reserve,"21 Marden Street, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+250,Carysfield Park,"2A Johnston Road, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+251,Orchard Reserve,"79 Orchard Road, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+252,Chick Street - Small Park,"Chick Street, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+253,Campsie Street - Small Park,"Campsie Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+254,Virgil Cul-de-sac,"2005 Virgil Avenue, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+255,Ryan Park,"8A Middleton Road, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+256,Woodland Reserve,"9B Woodland Road, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+257,Kinch Reserve,"2 Third Avenue, Condell Park",Condell Park,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+258,Allum Park,"9A Karuah Street, Greenacre",Greenacre,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+259,Keswick Reserve,"41 Balmoral Crescent, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+260,"Unnamed Reserve, Revesby Place","2A Revesby Place, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+261,Brooke Reserve,"50 Lucinda Avenue, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+262,Carlowrie Reserve,"3B Carlowrie Crescent, East Hills",East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+263,Langdale Reserve,"15A Langdale Avenue, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+264,Whitmarsh Park,"2 Gow Street, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+265,Roseanne Avenue Reserve,"13A Raymond Avenue, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+266,Little Salt Pan Creek Reserve,"21 Curzon Road, Padstow Heights",Padstow Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+267,Girrahween Park (National Park),"2 Sutton Avenue, Earlwood",Earlwood,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+268,Dorothy Park,"60 Griffiths Avenue, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+269,Banks Road Park,"18A Banks Road, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+270,Louisa Reserve,"1 Johnston Road, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+271,Belmore Station Reserve,"32-36 Redman Parade, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+272,Ewen Park,"68 Tennent Parade, Hurlstone Park",Hurlstone Park,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+273,Whittle Reserve,"58 Whittle Avenue, Milperra",Milperra,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+274,Harold Street - Small Park,"Harold Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+275,Roma Reserve,"13 Playford Road, Padstow Heights",Padstow Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+276,Jack Chesher Reserve,"12A Kilkee Avenue, Kingsgrove",Kingsgrove,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+277,R.M. Campbell Reserve,"14 Sir Joseph Street, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+278,Eynham Reserve,"32 Eynham Road, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+279,Cooks River Reserve 2,"24 Charles Street, Canterbury",Canterbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+280,Viking Street End,"87A Viking Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+281,Suva Reserve,"98 Greenacre Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+282,Gardenia Avenue Reserve,"65 Gardenia Avenue, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+283,Euston Reserve,"2C Euston Road, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+284,Eldridge Reserve,"81A Eldridge Road, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+285,Heritage Reserve,"53 Amiens Avenue, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+286,St Judes Crescent Reserve,"1A St Jude Crescent, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+287,Cooks River 5,"Adam Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+288,Rorie Reserve,"29 Alma Road, Padstow",Padstow,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+289,Starr Reserve,"6A Starr Avenue, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+290,Thurina Park,"1A Alcoomie Street, Villawood",Villawood,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+291,ONeill Park,"17 Nobbs Road, Yagoona",Yagoona,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+292,Northcote Park,"260 Waterloo Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+293,Richard Podmore Reserve,"51-57 Karne Street, Narwee",Narwee,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+294,Canterbury Public Golf Course,"186-192 Moorefields Road, Beverly Hills",Beverly Hills,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+295,Kirrang Street Reserve,"8 Kirrang Street, Beverly Hills",Beverly Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+296,Apex Park,"321 Hume Highway, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+297,Sylvan Grove Native Gardens,"7 Sylvan Grove, Picnic Point",Picnic Point,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+298,"Unnamed Reserve, Roosevelt Avenue Circle 2","13B Roosevelt Avenue, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+299,Peter Reserve,"28 Peter Crescent, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+300,Bettina Reserve,"7A Bettina Court, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+301,Carrington Square,"2 Carrington Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+302,Pat O'Connor Reserve 2,"20 Anzac Street, Canterbury",Canterbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+303,Saxon Street - Small Park,"Saxon Street, Belfield",Belfield,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+304,Padstow Park,"24 Davies Road, Padstow",Padstow,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+305,Gilliver Reserve,"25 Northcote Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+306,Roberts Park,"35 Waterloo Road, Greenacre",Greenacre,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+307,Flood Reserve,"267 Canterbury Road, Revesby",Revesby,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+308,Douglas Reserve,"20 Douglas Street, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+309,The River Reserve,"313 The River Road, Revesby Heights",Revesby Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+310,Edwards Reserve,"1 Braesmere Road, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+311,Knox Street - Small Park,"50 Knox Street, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+312,Potts Park,"144 Rookwood Road, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+313,Bankstown City Gardens,"73 Restwell Street, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+314,OBrien Park,"80 Cragg Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+315,Ken McLean Reserve,"Harp Street, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+316,Kurrajong Reserve,"48 Kurrajong Avenue, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+317,Austin Reserve,"18B Austin Boulevarde, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+318,Wilton Reserve,"1 Wendy Avenue, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+319,McLeod Reserve,"373 Hume Highway, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+320,Dryden Street - Small Park,"Dryden Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+321,Eickenloff Park,"26 Childs Street, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+322,Cairds Reserve,"12 Cairds Avenue, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+323,Roselands Aquatic Centre,"2 Diana Avenue, Roselands",Roselands,"Aquatic, Passive",Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+324,Bexley Road - Small Park,"Bexley Road, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+325,Abbott Park,"12 Banool Street, Chester Hill",Chester Hill,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+326,Lincoln Reserve,"17 Lincoln Road, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+327,Windarra Reserve,"32 Windarra Street, Narwee",Narwee,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+328,Kelso Park South,"41 Childs Street, Panania",Panania,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+329,Marco Reserve,"24 Homelea Avenue, Panania",Panania,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+330,Ruse Park,"84 Stacey Street, Bankstown",Bankstown,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+331,Joanna Thompson Reserve,"43016 Woolcott Street, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+332,Churchill Reserve,"20 Bushland Drive, Padstow Heights",Padstow Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+333,Ibex Street - Small Park,"Ibex Street, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+334,Russ Wheeler Reserve,"158 Virgil Avenue, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+335,Stevens Reserve,"170 Stacey Street, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+336,Maluga Passive Park,"96 Gascoigne Road, Birrong",Birrong,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+337,Croydon Park,"209 Croydon Avenue, Croydon Park",Croydon Park,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+338,Tucker Reserve,"19A Carysfield Road, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+339,Avalon Reserve,"16 Rodd Street, Birrong",Birrong,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+340,Peel Park,"12 Moreton Street, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+341,McLaughlin Oval,"48A Wiggs Road, Riverwood",Riverwood,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+342,Federation Reserve,"67A Second Avenue, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+343,Greenacre Heights Reserve,"116 Greenacre Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+344,Wattawa Reserve,"151 The Avenue, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+345,Johnstone Reserve,"75 Bransgrove Road, Revesby",Revesby,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+346,Sturt Reserve,"451 Marion Street, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+347,Cooks River 3,"15A Birdwood Avenue, Belfield",Belfield,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+348,Frank Moulang Reserve,"9 Zonnebeke Crescent, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+349,Boronia Street - Small Park,"Boronia Street, Belfield",Belfield,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+350,Playford Park,"15 Cahors Road, Padstow",Padstow,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+351,Berrima Reserve,"24 Berrima Avenue, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+352,Mary Barry Park,"19 South Terrace, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+353,Riga Reserve,"45 Riga Avenue, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+354,Bloxsome Park,"20 Purvis Avenue, Potts Hill",Potts Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+355,Toby Reserve,"33A Toby Crescent, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+356,Gillman Reserve,"1 Heather Street, Yagoona",Yagoona,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+357,Clarke Reserve,"8A Burley Road, Padstow",Padstow,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+358,Picken Oval,"58B Hampton Street, Croydon Park",Croydon Park,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+359,Dinora Street - Small Park,"Dinora Street, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+360,Monash Reserve,"616 Henry Lawson Drive, East Hills",East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+361,Mildura Reserve,"85B-85C Brighton Avenue, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+362,Shellcote Road Reserve,"21 Shellcote Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+363,SJ Harrison Reserve,"36 Bray Avenue, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+364,"Unnamed Reserve, 495 Henry Lawson Drive","495 Henry Lawson Drive, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+365,Eulabah Street Reserve,"2A Eulabah Avenue, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+366,Grahame Thomas Oval,"195 Chapel Road, Bankstown",Bankstown,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+367,Picnic Point Reserve,"3B Carinya Road, Picnic Point",Picnic Point,"Bushland, Passive",Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+368,Buckwall Reserve,"8 Tonga Close, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+369,Suncroft Reserve,"38 Donington Avenue, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+370,Graf Park,"29 George Street, Yagoona",Yagoona,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+371,"Unnamed Reserve, Daisy Street","47 Daisy Street, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+372,"Unnamed Reserve, Biara Avenue","42890 Biara Avenue, Clemton Park",Clemton Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+373,"Montgomery Reserve, Padstow","4A Montgomery Avenue, Padstow",Padstow,"Bushland, Passive",Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+374,"Unnamed Reserve, Punchbowl Road","899A Punchbowl Road, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+375,Patterson Reserve,"8 Patterson Close, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+376,Magney Reserve,"17 Auburn Road, Regents Park",Regents Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+377,Tyalgum Reserve,"12A Tyalgum Avenue, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+378,Statham Street Reserve,"42983 Statham Street, Belfield",Belfield,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+379,Gail Reserve,"12 Gail Place, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+380,Rex Reserve,"42 Rex Road, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+381,Bennett Park,"88 Karne Street, Riverwood",Riverwood,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+382,Griffith Park,"4A Olympic Parade, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+383,Taylor Reserve,"1A Enright Street, East Hills",East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+384,"Unnamed Reserve, Marco Avenue","75A & 75B &75C Marco Avenue, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+385,Boggabilla Reserve,"965 Hume Highway, Bass Hill",Bass Hill,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+386,Oswald Street - Small Park,"Oswald Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+387,Warren Reserve,"750 Punchbowl Road, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+388,Tasker Park,"19 Charles Street, Canterbury",Canterbury,"Active, Aquatic",Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+389,Little Tasker Park,"42767 East Parade, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+390,John Mountford Reserve,"15 Welfare Avenue, Narwee",Narwee,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+391,Deepwater Park,"2 Maxwell Avenue, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+392,Nugent Park South,"68 Wellington Road, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+393,Rosedale Park,"19 Riverside Road, Croydon Park",Croydon Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+394,Cheryl Reserve,"5 Cheryl Avenue, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+395,Dilke Reserve,"18 Bernard Road, Padstow Heights",Padstow Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+396,"Unnamed Reserve, Arizona Place","1A Arizona Place, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+397,Harden Reserve,"10 Harden Crescent, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+398,Cooks River 2,"25 Robert Street, Canterbury",Canterbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+399,Kelso Park North,"565 Henry Lawson Drive, Panania",Panania,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+400,Kardella Crescent Reserve,"41 Kardella Crescent, Narwee",Narwee,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+401,Denman Reserve,"94 Wendy Avenue, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+402,"Unnamed Reserve, 491 Henry Lawson Drive","491 Henry Lawson Drive, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+403,Walshaw Park,"4 Trebartha Street, Bass Hill",Bass Hill,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+404,Terpentine Reserve,"19 Terpentine Place, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+405,Canterbury Park,"55 King Street, Canterbury",Canterbury,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+406,Kentucky/Wyoming Reserve,"5A Kentucky Road, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+407,Brande Street - Small Park,"Brande Street, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+408,East Hill Scout Hall,"629 Henry Lawson Drive, East Hills",East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+409,"Unnamed Reserve, 20A Curzon Road","20A Curzon Road, Padstow Heights",Padstow Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+410,Morgans Creek Reserve,"330 The River Road, Revesby Heights",Revesby Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+411,Flinders Slopes,"48 Henry Lawson Drive, Lansdowne",Lansdowne,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+412,Wall Reserve,"167 Beaconsfield Street, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+413,Jacaranda Reserve,"2 Denman Road, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+414,Mount Lewis Park,"151A Wattle Street, Mount Lewis",Mount Lewis,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+415,Waterworth Park,"2 Bayview Avenue, Earlwood",Earlwood,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+416,Parry Park,"21C Koala Road, Lakemba",Lakemba,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+417,Braeside Crescent Reserve,"20 Braeside Crescent, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+418,Pivetta Reserve,"7A Pivetta Street, Revesby",Revesby,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+419,Hillcrest Reserve,"186 Old Kent Road, Mount Lewis",Mount Lewis,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+420,Wren Reserve,"31 Wren Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+421,Kingsbury Reserve,"14 Warejee Street, Kingsgrove",Kingsgrove,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+422,Presland Reserve,"6 Presland Avenue, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+423,Rosalie Reserve,"13 Rosalie Crescent, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+424,Woodville Reserve,"341 Woodville Road, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+425,Coleman Park,"25 Rabaul Road, Bankstown Aerodrome",Bankstown Aerodrome,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+426,Dunstan Reserve,"6 Dunstan Avenue, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+427,"Unnamed Reserve, 51 Beatty Parade","51 Beatty Parade, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+428,Watt Reserve,"30 Mitchell Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+429,Paul Keating Park,"375 Chapel Road, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+430,Lansdowne Reserve,"31 Henry Lawson Drive, Lansdowne",Lansdowne,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+431,Kelso Beach Reserve,"468-470 Henry Lawson Drive, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+432,Kirrily Reserve,"70 Lucinda Avenue, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+433,Mimosa Reserve,"54 Mimosa Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+434,Melford Street Reserve,"108 Crinan Street, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+435,McGuigan Place - Small Park,"2030 Waterloo Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+436,Baltimore Street - Small Park,"Baltimore Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+437,"Unnamed Reserve, 1 Hanna Street","1 Hanna Street, Potts Hill",Potts Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+438,Salamander Reserve,"16017 Salamander Place, Mount Lewis",Mount Lewis,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+439,Railway Street - Small Park,"Railway Street, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+440,"Unnamed Reserve, 261 Hume Highway","261 Hume Highway, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+441,Jensen Park,"30A Clapham Road, Regents Park",Regents Park,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+442,Rotary Park North,"122 Belmore Road, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+443,The Boulevarde Reserve,"120-124 Railway Parade, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+444,Remembrance Driveway,"767 Hume Highway, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+445,Emma Reserve,"24 Macdonald Street, Lakemba",Lakemba,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+446,Cos Egan Reserve,"551 Chapel Road, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+447,"Unnamed Reserve, Henry Lawson Drive","739 Henry Lawson Drive, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+448,Beaman Park,"167 Riverview Road, Earlwood",Earlwood,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+449,Explorer Reserve,"38 Sturt Avenue, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+450,Miller Reserve,"197 Miller Road, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+451,Dawn Reserve,"20A Dawn Avenue, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+452,Dunkeld Reserve,"9A Dunkeld Avenue, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+453,Josephine Reserve,"5 Josephine Crescent, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+454,Dalton Reserve,"41 Manahan Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+455,"Unnamed Reserve, Johnston Road","66 Johnston Road, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+456,"Unnamed Reserve, 2010 Berkley Road","1 Berkley Road, Padstow Heights",Padstow Heights,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+457,Phil Engisch Reserve,"62 The Mall , Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+458,Milperra Reserve,"121 Ashford Avenue, Milperra",Milperra,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+459,"Unnamed Reserve, 60 Arinya Street","60 Arinya Street, Kingsgrove",Kingsgrove,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+460,Napoli Reserve,"53 Napoli Street, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+461,Martha Reserve,"11 Martha Street, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+462,Roosevelt/Minnesota Reserve,"11 Roosevelt Avenue, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+463,Panania Civic Precinct,"77 Anderson Avenue, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+464,Kentucky Reserve,"256A Henry Lawson Drive, Bankstown Aerodrome",Bankstown Aerodrome,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+465,Fernhill Street Reserve,"19A Fernhill Street, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+466,Elouera Street Reserve,"36 Elouera Street, Beverly Hills",Beverly Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+467,Hughes Place Reserve,"1 Hughes Place, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+468,Diffey Street Drain Reserve,"688 Hume Highway, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+469,Moorefields Cemetery,"96A Moorefields Road, Kingsgrove",Kingsgrove,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+470,Brancourt Reserve,"55A-55B Brancourt Avenue, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+471,Duke Reserve,"9 Duke Street, East Hills",East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+472,Court House Reserve,"64 The Mall , Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+473,Allder Park,"201A Rodd Street, Sefton",Sefton,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+474,Stiller Reserve,"32 Stiller Place, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+475,Rolestone Avenue - Small Park,"Rolestone Avenue, Kingsgrove",Kingsgrove,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+476,Mazarin Street Reserve,"24-26 Mazarin Street, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+477,Werona Reserve,"16 Werona Avenue, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+478,Bankstown Interchange,"143 Bankstown City Plaza , Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+479,Colechin Reserve,"61 Colechin Street, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+480,Mitchell Reserve,"40 Lee Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+481,Eldon Reserve,"34 Surrey Avenue, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+482,Lockwood Park,"352 Waterloo Road, Greenacre",Greenacre,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+483,"Unnamed Reserve, Vermont Crescent","2A Vermont Crescent, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+484,Arthur Park,"63 James Street, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+485,Goondah Reserve,"1 Coolalie Street, Villawood",Villawood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+486,Keys Reserve,"7A Piper Close, Milperra",Milperra,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+487,McPherson Reserve,"37A Nelson Road, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+488,Juno Reserve,"2C Juno Parade, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+489,"Unnamed Reserve, Douglas Street","1A Douglas Street, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+490,Hurlstone Memorial Reserve,"35-41 Crinan Street, Hurlstone Park",Hurlstone Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+491,Forrester Reserve,"7 Forrester Street, Kingsgrove",Kingsgrove,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+492,Hoskins Reserve,"51 De Witt Street, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+493,George Cayley Reserve,"38 Tusmore Street, Punchbowl",Punchbowl,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+494,Bullock Reserve,"9 Bullock Avenue, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+495,Bromley Reserve,"51 Mimosa Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+496,"Unnamed Reserve, 99 Virginius Street","99 Virginius Street, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+497,"Unnamed Reserve, Arilla Avenue","3 Arilla Avenue, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+498,Cooks River 1,"1A Olwyn Place, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+499,Norfolk Reserve,"67 Norfolk Road, Greenacre",Greenacre,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+500,Marion Reserve,"249 Marion Street, Yagoona",Yagoona,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+501,Terry Raper Reserve,"38 Wilberforce Road, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+502,Neate Reserve,"16B Loftus Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+503,Canterbury SES,"196 Moorefields Road, Beverly Hills",Beverly Hills,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+504,Riverwood Peace Park,"24A Michigan Road, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+505,Viking Street Reserve 1,"79 Viking Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+506,Higgins Reserve,"23 Allingham Street, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+507,Smith Park,"2B Lehn Road, East Hills",East Hills,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+508,Hercules Reserve,"1A Uranus Road, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+509,Baxter Reserve,"64 Farrell Road, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+510,"Unnamed Reserve, Olympic Parade","4 Olympic Parade, Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+511,Amaroo Reserve,"161 Henry Lawson Drive, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+512,Marks Reserve,"70 Marks Street, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+513,Manuka Reserve,"2 Johnston Road, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+514,Hazel Street Reserve,"59 Henry Lawson Drive, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+515,Bankstown Showground,"190 Eldridge Road, Condell Park",Condell Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+516,Wiley Park,"1071 Canterbury Road, Wiley Park",Wiley Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+517,Parry Steps,"80 Undercliffe Road, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+518,Gascoigne Reserve,"55A Gascoigne Road, Birrong",Birrong,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+519,Gough Whitlam Park,"1B Pine Avenue, Earlwood",Earlwood,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+520,Loch Street Reserve,"113 Campsie Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+521,"Unnamed Reserve, Hannans Road","140 Hannans Road, Narwee",Narwee,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+522,Gosling Park,"42A Hillcrest Avenue, Greenacre",Greenacre,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+523,Rawson Road Reserve,"55 Rawson Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+524,Leo Reserve,"4 Burraneer Crescent, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+525,Jocarm Reserve,"18 Dalton Avenue, Condell Park",Condell Park,Bushland,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+526,Benda Street - Small Park,"Benda Street, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+527,Shelley Street - Small Park,"Shelley Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+528,McPhee Park,"25 Chester Hill Road, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+529,"Unnamed Reserve, Marlowe Street","31 Marlowe Street, Campsie",Campsie,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+530,Lake Gillawarna,"122 Henry Lawson Drive, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+531,Bowden Reserve,"34-6 Hampton Street, Croydon Park",Croydon Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+532,Band Hall Reserve,"134 Auburn Road, Birrong",Birrong,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+533,Rudd Park,"4A Clarence Street, Belfield",Belfield,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+534,The Crest,"2 Mc Clean Close, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+535,Garrison Point,"190-192 Henry Lawson Drive, Georges Hall",Georges Hall,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+536,Punchbowl Park,"1481A Canterbury Road, Punchbowl",Punchbowl,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+537,Leonard Reserve,"26 Leslie Street, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+538,Sutton Reserve,"1 Karool Avenue, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+539,Greenacre Civic Centre Reserve,"33 Banksia Road, Greenacre",Greenacre,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+540,Appian Way,"75 The Mall , Bankstown",Bankstown,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+541,Herbert Crabtree Reserve,"3 Buist Street, Bass Hill",Bass Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+542,Airport Reserve,"501 Milperra Road, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+543,Bransgrove Road Reserve,"233 Horsley Road, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+544,Gazzard Park,"176D Cooper Road, Yagoona",Yagoona,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+545,Doug Gooding Reserve,"20 Chester Hill Road, Chester Hill",Chester Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+546,Balmoral Reserve 3,"28 Balmoral Avenue, Croydon Park",Croydon Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+547,Whitfield Reserve,"14 Whitfield Avenue, Ashbury",Ashbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+548,Coolabah Street Reserve,"186-192 Moorefields Road, Beverly Hills",Beverly Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+549,Cutting Reserve,"133-137 Davies Road, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+550,Salt Pan Creek Reserve 2,"1A Meager Avenue, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+551,Salt Pan Creek Reserve 1,"1A Gow Street, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+552,Cooks River Park,"15A Birdwood Avenue, Belfield",Belfield,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+553,"Unnamed Reserve, Rowe Drive","52 Rowe Drive, Potts Hill",Potts Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+554,"Unnamed Reserve, Purvis Avenue","17 Purvis Avenue, Potts Hill",Potts Hill,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+555,Canterbury Station Reserve,"195 Canterbury Road, Canterbury",Canterbury,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+556,Alan Ashton Reserve,"3B Carinya Road, Picnic Point",Picnic Point,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+557,Balmoral Reserve 2,"29A Balmoral Avenue, Croydon Park",Croydon Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+558,Mactier Avenue - Small Park,"Mactier Avenue, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+559,Bass Avenue - Small Park,"Bass Avenue, Milperra",Millperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+560,"Unnamed Reserve, 376 Henry Lawson Drive","376 Henry Lawson Drive, Milperra",Millperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+561,"Unnamed Reserve, Permanent Avenue","19A & 21B Permanent Avenue, Earlwood",Earlwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+562,Defoe Street Reserve,"41 Defoe Street, Wiley Park",Wiley Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+563,Yatama Park,"26-32 Alfred Street, Clemton Park",Clemton Park,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+564,Belmore Oval Sports Complex (includes Peter Moore Field),"3A Edison Lane, Belmore",Belmore,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+565,Shortland Brush,"10 Henry Lawson Drive, Lansdowne",Lansdowne,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+566,Vale of Ah Reserve,"27 Auld Avenue, Milperra",Milperra,Active,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+567,Harrison Street - Small Park,"Harrison Street, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+568,Simmons Street - Small Park,"Simmons Street, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+569,Parmal Avenue - Small Park,"Parmal Avenue, Padstow",Padstow,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+570,Carrington Street - Small Park,"Carrington Street, Revesby",Revesby,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+571,"Unnamed Reserve, 19B Dowding Street","19B Dowding Street, Panania",Panania,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+572,Ashford Avenue - Small Park,"Ashford Avenue, Milperra",Milperra,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+573,"Unnamed Reserve, 39 Lehn Road","39 Lehn Road, East Hills",East Hills,Passive,Recreation Areas,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+574,"Unnamed Reserve, 152 Centaur Street","152 Centaur Street, Revesby Heights",Revesby Heights,Passive,Recreation Areas,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+575,Cook Crescent - Small Park,Cook Crescent - East Hills,East Hills,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+576,Roselands Reserve,"2 Diana Avenue, Roselands",Roselands,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
+577,Old Library Reserve,"7 Belmore Road North, Riverwood",Riverwood,Passive,Park/Reserve,Parks,Parks Gardens MD_region.shp,Shapefiles\Parks Gardens MD_region.shp
