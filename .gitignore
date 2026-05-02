@@ -11,4 +11,11 @@ __pycache__/
 # OS
 .DS_Store
 
-# Traits data source
+# personal exports
+species.csv
+traits.csv
+junction.csv
+bad_rows.csv
+fix_dates.csv
+species_no_traits.csv
+final_species_traits.csv
