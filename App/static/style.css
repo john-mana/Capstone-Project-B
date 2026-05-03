@@ -789,3 +789,31 @@ body {
     margin: 0;
     font-weight: 500;
 }
+
+.nav-menu {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.nav-btn {
+    background-color: #0ba84a;
+    color: white;
+    font-weight: bold;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-btn:hover {
+    background-color: #098f3f;
+}
+
+.home-icon {
+    width: 20px;
+    height: 20px;
+}
