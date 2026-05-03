@@ -91,6 +91,7 @@ body {
     gap: 70px;
     position: relative;
     z-index: 2;
+    flex: 1;
 }
 
 .left-panel {
@@ -753,7 +754,6 @@ body {
     border-radius: 8px 8px 0 0;
 }
 
-/* Nav bar, need to add buttons here? */
 .app-nav {
     background-color: #40623f;
     padding: 14px 24px;
@@ -765,10 +765,10 @@ body {
 
 .app-title {
     margin: 0;
-    color: white;
+    color: #40623f;
 
     font-family: "Playfair Display", Georgia, serif;
-    font-size: 28px;
+    font-size: 35px;
     font-weight: 700;
 }
 
@@ -818,4 +818,44 @@ body {
 .home-icon {
     width: 20px;
     height: 20px;
+}
+
+/* Footer layout */
+.app-footer {
+    margin-top: auto;
+    padding: 18px 24px;
+
+    background-color: #dcebdd;
+    border-top: 1px solid #c7d3c2;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Left text */
+.footer-left p {
+    margin: 0;
+    font-size: 14px;
+    color: #123b20;
+}
+
+/* Logout button */
+.logout-btn {
+    background-color: #e67e22; /* orange */
+    color: white;
+
+    padding: 10px 18px;
+    border-radius: 8px;
+
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+/* Hover effect */
+.logout-btn:hover {
+    background-color: #cf711f;
 }
