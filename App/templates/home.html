@@ -18,7 +18,22 @@
         </div>
 
         <div class="app-nav">
-            <p> **Insert nav buttons here** </p>
+
+            <div class="nav-menu">
+
+                <a href="/home" class="nav-btn">
+                    <img src="{{ url_for('static', filename='home.png') }}" class="home-icon">
+                </a>
+
+                <a href="/species" class="nav-btn">Species</a>
+                <a href="/traits" class="nav-btn">Traits</a>
+                <a href="/observations" class="nav-btn">Observations</a>
+                <a href="/reserves" class="nav-btn">Reserves</a>
+                <a href="/at_risk" class="nav-btn">At Risk Species</a>
+                <a href="/admin" class="nav-btn">Admin Controls</a>
+
+            </div>
+
         </div>
     </header>
 
