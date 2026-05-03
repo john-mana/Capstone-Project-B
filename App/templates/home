@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="page">
+
+    <header class="app-header">
+        <div class="app-header-image">
+            <img src="{{ url_for('static', filename='header.png') }}" alt="Header">
+        </div>
+
+        <div class="app-nav">
+            <p> **Insert nav buttons here** </p>
+        </div>
+    </header>
+
+    <div class="header-divider"></div>
+
+    <h1 class="app-title">BioGeo DA Flora DataBase</h1>
+
+    <!-- PAGE CONTENT -->
+    <div class="content">
+        <p>**Insert contect here**</p>
+    </div>
+
+    <footer class="app-footer">
+        <p>Bio Geographic Data Analysts</p>
+        <p>ABN 579 423 418 07</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
