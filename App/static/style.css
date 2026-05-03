@@ -737,3 +737,55 @@ body {
     background: #174c27;
     color: white;
 }
+
+/* ===== STYLES FOR ONCE THE USER SUCCESFFULY LOGS IN ARE BELOW ===== */
+
+.app-header {
+    margin-bottom: 20px;
+}
+
+.app-header-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Nav bar, need to add buttons here? */
+.app-nav {
+    background-color: #40623f;
+    padding: 14px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-title {
+    margin: 0;
+    color: white;
+
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.app-footer {
+    margin-top: 50px;
+    padding: 18px 24px;
+
+    background-color: #dcebdd; /* light green */
+    border-top: 1px solid #c7d3c2;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 14px;
+    color: #123b20;
+}
+
+.app-footer p {
+    margin: 0;
+    font-weight: 500;
+}
