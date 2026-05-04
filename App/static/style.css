@@ -778,6 +778,15 @@ body {
     margin: 0;
 }
 
+.h2-title {
+    margin: 0;
+    color: #0ba84a;
+
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+}
+
 .app-footer {
     margin-top: 50px;
     padding: 18px 24px;
@@ -921,7 +930,7 @@ body {
 
 .page-divider {
     height: 1px;
-    background: #c7cfc2;
+    background: #f6f9f2;
     margin: 10px 0 10px;
     position: relative;
     z-index: 2;
