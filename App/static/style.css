@@ -772,6 +772,12 @@ body {
     font-weight: 700;
 }
 
+.app-title h1 {
+    font-size: 48px;
+    line-height: 1.1;
+    margin: 0;
+}
+
 .app-footer {
     margin-top: 50px;
     padding: 18px 24px;
@@ -858,4 +864,56 @@ body {
 /* Hover effect */
 .logout-btn:hover {
     background-color: #cf711f;
+}
+
+/* ===== QUICK LINKS PANEL ===== */
+
+.quick-links-panel {
+    width: 650px;   
+    height: fit-content; 
+
+    background: rgba(250, 251, 247, 0.95);
+    border: 1px solid #d6ddd2;
+    border-radius: 12px;
+
+    padding: 20px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* Title */
+.quick-links-panel h3 {
+    margin: 0 0 15px;
+
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    color: #40623f;
+}
+
+/* Button container */
+.quick-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Buttons */
+.quick-btn {
+    display: block;
+    text-align: center;
+
+    padding: 12px;
+    border-radius: 8px;
+
+    background-color: #40623f;
+    color: white;
+
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+/* Hover */
+.quick-btn:hover {
+    background-color: #2f4d2e;
 }
