@@ -2,28 +2,73 @@
 <html>
 <head>
     <title>Contact Us</title>
-    <link rel="stylesheet" href="/static/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-//body
-<body class="contact-page">
+<body>
 
-    <div class="contact-wrapper">
-        <h1>Contact Us</h1>
+    <div class="page">
 
-        <form class="contact-form">
-            <label>Email</label>
-            <input type="email" placeholder="Enter your email">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-box">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="BIO GEODA Logo">
+            </div>
 
-            <label>Message</label>
-            <textarea placeholder="Enter your message"></textarea>
+            <div class="header-text">
+                <h1>Bio Geographic Data Analysts</h1>
+                <p>ABN 579 423 418 07</p>
+                <h2>🔒 This is a private site, available to approved users only</h2>
+            </div>
+        </header>
 
-            <button type="submit">Send Message</button>
-        </form>
+        <div class="header-divider"></div>
 
-       <div class="back-bubble">
-    <a href="login.html">← Back to Home</a>
-</div>
+        <!-- Content -->
+        <main class="contact-content">
+
+            <div class="contact-card">
+                <h1>Contact Us</h1>
+
+                <p class="contact-subtitle">
+                    Send us a message and our team will review your request.
+                </p>
+
+                <form class="contact-form" method="POST" action="{{ url_for('contact') }}" onsubmit="showSuccessMessage()">
+
+    <label>Email</label>
+    <input type="email" name="email" placeholder="Enter your email" required>
+
+    <label>Message</label>
+    <textarea name="message" placeholder="Enter your message" required></textarea>
+
+    <button type="submit">SEND MESSAGE</button>
+
+    <a href="{{ url_for('home') }}" class="back-btn contact-back">
+        Back
+    </a>
+
+</form>
+
+<script>
+    function showSuccessMessage() {
+        alert("Message submitted successfully!");
+    }
+</script>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Contact Number: +61 000 000 000</p>
+            <p>Email: info@biogeoda.au</p>
+            <p>Bio Geographic Data Analysts © 2026</p>
+        </footer>
+
     </div>
 
 </body>
