@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Controls</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="page">
+
+    <header class="app-header">
+        <div class="app-header-image">
+            <img src="{{ url_for('static', filename='header.png') }}" alt="Header">
+        </div>
+
+        <div class="app-nav">
+
+            <div class="nav-menu">
+
+                <!-- HOME -->
+                <a href="/home" class="nav-btn">
+                    <img src="{{ url_for('static', filename='home.png') }}" class="home-icon">
+                </a>
+
+                <!-- SPECIES -->
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Species ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/species">View All</a>
+                        <a href="/species_new">New Species</a>
+                        <a href="/species_detail">Species Detail</a>
+                    </div>
+                </div>
+
+                <!-- TRAITS -->
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Traits ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/traits">View All</a>
+                        <a href="/traits_detail">Traits Detail</a>
+                        <a href="/traits_findby">Find by Trait</a>
+                    </div>
+                </div>
+
+                <!-- OBSERVATIONS -->
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Observations ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/observations">View All</a>
+                        <a href="/observations_new">New Observations</a>
+                    </div>
+                </div>
+
+                <!-- RESERVES -->
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Reserves ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/reserves">View All</a>
+                    </div>
+                </div>
+
+                <!-- AT RISK -->
+                <div class="nav-dropdown">
+                    <button class="nav-btn">At Risk Species ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/at_risk">View All</a>
+                    </div>
+                </div>
+
+                <!-- ADVANCED SEARCH -->
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Advanced Search ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/query_builder">Query Builder</a>
+                    </div>
+                </div>
+
+                <!-- ADMIN -->
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Admin Controls ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/admin_controls">Dashboard</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </header>
+
+    <div class="page-divider"></div>
+
+    <h2 class="h2-title">Species Detail</h2>
+    <h1 class="app-title">**Species Name**</h1>
+
+    <!-- PAGE CONTENT -->
+    <div class="content">
+        <p> **specific species details here + dashboard to the right of all associated traits + flags to say whether the species is native, the endangered status, at risk</p>
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-right">
+            <a href="/login" class="logout-btn">Log Out</a>
+        </div>
+        <p>Bio Geographic Data Analysts | ABN 579 423 418 07</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
