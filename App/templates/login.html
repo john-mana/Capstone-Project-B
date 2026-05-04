@@ -58,14 +58,14 @@
                 </div>
 
                 <div class="contact-bubble">
-                    <a href="{{ url_for('contact') }}">💬 Contact us</a>
+                    <a href="{{ url_for('main.contact') }}">💬 Contact us</a>
                 </div>
 
             </section>
 
             <section class="right-panel">
 
-                <form action="{{ url_for('login') }}" method="POST" class="login-box">
+                <form action="{{ url_for('main.login') }}" method="POST" class="login-box">
 
                     <input type="email" name="email" placeholder="Username" required>
 
@@ -75,9 +75,9 @@
                     </div>
 
                     <div class="small-links">
-                        <a href="{{ url_for('register') }}">Register New Account</a>
+                        <a href="{{ url_for('main.register') }}">Register New Account</a>
                         <div class="link-divider"></div>
-                        <a href="{{ url_for('forgot_password') }}">Forgot my Password</a>
+                        <a href="#">Forgot my Password</a>
                     </div>
 
                     <button type="submit">LOGIN</button>
