@@ -11,9 +11,9 @@ body {
 }
 
 .page {
-    width: 1180px;
+    width: 100%;
     min-height: 100vh;
-    margin: 28px auto;
+    margin: 0;
     padding: 42px 62px 55px;
     background:
         linear-gradient(rgba(248, 250, 244, 0.88), rgba(248, 250, 244, 0.88)),
@@ -838,7 +838,7 @@ body {
 
 /* Footer layout */
 .app-footer {
-    margin-top: auto;
+    margin-top: 72px;
     padding: 18px 24px;
 
     background-color: #dcebdd;

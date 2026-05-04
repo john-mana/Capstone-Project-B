@@ -6,6 +6,153 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .traits-toolbar {
+            align-items: center;
+            display: flex;
+            gap: 28px;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .traits-heading {
+            align-items: center;
+            display: flex;
+            gap: 28px;
+        }
+
+        .traits-heading .app-title {
+            color: #40623f;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 44px;
+            font-weight: 700;
+            line-height: 1.08;
+            margin: 0;
+        }
+
+        .traits-filter {
+            align-items: center;
+            display: flex;
+            gap: 12px;
+        }
+
+        .traits-filter input {
+            border: 2px solid #b6b6bb;
+            border-radius: 999px;
+            color: #233523;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 16px;
+            min-width: 280px;
+            padding: 13px 20px;
+        }
+
+        .traits-filter button,
+        .traits-filter a {
+            background: #b9b9bc;
+            border: 0;
+            border-radius: 999px;
+            color: white;
+            cursor: pointer;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 14px 28px;
+            text-decoration: none;
+        }
+
+        .traits-filter button {
+            cursor: not-allowed;
+            opacity: 0.62;
+        }
+
+        .traits-filter button.is-active {
+            background: #4aa857;
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .traits-filter a {
+            background: #4aa857;
+            opacity: 1;
+        }
+
+        .traits-count {
+            color: #466145;
+            font-size: 16px;
+            margin: 0 0 12px;
+        }
+
+        .traits-table-wrap {
+            border: 1px solid #273827;
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .traits-table {
+            border-collapse: collapse;
+            font-family: "Inter", Arial, sans-serif;
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .traits-table th,
+        .traits-table td {
+            border: 1px solid #273827;
+            overflow-wrap: anywhere;
+            padding: 18px 16px;
+            text-align: left;
+            vertical-align: top;
+            word-break: break-word;
+        }
+
+        .traits-table th {
+            background: #d8ded5;
+            color: #050505;
+            font-size: 18px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .traits-table td {
+            background: rgba(248, 250, 244, 0.72);
+            color: #172117;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .traits-table a {
+            color: #174c27;
+            display: block;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+            text-decoration: none;
+            word-break: break-word;
+        }
+
+        .traits-empty {
+            background: rgba(248, 250, 244, 0.72);
+            border: 1px solid #273827;
+            color: #466145;
+            padding: 36px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("traits-search");
+            const button = document.getElementById("traits-filter-button");
+
+            function updateFilterButton() {
+                const hasSearch = input.value.trim().length > 0;
+                button.disabled = !hasSearch;
+                button.classList.toggle("is-active", hasSearch);
+            }
+
+            input.addEventListener("input", updateFilterButton);
+            updateFilterButton();
+        });
+    </script>
 </head>
 
 <body>
@@ -94,11 +241,61 @@
 
     <div class="page-divider"></div>
 
-    <h1 class="app-title">Traits</h1>
-
     <!-- PAGE CONTENT -->
     <div class="content">
-        <p> **dashboard with all traits here </p>
+        <div style="width: 100%;">
+            <div class="traits-toolbar">
+                <div class="traits-heading">
+                    <h1 class="app-title">Traits</h1>
+                    <form class="traits-filter" method="get" action="/traits">
+                        <input id="traits-search" type="search" name="q" value="{{ search or '' }}" placeholder="Filter by trait...">
+                        <button id="traits-filter-button" type="submit" disabled>Filter by...</button>
+                        {% if search %}
+                            <a href="/traits">Clear</a>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+
+            {% if error %}
+                <div class="traits-empty">Traits could not be loaded from the database yet.</div>
+            {% else %}
+                <p class="traits-count">{{ traits|length }} trait{{ 's' if traits|length != 1 }} shown</p>
+
+                <div class="traits-table-wrap">
+                    <table class="traits-table">
+                        <thead>
+                            <tr>
+                                <th>Trait Type Name</th>
+                                <th>Trait Name</th>
+                                <th>Trait Label</th>
+                                <th>Trait unit</th>
+                                <th>Trait Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for trait in traits %}
+                                <tr>
+                                    <td>{{ trait.trait_type_name or '' }}</td>
+                                    <td>
+                                        <a href="/traits_detail?trait={{ trait.trait_name | urlencode }}">
+                                            {{ trait.trait_name or '' }}
+                                        </a>
+                                    </td>
+                                    <td>{{ trait.trait_label or '' }}</td>
+                                    <td>{{ trait.trait_unit or '' }}</td>
+                                    <td>{{ trait.trait_type or '' }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="traits-empty">No traits match this filter.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
     </div>
 
     <footer class="app-footer">
