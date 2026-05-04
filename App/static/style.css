@@ -815,6 +815,7 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
+    box-shadow: none;
 }
 
 .nav-btn:hover {
@@ -940,4 +941,42 @@ body {
 .admin-links {
     display: flex;
     gap: 12px;
+}
+
+/* Dropdown wrapper */
+.nav-dropdown {
+    position: relative;
+}
+
+/* Dropdown menu */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    background: white;
+    min-width: 180px;
+
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 100;
+}
+
+/* Links inside dropdown */
+.dropdown-content a {
+    display: block;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: #123b20;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background: #eef5ec;
+}
+
+/* Show on hover */
+.nav-dropdown:hover .dropdown-content {
+    display: block;
 }
