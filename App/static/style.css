@@ -917,3 +917,27 @@ body {
 .quick-btn:hover {
     background-color: #2f4d2e;
 }
+
+.page-divider {
+    height: 1px;
+    background: #c7cfc2;
+    margin: 10px 0 10px;
+    position: relative;
+    z-index: 2;
+}
+
+.admin-panel {
+    height: fit-content; 
+
+    background: rgba(250, 251, 247, 0.95);
+    border: 1px solid #d6ddd2;
+    border-radius: 12px;
+
+    padding: 20px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.admin-links {
+    display: flex;
+    gap: 12px;
+}
