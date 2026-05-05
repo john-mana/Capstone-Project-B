@@ -149,51 +149,15 @@
             margin: 0 0 14px;
         }
 
-        .summary-strip {
-            border-bottom: 1px solid #cfd8cb;
-            border-top: 1px solid #cfd8cb;
-            display: grid;
-            gap: 0;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            margin: 22px 0;
-            padding: 18px 0;
-        }
-
-        .summary-item {
-            padding: 0 28px;
-        }
-
-        .summary-item:first-child {
-            padding-left: 0;
-        }
-
-        .summary-item:not(:last-child) {
-            border-right: 1px solid #cfd8cb;
-        }
-
-        .summary-label {
-            color: #516351;
-            display: block;
-            font-size: 13px;
-            font-weight: 800;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-
-        .summary-value {
-            color: #17351c;
-            display: block;
-            font-size: 27px;
-            font-weight: 800;
-            line-height: 1.15;
-            overflow-wrap: anywhere;
+        .details-heading {
+            margin-top: 34px !important;
         }
 
         .metadata-grid {
             display: grid;
-            gap: 12px 18px;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            margin-top: 22px;
+            gap: 13px;
+            grid-template-columns: 1fr;
+            margin-top: 34px;
         }
 
         .metadata-item {
@@ -280,6 +244,20 @@
             text-align: center;
         }
 
+        .empty-detail h1 {
+            color: #40623f;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 44px;
+            line-height: 1.08;
+            margin: 0 0 14px;
+        }
+
+        .empty-detail p {
+            color: #526052;
+            font-size: 17px;
+            margin: 0;
+        }
+
         @media (max-width: 1080px) {
             .detail-topline,
             .values-header {
@@ -290,17 +268,6 @@
             .detail-grid,
             .metadata-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .summary-strip {
-                display: grid;
-                grid-template-columns: 1fr;
-            }
-
-            .summary-item,
-            .summary-item + .summary-item {
-                border-right: 0;
-                padding: 10px 0;
             }
 
             .trait-search-row {
@@ -491,28 +458,7 @@
                         <h2>Description</h2>
                         <p class="trait-description">{{ trait.trait_info or 'No description recorded for this trait.' }}</p>
 
-                        <div class="summary-strip">
-                            <div class="summary-item">
-                                <span class="summary-label">Values</span>
-                                <span class="summary-value">{{ summary.value_count or 0 }}</span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Species</span>
-                                <span class="summary-value">{{ summary.species_count or 0 }}</span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Latest observation</span>
-                                <span class="summary-value">
-                                    {% if summary.latest_observation_date %}
-                                        {{ summary.latest_observation_date.strftime('%Y-%m-%d') }}
-                                    {% else %}
-                                        None
-                                    {% endif %}
-                                </span>
-                            </div>
-                        </div>
-
-                        <h2>Details</h2>
+                        <h2 class="details-heading">Details</h2>
                         <div class="metadata-grid">
                             <div class="metadata-item">
                                 <span class="metadata-label">Trait type name</span>
@@ -529,6 +475,16 @@
                             <div class="metadata-item">
                                 <span class="metadata-label">Column</span>
                                 <div class="metadata-value">{{ trait.column_number or 'Not recorded' }}</div>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="metadata-label">Latest observation</span>
+                                <div class="metadata-value">
+                                    {% if summary.latest_observation_date %}
+                                        {{ summary.latest_observation_date.strftime('%Y-%m-%d') }}
+                                    {% else %}
+                                        None
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -576,7 +532,15 @@
                 </section>
             </div>
         {% else %}
-            <div class="empty-detail">No matching trait was found.</div>
+            <div class="empty-detail">
+                {% if trait_name %}
+                    <h1>No matching trait was found.</h1>
+                    <p>Search for one of the selected trait names to open its details.</p>
+                {% else %}
+                    <h1>Trait Detail</h1>
+                    <p>Search for a trait name to view its description, summary, and values.</p>
+                {% endif %}
+            </div>
         {% endif %}
     </main>
 

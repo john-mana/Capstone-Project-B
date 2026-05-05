@@ -181,8 +181,18 @@ def traits_detail():
             )
             trait_options = cursor.fetchall()
 
-            if not trait_name and trait_options:
-                trait_name = trait_options[0]["trait_name"]
+            if not trait_name:
+                conn.close()
+                return render_template(
+                    "traits_detail.html",
+                    trait=None,
+                    trait_name=trait_name,
+                    trait_options=trait_options,
+                    value_rows=value_rows,
+                    summary=summary,
+                    max_species_count=max_species_count,
+                    error=error,
+                )
 
             cursor.execute(
                 """
