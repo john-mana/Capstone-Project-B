@@ -7,23 +7,6 @@ from .db import get_connection
 
 main = Blueprint("main", __name__)
 
-SIMPLE_PAGES = {
-    "admin_controls": "admin_controls.html",
-    "at_risk": "at_risk.html",
-    "contact": "contact.html",
-    "forgot_password": "forgot_password.html",
-    "home": "home.html",
-    "login": "login.html",
-    "observations": "observations.html",
-    "observations_new": "observations_new.html",
-    "register": "register.html",
-    "reserves": "reserves.html",
-    "species": "species.html",
-    "species_detail": "species_detail.html",
-    "species_new": "species_new.html",
-    "traits_findby": "traits_findby.html",
-}
-
 QUERY_FILTERS = (
     "species",
     "vernacular_name",
@@ -58,17 +41,74 @@ def index():
     return redirect(url_for("main.home"))
 
 
-def render_simple_page(template_name):
-    return render_template(template_name)
+@main.route("/home")
+def home():
+    return render_template("home.html")
 
 
-for route_name, template_name in SIMPLE_PAGES.items():
-    main.add_url_rule(
-        f"/{route_name}",
-        endpoint=route_name,
-        view_func=lambda template_name=template_name: render_simple_page(template_name),
-        methods=["GET", "POST"],
-    )
+@main.route("/login", methods=["GET", "POST"])
+def login():
+    return render_template("login.html")
+
+
+@main.route("/register", methods=["GET", "POST"])
+def register():
+    return render_template("register.html")
+
+
+@main.route("/forgot_password", methods=["GET", "POST"])
+def forgot_password():
+    return render_template("forgot_password.html")
+
+
+@main.route("/contact", methods=["GET", "POST"])
+def contact():
+    return render_template("contact.html")
+
+
+@main.route("/species")
+def species():
+    return render_template("species.html")
+
+
+@main.route("/species_new")
+def species_new():
+    return render_template("species_new.html")
+
+
+@main.route("/species_detail")
+def species_detail():
+    return render_template("species_detail.html")
+
+
+@main.route("/observations")
+def observations():
+    return render_template("observations.html")
+
+
+@main.route("/observations_new")
+def observations_new():
+    return render_template("observations_new.html")
+
+
+@main.route("/reserves")
+def reserves():
+    return render_template("reserves.html")
+
+
+@main.route("/at_risk")
+def at_risk():
+    return render_template("at_risk.html")
+
+
+@main.route("/admin_controls")
+def admin_controls():
+    return render_template("admin_controls.html")
+
+
+@main.route("/traits_findby")
+def traits_findby():
+    return render_template("traits_findby.html")
 
 
 @main.route("/logout")
