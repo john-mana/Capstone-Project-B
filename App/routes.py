@@ -36,6 +36,10 @@ def database_port_open(timeout=1):
         return False
 
 
+# =========================
+# Home
+# =========================
+
 @main.route("/")
 def index():
     return redirect(url_for("main.home"))
@@ -45,6 +49,10 @@ def index():
 def home():
     return render_template("home.html")
 
+
+# =========================
+# Authentication
+# =========================
 
 @main.route("/login", methods=["GET", "POST"])
 def login():
@@ -66,6 +74,10 @@ def contact():
     return render_template("contact.html")
 
 
+# =========================
+# Species
+# =========================
+
 @main.route("/species")
 def species():
     return render_template("species.html")
@@ -81,6 +93,10 @@ def species_detail():
     return render_template("species_detail.html")
 
 
+# =========================
+# Observations
+# =========================
+
 @main.route("/observations")
 def observations():
     return render_template("observations.html")
@@ -91,24 +107,31 @@ def observations_new():
     return render_template("observations_new.html")
 
 
+# =========================
+# Reserves
+# =========================
+
 @main.route("/reserves")
 def reserves():
     return render_template("reserves.html")
 
+
+# =========================
+# At Risk Species
+# =========================
 
 @main.route("/at_risk")
 def at_risk():
     return render_template("at_risk.html")
 
 
+# =========================
+# Admin Controls
+# =========================
+
 @main.route("/admin_controls")
 def admin_controls():
     return render_template("admin_controls.html")
-
-
-@main.route("/traits_findby")
-def traits_findby():
-    return render_template("traits_findby.html")
 
 
 @main.route("/logout")
@@ -125,6 +148,10 @@ def placeholder_page():
     return render_template("home.html")
 
 
+# =========================
+# Database Test
+# =========================
+
 @main.route("/db-test")
 def db_test():
     try:
@@ -140,6 +167,15 @@ def db_test():
 
     except Exception as e:
         return f"Database connection failed: {e}"
+
+
+# =========================
+# Traits
+# =========================
+
+@main.route("/traits_findby")
+def traits_findby():
+    return render_template("traits_findby.html")
 
 
 @main.route("/traits")
@@ -308,6 +344,10 @@ def traits_detail():
         error=error,
     )
 
+
+# =========================
+# Query Builder
+# =========================
 
 @main.route("/query_builder", methods=["GET", "POST"])
 def query_builder():
