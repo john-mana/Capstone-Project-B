@@ -1,5 +1,6 @@
 import os
 import socket
+from urllib.parse import urlencode
 
 from flask import Blueprint, redirect, render_template, request, url_for
 
@@ -175,7 +176,292 @@ def db_test():
 
 @main.route("/traits_findby")
 def traits_findby():
-    return render_template("traits_findby.html")
+    selected_groups = [
+        value.strip()
+        for value in request.args.getlist("trait_group")
+        if value.strip()
+    ]
+    selected_traits = [
+        value.strip()
+        for value in request.args.getlist("trait")
+        if value.strip()
+    ]
+    selected_values = [
+        value.strip()
+        for value in request.args.getlist("trait_value")
+        if value.strip()
+    ]
+    selected_value_filters = {}
+    for value in selected_values:
+        if ":::" in value:
+            trait_name, trait_value = value.split(":::", 1)
+            selected_value_filters.setdefault(trait_name, []).append(trait_value)
+        else:
+            for trait_name in selected_traits:
+                selected_value_filters.setdefault(trait_name, []).append(value)
+
+    per_page_options = [10, 20, 50, 75]
+    try:
+        per_page = int(request.args.get("per_page", 50))
+    except ValueError:
+        per_page = 50
+    if per_page not in per_page_options:
+        per_page = 50
+
+    try:
+        page_num = int(request.args.get("page", 1))
+    except ValueError:
+        page_num = 1
+    page_num = max(1, page_num)
+
+    trait_groups = []
+    trait_options = []
+    value_options = []
+    matching_species = []
+    total_results = 0
+    total_pages = 1
+    pagination_pages = []
+    result_start = 0
+    result_end = 0
+    error = None
+
+    def build_findby_url(page=None, page_size=None):
+        params = []
+        for value in selected_groups:
+            params.append(("trait_group", value))
+        for value in selected_traits:
+            params.append(("trait", value))
+        for value in selected_values:
+            params.append(("trait_value", value))
+        params.append(("per_page", page_size if page_size is not None else per_page))
+        params.append(("page", page if page is not None else page_num))
+        return f"{url_for('main.traits_findby')}?{urlencode(params)}"
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT trait_type_name, COUNT(*) AS trait_count
+                FROM traits
+                WHERE of_interest = 1
+                GROUP BY trait_type_name
+                ORDER BY trait_type_name
+                """
+            )
+            trait_groups = cursor.fetchall()
+
+            cursor.execute(
+                """
+                SELECT trait_id, trait_type_name, trait_name, trait_label
+                FROM traits
+                WHERE of_interest = 1
+                ORDER BY column_number, trait_type_name, trait_name
+                """
+            )
+            trait_options = cursor.fetchall()
+
+            cursor.execute(
+                """
+                SELECT
+                    t.trait_name,
+                    COALESCE(
+                        NULLIF(TRIM(stj.working_value), ''),
+                        NULLIF(TRIM(stj.original_value), ''),
+                        '(blank)'
+                    ) AS trait_value,
+                    COUNT(DISTINCT stj.species_id) AS species_count
+                FROM traits t
+                JOIN species_traits_junction stj ON stj.trait_id = t.trait_id
+                WHERE t.of_interest = 1
+                GROUP BY t.trait_name, trait_value
+                ORDER BY t.trait_name, species_count DESC, trait_value
+                """
+            )
+            value_options = cursor.fetchall()
+
+            if selected_traits:
+                required_value_filters = {
+                    trait_name: values
+                    for trait_name, values in selected_value_filters.items()
+                    if trait_name in selected_traits and values
+                }
+                filter_traits = list(required_value_filters.keys()) or selected_traits
+                filter_trait_placeholders = ", ".join(["%s"] * len(filter_traits))
+                match_where = [f"match_trait.trait_name IN ({filter_trait_placeholders})"]
+                value_expression = """
+                        COALESCE(
+                            NULLIF(TRIM(match_stj.working_value), ''),
+                            NULLIF(TRIM(match_stj.original_value), ''),
+                            '(blank)'
+                        )
+                        """
+                match_having = []
+                having_params = []
+
+                for trait_name, values in required_value_filters.items():
+                    match_having.append(
+                        f"""
+                        SUM(
+                            CASE
+                                WHEN match_trait.trait_name = %s
+                                AND {value_expression} IN ({', '.join(['%s'] * len(values))})
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) > 0
+                        """
+                    )
+                    having_params.append(trait_name)
+                    having_params.extend(values)
+
+                match_params = filter_traits + having_params
+                having_clause = f"HAVING {' AND '.join(match_having)}" if match_having else ""
+
+                cursor.execute(
+                    f"""
+                    SELECT COUNT(*) AS total
+                    FROM (
+                        SELECT sp.species_id
+                        FROM species_traits_junction match_stj
+                        JOIN traits match_trait ON match_trait.trait_id = match_stj.trait_id
+                        JOIN species sp ON sp.species_id = match_stj.species_id
+                        WHERE {' AND '.join(match_where)}
+                        GROUP BY sp.species_id
+                        {having_clause}
+                    ) matched_species
+                    """,
+                    match_params,
+                )
+                total_results = cursor.fetchone()["total"]
+                total_pages = max(1, -(-total_results // per_page))
+                page_num = min(page_num, total_pages)
+                offset = (page_num - 1) * per_page
+
+                cursor.execute(
+                    f"""
+                    SELECT sp.species_id, sp.scientific_name, sp.vernacular_name
+                    FROM species_traits_junction match_stj
+                    JOIN traits match_trait ON match_trait.trait_id = match_stj.trait_id
+                    JOIN species sp ON sp.species_id = match_stj.species_id
+                    WHERE {' AND '.join(match_where)}
+                    GROUP BY sp.species_id, sp.scientific_name, sp.vernacular_name
+                    {having_clause}
+                    ORDER BY sp.scientific_name
+                    LIMIT %s OFFSET %s
+                    """,
+                    match_params + [per_page, offset],
+                )
+                species_rows = cursor.fetchall()
+                matching_species = [
+                    {
+                        "species_id": row["species_id"],
+                        "scientific_name": row["scientific_name"],
+                        "vernacular_name": row["vernacular_name"],
+                        "trait_values": {trait_name: [] for trait_name in selected_traits},
+                    }
+                    for row in species_rows
+                ]
+
+                species_ids = [row["species_id"] for row in species_rows]
+
+                if species_ids:
+                    display_value_expression = """
+                        COALESCE(
+                            NULLIF(TRIM(stj.working_value), ''),
+                            NULLIF(TRIM(stj.original_value), ''),
+                            '(blank)'
+                        )
+                    """
+                    display_filter_clause = ""
+                    display_filter_params = []
+
+                    if required_value_filters:
+                        filtered_trait_names = list(required_value_filters.keys())
+                        display_filter_parts = [
+                            f"t.trait_name NOT IN ({', '.join(['%s'] * len(filtered_trait_names))})"
+                        ]
+                        display_filter_params.extend(filtered_trait_names)
+
+                        for trait_name, values in required_value_filters.items():
+                            display_filter_parts.append(
+                                f"""
+                                (
+                                    t.trait_name = %s
+                                    AND {display_value_expression} IN ({', '.join(['%s'] * len(values))})
+                                )
+                                """
+                            )
+                            display_filter_params.append(trait_name)
+                            display_filter_params.extend(values)
+
+                        display_filter_clause = f"AND ({' OR '.join(display_filter_parts)})"
+
+                    cursor.execute(
+                        f"""
+                    SELECT
+                        sp.species_id,
+                        sp.scientific_name,
+                        sp.vernacular_name,
+                        t.trait_name,
+                        {display_value_expression} AS trait_value
+                    FROM species_traits_junction stj
+                    JOIN traits t ON t.trait_id = stj.trait_id
+                    JOIN species sp ON sp.species_id = stj.species_id
+                    WHERE sp.species_id IN ({', '.join(['%s'] * len(species_ids))})
+                    AND t.trait_name IN ({', '.join(['%s'] * len(selected_traits))})
+                    {display_filter_clause}
+                    GROUP BY
+                        sp.species_id,
+                        sp.scientific_name,
+                        sp.vernacular_name,
+                        t.trait_name,
+                        trait_value
+                    ORDER BY sp.scientific_name, t.trait_name, trait_value
+                    """,
+                        species_ids + selected_traits + display_filter_params,
+                    )
+                    species_value_rows = cursor.fetchall()
+                    species_map = {row["species_id"]: row for row in matching_species}
+
+                    for row in species_value_rows:
+                        species_map[row["species_id"]]["trait_values"].setdefault(row["trait_name"], [])
+                        species_map[row["species_id"]]["trait_values"][row["trait_name"]].append(row["trait_value"])
+
+        conn.close()
+    except Exception as exc:
+        error = str(exc)
+
+    if total_results:
+        result_start = ((page_num - 1) * per_page) + 1
+        result_end = min(page_num * per_page, total_results)
+
+    pagination_start = max(1, page_num - 1)
+    pagination_end = min(total_pages, pagination_start + 2)
+    pagination_start = max(1, pagination_end - 2)
+    pagination_pages = list(range(pagination_start, pagination_end + 1))
+
+    return render_template(
+        "traits_findby.html",
+        trait_groups=trait_groups,
+        trait_options=trait_options,
+        value_options=value_options,
+        matching_species=matching_species,
+        total_results=total_results,
+        total_pages=total_pages,
+        page_num=page_num,
+        per_page=per_page,
+        per_page_options=per_page_options,
+        pagination_pages=pagination_pages,
+        result_start=result_start,
+        result_end=result_end,
+        build_findby_url=build_findby_url,
+        selected_groups=selected_groups,
+        selected_traits=selected_traits,
+        selected_values=selected_values,
+        error=error,
+    )
 
 
 @main.route("/traits")

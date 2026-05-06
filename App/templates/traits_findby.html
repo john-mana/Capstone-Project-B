@@ -1,11 +1,642 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Find by Traits</title>
+    <title>Find Flowers by Trait</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .find-trait-shell {
+            display: grid;
+            gap: 28px;
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        .find-trait-content {
+            display: block;
+            flex: 1;
+            width: 100%;
+        }
+
+        .find-trait-content .app-title {
+            display: block;
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+        .find-trait-form {
+            display: grid;
+            gap: 22px;
+            width: 100%;
+        }
+
+        .find-trait-field {
+            display: grid;
+            gap: 9px;
+            position: relative;
+        }
+
+        .find-trait-field label {
+            color: #263826;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .find-trait-combobox {
+            align-items: center;
+            background: #f8faf4;
+            border: 2px solid #b6b6bb;
+            border-radius: 999px;
+            box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 52px;
+            padding: 7px 50px 7px 12px;
+            position: relative;
+            width: 100%;
+        }
+
+        .find-trait-combobox:focus-within {
+            border-color: #4aa857;
+            outline: 3px solid rgba(74, 168, 87, 0.18);
+        }
+
+        .find-trait-search {
+            background: transparent;
+            border: 0;
+            box-sizing: border-box;
+            color: #233523;
+            flex: 1 1 180px;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 15px;
+            min-width: 0;
+            padding: 7px 4px;
+        }
+
+        .find-trait-search:focus {
+            outline: 0;
+        }
+
+        .find-trait-search:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .find-trait-toggle {
+            align-items: center;
+            background: transparent;
+            border: 0;
+            color: #4b5d4b;
+            cursor: pointer;
+            display: flex;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            height: 34px;
+            justify-content: center;
+            line-height: 1;
+            padding: 0;
+            position: absolute;
+            right: 12px;
+            top: 8px;
+            width: 34px;
+        }
+
+        .find-trait-toggle:hover {
+            color: #174c27;
+        }
+
+        .find-trait-toggle:disabled {
+            cursor: not-allowed;
+            opacity: 0.45;
+        }
+
+        .find-trait-dropdown {
+            background: #f8faf4;
+            border: 2px solid #b6b6bb;
+            border-radius: 14px;
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
+            display: none;
+            left: 0;
+            list-style: none;
+            margin: 8px 0 0;
+            max-height: 280px;
+            overflow-y: auto;
+            padding: 6px;
+            position: absolute;
+            top: 100%;
+            width: 100%;
+            z-index: 20;
+        }
+
+        .find-trait-dropdown.is-open {
+            display: block;
+        }
+
+        .find-trait-option {
+            border-radius: 10px;
+            color: #1c271c;
+            cursor: pointer;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+            padding: 10px 12px;
+        }
+
+        .find-trait-option:hover,
+        .find-trait-option.is-highlighted {
+            background: #dcebdd;
+            color: #17351c;
+        }
+
+        .find-trait-option.is-selected {
+            background: #edf4eb;
+            color: #6e7a6e;
+            cursor: default;
+        }
+
+        .find-trait-option small {
+            color: #607060;
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.35;
+            margin-top: 3px;
+        }
+
+        .find-trait-dropdown-empty {
+            color: #526052;
+            cursor: default;
+            font-weight: 500;
+        }
+
+        .find-trait-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .find-trait-chip {
+            align-items: center;
+            background: #4aa857;
+            border-radius: 999px;
+            color: #fff;
+            display: inline-flex;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 13px;
+            font-weight: 800;
+            gap: 8px;
+            max-width: 100%;
+            padding: 7px 11px;
+        }
+
+        .find-trait-chip button {
+            background: transparent;
+            border: 0;
+            color: #fff;
+            cursor: pointer;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .find-trait-actions {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .find-trait-actions button,
+        .find-trait-actions a {
+            border: 0;
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            padding: 13px 24px;
+            text-decoration: none;
+        }
+
+        .find-trait-actions button {
+            background: #4aa857;
+            color: #fff;
+        }
+
+        .find-trait-actions a {
+            background: #e4e9e1;
+            color: #254125;
+        }
+
+        .find-trait-results {
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .find-trait-results-header {
+            align-items: end;
+            display: flex;
+            gap: 18px;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .find-trait-results-header h2 {
+            color: #40623f;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 30px;
+            line-height: 1.1;
+            margin: 0;
+        }
+
+        .find-trait-count,
+        .find-trait-empty {
+            color: #536453;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .find-trait-table-tools {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .find-trait-page-size {
+            align-items: center;
+            display: flex;
+            gap: 9px;
+        }
+
+        .find-trait-page-size label {
+            color: #536453;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .find-trait-page-size select {
+            background: #f8faf4;
+            border: 1px solid #b6b6bb;
+            color: #233523;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 14px;
+            padding: 8px 10px;
+        }
+
+        .find-trait-pagination {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+
+        .find-trait-pagination a,
+        .find-trait-pagination span {
+            color: #254125;
+            font-family: "Inter", Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            padding: 6px 8px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .find-trait-pagination a:hover,
+        .find-trait-pagination .is-current {
+            color: #0b7f36;
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 6px;
+        }
+
+        .find-trait-pagination .is-disabled {
+            color: #879487;
+            opacity: 0.58;
+        }
+
+        .find-trait-table-wrap {
+            border: 1px solid #273827;
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .find-trait-table {
+            border-collapse: collapse;
+            font-family: "Inter", Arial, sans-serif;
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .find-trait-table th,
+        .find-trait-table td {
+            border: 1px solid #273827;
+            overflow-wrap: anywhere;
+            padding: 15px 14px;
+            text-align: left;
+            vertical-align: top;
+            word-break: break-word;
+        }
+
+        .find-trait-table th {
+            background: #d8ded5;
+            color: #050505;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .find-trait-table td {
+            background: rgba(248, 250, 244, 0.72);
+            color: #172117;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .find-trait-table a {
+            color: #174c27;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .find-trait-table th a {
+            color: #050505;
+            display: block;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        .find-trait-alert {
+            background: #fff7ed;
+            border: 1px solid #f2c391;
+            color: #703808;
+            font-family: "Inter", Arial, sans-serif;
+            padding: 16px 18px;
+        }
+
+        @media (max-width: 760px) {
+            .find-trait-results-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const controls = document.querySelectorAll("[data-multi-dropdown]");
+            const dropdowns = {};
+
+            controls.forEach(function (control) {
+                const input = control.querySelector("[data-dropdown-input]");
+                const toggle = control.querySelector("[data-dropdown-toggle]");
+                const menu = control.querySelector("[data-dropdown-menu]");
+                const chips = control.querySelector("[data-dropdown-chips]");
+                const hiddenInputs = control.querySelector("[data-hidden-inputs]");
+                const inputName = control.dataset.inputName;
+                const placeholder = input.placeholder;
+                const selected = new Set(JSON.parse(control.dataset.selected || "[]"));
+                const options = Array.from(menu.querySelectorAll("[data-option-value]"));
+                let hasFocus = false;
+
+                dropdowns[inputName] = {
+                    control: control,
+                    input: input,
+                    menu: menu,
+                    options: options,
+                    selected: selected,
+                    sync: syncAll
+                };
+
+                function optionAllowed(option) {
+                    if (inputName === "trait") {
+                        const groupDropdown = dropdowns.trait_group;
+                        if (!groupDropdown || !groupDropdown.selected.size) {
+                            return true;
+                        }
+
+                        return groupDropdown.selected.has(option.dataset.traitGroup);
+                    }
+
+                    if (inputName === "trait_value") {
+                        const traitDropdown = dropdowns.trait;
+                        if (!traitDropdown || !traitDropdown.selected.size) {
+                            return false;
+                        }
+
+                        return traitDropdown.selected.has(option.dataset.traitName);
+                    }
+
+                    return true;
+                }
+
+                function pruneInvalidSelections() {
+                    if (inputName !== "trait" && inputName !== "trait_value") {
+                        return;
+                    }
+
+                    selected.forEach(function (value) {
+                        const option = options.find(function (item) {
+                            return item.dataset.optionValue === value;
+                        });
+                        const hasAllowedMatch = options.some(function (item) {
+                            return item.dataset.optionValue === value && optionAllowed(item);
+                        });
+                        if (option && !hasAllowedMatch) {
+                            selected.delete(value);
+                        }
+                    });
+                }
+
+                function updatePlaceholder() {
+                    input.placeholder = hasFocus || selected.size ? "" : placeholder;
+                }
+
+                function updateAvailability() {
+                    if (inputName !== "trait_value") {
+                        return;
+                    }
+
+                    const traitDropdown = dropdowns.trait;
+                    const hasTraits = traitDropdown && traitDropdown.selected.size > 0;
+                    input.disabled = !hasTraits;
+                    toggle.disabled = !hasTraits;
+                    if (!hasTraits) {
+                        setOpen(false);
+                    }
+                }
+
+                function setOpen(isOpen) {
+                    if (input.disabled && isOpen) {
+                        return;
+                    }
+
+                    menu.classList.toggle("is-open", isOpen);
+                    toggle.textContent = isOpen ? "⌃" : "⌄";
+                    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+                    if (isOpen) {
+                        renderOptions();
+                    }
+                }
+
+                function syncHiddenInputs() {
+                    hiddenInputs.innerHTML = "";
+                    selected.forEach(function (value) {
+                        const hidden = document.createElement("input");
+                        hidden.type = "hidden";
+                        hidden.name = inputName;
+                        hidden.value = value;
+                        hiddenInputs.appendChild(hidden);
+                    });
+                }
+
+                function renderChips() {
+                    chips.innerHTML = "";
+                    selected.forEach(function (value) {
+                        const option = options.find(function (item) {
+                            return item.dataset.optionValue === value;
+                        });
+                        const label = option ? option.dataset.optionLabel : value;
+                        const chip = document.createElement("span");
+                        chip.className = "find-trait-chip";
+                        chip.textContent = label;
+
+                        const remove = document.createElement("button");
+                        remove.type = "button";
+                        remove.setAttribute("aria-label", "Remove " + label);
+                        remove.textContent = "x";
+                        remove.addEventListener("click", function () {
+                            selected.delete(value);
+                            syncAll();
+                            if (inputName === "trait_group" && dropdowns.trait) {
+                                dropdowns.trait.sync();
+                            }
+                            if ((inputName === "trait_group" || inputName === "trait") && dropdowns.trait_value) {
+                                dropdowns.trait_value.sync();
+                            }
+                        });
+
+                        chip.appendChild(remove);
+                        chips.appendChild(chip);
+                    });
+                }
+
+                function renderOptions() {
+                    pruneInvalidSelections();
+                    const term = input.value.trim().toLowerCase();
+                    let visibleCount = 0;
+
+                    options.forEach(function (option) {
+                        const text = [
+                            option.textContent,
+                            option.dataset.optionLabel,
+                            option.dataset.traitGroup,
+                            option.dataset.traitName
+                        ].filter(Boolean).join(" ").toLowerCase();
+                        const matches = optionAllowed(option) && (!term || text.includes(term));
+                        const isSelected = selected.has(option.dataset.optionValue);
+
+                        option.style.display = matches ? "" : "none";
+                        option.classList.toggle("is-selected", isSelected);
+                        if (matches) {
+                            visibleCount += 1;
+                        }
+                    });
+
+                    let empty = menu.querySelector("[data-dropdown-empty]");
+                    if (!visibleCount) {
+                        if (!empty) {
+                            empty = document.createElement("li");
+                            empty.className = "find-trait-option find-trait-dropdown-empty";
+                            empty.dataset.dropdownEmpty = "true";
+                            empty.textContent = "No matching options";
+                            menu.appendChild(empty);
+                        }
+                    } else if (empty) {
+                        empty.remove();
+                    }
+                }
+
+                function syncAll() {
+                    updateAvailability();
+                    pruneInvalidSelections();
+                    syncHiddenInputs();
+                    renderChips();
+                    renderOptions();
+                    updatePlaceholder();
+                }
+
+                input.addEventListener("focus", function () {
+                    hasFocus = true;
+                    updatePlaceholder();
+                    setOpen(true);
+                });
+
+                input.addEventListener("input", function () {
+                    hasFocus = true;
+                    updatePlaceholder();
+                    setOpen(true);
+                });
+
+                input.addEventListener("blur", function () {
+                    hasFocus = false;
+                    window.setTimeout(updatePlaceholder, 0);
+                });
+
+                options.forEach(function (option) {
+                    option.addEventListener("mousedown", function (event) {
+                        event.preventDefault();
+                        const value = option.dataset.optionValue;
+                        if (selected.has(value)) {
+                            selected.delete(value);
+                        } else {
+                            selected.add(value);
+                        }
+                        input.value = "";
+                        syncAll();
+                        if (inputName === "trait_group" && dropdowns.trait) {
+                            dropdowns.trait.sync();
+                        }
+                        if ((inputName === "trait_group" || inputName === "trait") && dropdowns.trait_value) {
+                            dropdowns.trait_value.sync();
+                        }
+                    });
+                });
+
+                toggle.addEventListener("click", function () {
+                    if (menu.classList.contains("is-open")) {
+                        setOpen(false);
+                    } else {
+                        input.focus();
+                        setOpen(true);
+                    }
+                });
+
+                document.addEventListener("click", function (event) {
+                    if (!control.contains(event.target)) {
+                        setOpen(false);
+                    }
+                });
+
+                syncAll();
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -42,7 +673,7 @@
                     <div class="dropdown-content">
                         <a href="/traits">View All</a>
                         <a href="/traits_detail">Traits Detail</a>
-                        <a href="/traits_findby">Find by Trait</a>
+                        <a href="/traits_findby">Find Flowers by Trait</a>
                     </div>
                 </div>
 
@@ -94,11 +725,174 @@
 
     <div class="page-divider"></div>
 
-    <h1 class="app-title">Find by Trait</h1>
+    <div class="content find-trait-content">
+        <h1 class="app-title">Find Flowers by Trait</h1>
 
-    <!-- PAGE CONTENT -->
-    <div class="content">
-        <p> I DON'T THINK WE NEED THIS IF WE HAVE THE QUERY BUILDER</p>
+        <div class="find-trait-shell">
+            {% if error %}
+                <div class="find-trait-alert">Database error: {{ error }}</div>
+            {% endif %}
+
+            <form class="find-trait-form" method="get" action="/traits_findby">
+                <div class="find-trait-field" data-multi-dropdown data-input-name="trait_group" data-selected='{{ selected_groups | tojson }}'>
+                    <label for="trait-group-search">Select trait groups</label>
+                    <div class="find-trait-combobox">
+                        <div class="find-trait-chips" data-dropdown-chips></div>
+                        <input id="trait-group-search" class="find-trait-search" type="text" placeholder="Search trait groups" autocomplete="off" data-dropdown-input>
+                        <button class="find-trait-toggle" type="button" aria-label="Toggle trait group dropdown" aria-expanded="false" data-dropdown-toggle>⌄</button>
+                        <ul class="find-trait-dropdown" data-dropdown-menu>
+                            {% for group in trait_groups %}
+                                <li class="find-trait-option" data-option-value="{{ group.trait_type_name }}" data-option-label="{{ group.trait_type_name }}">
+                                    {{ group.trait_type_name }}
+                                    <small>{{ group.trait_count }} traits</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div data-hidden-inputs></div>
+                </div>
+
+                <div class="find-trait-field" data-multi-dropdown data-input-name="trait" data-selected='{{ selected_traits | tojson }}'>
+                    <label for="trait-search">Select traits to filter by</label>
+                    <div class="find-trait-combobox">
+                        <div class="find-trait-chips" data-dropdown-chips></div>
+                        <input id="trait-search" class="find-trait-search" type="text" placeholder="Search traits" autocomplete="off" data-dropdown-input>
+                        <button class="find-trait-toggle" type="button" aria-label="Toggle traits dropdown" aria-expanded="false" data-dropdown-toggle>⌄</button>
+                        <ul class="find-trait-dropdown" data-dropdown-menu>
+                            {% for trait in trait_options %}
+                                <li class="find-trait-option" data-option-value="{{ trait.trait_name }}" data-option-label="{{ trait.trait_name }}" data-trait-group="{{ trait.trait_type_name }}">
+                                    {{ trait.trait_name }}
+                                    {% if trait.trait_label %}
+                                        <small>{{ trait.trait_label }}</small>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div data-hidden-inputs></div>
+                </div>
+
+                <div class="find-trait-field" data-multi-dropdown data-input-name="trait_value" data-selected='{{ selected_values | tojson }}'>
+                    <label for="value-search">Select values</label>
+                    <div class="find-trait-combobox">
+                        <div class="find-trait-chips" data-dropdown-chips></div>
+                        <input id="value-search" class="find-trait-search" type="text" placeholder="{% if selected_traits %}Search values{% else %}Select traits first{% endif %}" autocomplete="off" data-dropdown-input {% if not selected_traits %}disabled{% endif %}>
+                        <button class="find-trait-toggle" type="button" aria-label="Toggle values dropdown" aria-expanded="false" data-dropdown-toggle {% if not selected_traits %}disabled{% endif %}>⌄</button>
+                        <ul class="find-trait-dropdown" data-dropdown-menu>
+                            {% for value in value_options %}
+                                <li class="find-trait-option" data-option-value="{{ value.trait_name }}:::{{ value.trait_value }}" data-option-label="{{ value.trait_value }}" data-trait-name="{{ value.trait_name }}">
+                                    {{ value.trait_value }}
+                                    <small>{{ value.trait_name }} · {{ value.species_count }} species</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div data-hidden-inputs></div>
+                </div>
+
+                <div class="find-trait-actions">
+                    <button type="submit">Find Flowers</button>
+                    <a href="/traits_findby">Clear</a>
+                </div>
+            </form>
+
+            <div class="find-trait-results">
+                <div class="find-trait-results-header">
+                    <h2>Matching Flowers</h2>
+                </div>
+
+                {% if selected_traits and matching_species %}
+                    <div class="find-trait-table-tools">
+                        <p class="find-trait-count">Showing {{ result_start }}-{{ result_end }} of {{ total_results }} flowers</p>
+                        <form class="find-trait-page-size" method="get" action="/traits_findby">
+                            {% for group in selected_groups %}
+                                <input type="hidden" name="trait_group" value="{{ group }}">
+                            {% endfor %}
+                            {% for trait_name in selected_traits %}
+                                <input type="hidden" name="trait" value="{{ trait_name }}">
+                            {% endfor %}
+                            {% for value in selected_values %}
+                                <input type="hidden" name="trait_value" value="{{ value }}">
+                            {% endfor %}
+                            <input type="hidden" name="page" value="1">
+                            <label for="per-page">Show</label>
+                            <select id="per-page" name="per_page" onchange="this.form.submit()">
+                                {% for option in per_page_options %}
+                                    <option value="{{ option }}" {% if option == per_page %}selected{% endif %}>{{ option }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </div>
+
+                    <div class="find-trait-table-wrap">
+                        <table class="find-trait-table">
+                            <thead>
+                                <tr>
+                                    <th>Flower Name</th>
+                                    {% for trait_name in selected_traits %}
+                                        <th>
+                                            <a href="/traits_detail?trait={{ trait_name | urlencode }}">
+                                                {{ trait_name }}
+                                            </a>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for species in matching_species %}
+                                    <tr>
+                                        <td>
+                                            <a href="/species_detail?species={{ species.scientific_name | urlencode }}">
+                                                {{ species.scientific_name }}
+                                            </a>
+                                        </td>
+                                        {% for trait_name in selected_traits %}
+                                                <td>
+                                                    {% if species.trait_values.get(trait_name) %}
+                                                        {{ species.trait_values.get(trait_name) | join(", ") }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <nav class="find-trait-pagination" aria-label="Matching flowers pagination">
+                        {% if page_num > 1 %}
+                            <a href="{{ build_findby_url(1) }}">&lt;&lt;</a>
+                            <a href="{{ build_findby_url(page_num - 1) }}">&lt;</a>
+                        {% else %}
+                            <span class="is-disabled">&lt;&lt;</span>
+                            <span class="is-disabled">&lt;</span>
+                        {% endif %}
+
+                        {% for page in pagination_pages %}
+                            {% if page == page_num %}
+                                <span class="is-current">{{ page }}</span>
+                            {% else %}
+                                <a href="{{ build_findby_url(page) }}">{{ page }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_num < total_pages %}
+                            <a href="{{ build_findby_url(page_num + 1) }}">&gt;</a>
+                            <a href="{{ build_findby_url(total_pages) }}">&gt;&gt;</a>
+                        {% else %}
+                            <span class="is-disabled">&gt;</span>
+                            <span class="is-disabled">&gt;&gt;</span>
+                        {% endif %}
+                    </nav>
+                {% elif selected_traits %}
+                    <div class="find-trait-empty">No flowers matched the selected trait filters.</div>
+                {% else %}
+                    <div class="find-trait-empty">Select one or more traits to show matching flowers.</div>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
     <footer class="app-footer">
