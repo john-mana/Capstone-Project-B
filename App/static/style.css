@@ -990,3 +990,11 @@ body {
 .nav-dropdown:hover .dropdown-content {
     display: block;
 }
+
+.home-divider {
+    height: 1px;
+    background: #f6f9f2;
+    margin: 42px 0 85px;
+    position: relative;
+    z-index: 2;
+}
