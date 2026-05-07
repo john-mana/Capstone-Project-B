@@ -468,27 +468,29 @@ def traits_findby():
 def traits():
     search = request.args.get("q", "").strip()
     rows = []
+    trait_options = []
     error = None
 
     try:
         conn = get_connection()
 
         with conn.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT trait_name, trait_label
+                FROM traits
+                WHERE of_interest = 1
+                ORDER BY column_number, trait_name
+                """
+            )
+            trait_options = cursor.fetchall()
+
             params = []
             where_clause = ""
 
             if search:
-                where_clause = """
-                AND (
-                    trait_type_name LIKE %s
-                    OR trait_name LIKE %s
-                    OR trait_info LIKE %s
-                    OR trait_unit LIKE %s
-                    OR trait_type LIKE %s
-                    OR trait_label LIKE %s
-                )
-                """
-                params = [f"%{search}%"] * 6
+                where_clause = "AND trait_name LIKE %s"
+                params = [f"%{search}%"]
 
             cursor.execute(
                 f"""
@@ -512,7 +514,13 @@ def traits():
     except Exception as exc:
         error = str(exc)
 
-    return render_template("traits.html", traits=rows, search=search, error=error)
+    return render_template(
+        "traits.html",
+        traits=rows,
+        trait_options=trait_options,
+        search=search,
+        error=error,
+    )
 
 
 @main.route("/traits_detail")
