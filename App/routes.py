@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import os
 import socket
 
@@ -75,6 +74,11 @@ def contact():
     return render_template("contact.html")
 
 
+@main.route("/logout")
+def logout():
+    return redirect(url_for("main.login"))
+
+
 # =========================
 # Species
 # =========================
@@ -135,18 +139,69 @@ def admin_controls():
     return render_template("admin_controls.html")
 
 
-@main.route("/logout")
-def logout():
-    return redirect(url_for("main.login"))
-
+# =========================
+# Placeholder Pages
+# =========================
 
 @main.route("/flora_dashboard")
 @main.route("/fauna_dashboard")
 @main.route("/report")
-@main.route("/map")
 @main.route("/settings")
 def placeholder_page():
     return render_template("home.html")
+
+
+# =========================
+# Map
+# =========================
+
+@main.route("/map")
+def map_view():
+    species = request.args.get("species", "").strip()
+    date = request.args.get("date", "").strip()
+    data = []
+    error = None
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            query = """
+                SELECT 
+                    scientific_name,
+                    decimal_latitude,
+                    decimal_longitude,
+                    event_date
+                FROM occurrences
+                WHERE decimal_latitude IS NOT NULL
+                AND decimal_longitude IS NOT NULL
+            """
+
+            params = []
+
+            if species:
+                query += " AND scientific_name LIKE %s"
+                params.append(f"%{species}%")
+
+            if date:
+                query += " AND DATE(event_date) = %s"
+                params.append(date)
+
+            cursor.execute(query, params)
+            data = cursor.fetchall()
+
+        conn.close()
+
+    except Exception as exc:
+        error = str(exc)
+
+    return render_template(
+        "map.html",
+        data=data,
+        species=species,
+        date=date,
+        error=error,
+    )
 
 
 # =========================
@@ -155,137 +210,30 @@ def placeholder_page():
 
 @main.route("/db-test")
 def db_test():
-=======
-from flask import Blueprint, render_template, request
-import mysql.connector
-
-main = Blueprint("main", __name__)
-
-
-@main.route("/")
-def index():
-    return "Flask app is running."
-
-
-@main.route("/map")
-def map_view():
-    species = request.args.get("species")
-    date = request.args.get("date")
-
->>>>>>> origin/andrio-map-branch
     try:
-        conn = mysql.connector.connect(
-            host="db",
-            user="root",
-            password="root",
-            database="flora_project"
-        )
+        conn = get_connection()
 
-        cursor = conn.cursor(dictionary=True)
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT 1 AS status")
+            result = cursor.fetchone()
 
-        query = """
-            SELECT 
-                scientific_name,
-                decimal_latitude,
-                decimal_longitude,
-                event_date
-            FROM occurrences
-            WHERE decimal_latitude IS NOT NULL
-            AND decimal_longitude IS NOT NULL
-        """
-
-        params = []
-
-        if species:
-            query += " AND scientific_name LIKE %s"
-            params.append(f"%{species}%")
-
-        if date:
-            query += " AND DATE(event_date) = %s"
-            params.append(date)
-
-        cursor.execute(query, params)
-        data = cursor.fetchall()
-
-        cursor.close()
         conn.close()
 
-        return render_template("map.html", data=data, species=species, date=date)
+        return f"Database connected successfully: {result}"
 
-    except Exception as e:
-        return f"Database connection failed: {e}"
+    except Exception as exc:
+        return f"Database connection failed: {exc}"
 
 
-<<<<<<< HEAD
 # =========================
 # Traits
 # =========================
-=======
-@main.route("/contact")
-def contact():
-    return render_template("contact.html")
-
-
-@main.route("/login")
-def login():
-    return render_template("login.html")
-
-
-@main.route("/register")
-def register():
-    return render_template("register.html")
-
-
-@main.route("/admin_controls")
-def admin_controls():
-    return render_template("admin_controls.html")
-
-
-@main.route("/home")
-def home():
-    return render_template("home.html")
-
-
-@main.route("/query_builder")
-def query_builder():
-    return render_template(
-        "query_builder.html",
-        species_options=[],
-    )
-
-
-@main.route("/species")
-def species():
-    return render_template("species.html")
-
-
-@main.route("/species_new")
-def species_new():
-    return render_template("species_new.html")
-
-
-@main.route("/species_detail")
-def species_detail():
-    return render_template("species_detail.html")
-
-
-@main.route("/traits")
-def traits():
-    return render_template("traits.html")
-
-
-@main.route("/traits_detail")
-def traits_detail():
-    return render_template("traits_detail.html")
-
->>>>>>> origin/andrio-map-branch
 
 @main.route("/traits_findby")
 def traits_findby():
     return render_template("traits_findby.html")
 
 
-<<<<<<< HEAD
 @main.route("/traits")
 def traits():
     search = request.args.get("q", "").strip()
@@ -331,15 +279,11 @@ def traits():
             rows = cursor.fetchall()
 
         conn.close()
+
     except Exception as exc:
         error = str(exc)
 
     return render_template("traits.html", traits=rows, search=search, error=error)
-=======
-@main.route("/observations")
-def observations():
-    return render_template("observations.html")
->>>>>>> origin/andrio-map-branch
 
 
 @main.route("/traits_detail")
@@ -439,10 +383,12 @@ def traits_detail():
                     [trait["trait_id"]],
                 )
                 value_rows = cursor.fetchall()
+
                 if value_rows:
                     max_species_count = max(row["species_count"] for row in value_rows)
 
         conn.close()
+
     except Exception as exc:
         error = str(exc)
 
@@ -458,21 +404,14 @@ def traits_detail():
     )
 
 
-<<<<<<< HEAD
 # =========================
 # Query Builder
 # =========================
-=======
-@main.route("/reserves")
-def reserves():
-    return render_template("reserves.html")
->>>>>>> origin/andrio-map-branch
 
 @main.route("/query_builder", methods=["GET", "POST"])
 def query_builder():
     filters = {key: "" for key in QUERY_FILTERS}
 
-<<<<<<< HEAD
     if request.method == "POST":
         for key in filters:
             filters[key] = request.form.get(key, "")
@@ -512,33 +451,43 @@ def query_builder():
         if filters["species"]:
             where.append("o.scientific_name LIKE %s")
             params.append(f"%{filters['species']}%")
+
         if filters["vernacular_name"]:
             where.append("sp.vernacular_name LIKE %s")
             params.append(f"%{filters['vernacular_name']}%")
+
         if filters["reserve"]:
             where.append("r.asset_name LIKE %s")
             params.append(f"%{filters['reserve']}%")
+
         if filters["native"]:
             where.append("sp.native_flag = %s")
             params.append(filters["native"])
+
         if filters["rare"]:
             where.append("sp.threatened_species_status LIKE %s")
             params.append(f"%{filters['rare']}%")
+
         if filters["start_year"]:
             where.append("YEAR(o.event_date) >= %s")
             params.append(filters["start_year"])
+
         if filters["end_year"]:
             where.append("YEAR(o.event_date) <= %s")
             params.append(filters["end_year"])
+
         if filters["dataset"]:
             where.append("d.dataset_name LIKE %s")
             params.append(f"%{filters['dataset']}%")
+
         if filters["locality"]:
             where.append("o.locality LIKE %s")
             params.append(f"%{filters['locality']}%")
+
         if filters["habitat"]:
             where.append("o.habitat LIKE %s")
             params.append(f"%{filters['habitat']}%")
+
         if filters["basis"]:
             where.append("o.basis_of_record LIKE %s")
             params.append(f"%{filters['basis']}%")
@@ -589,26 +538,44 @@ def query_builder():
         results = cursor.fetchall()
 
         cursor.execute(
-            "SELECT DISTINCT scientific_name FROM occurrences "
-            "WHERE scientific_name IS NOT NULL ORDER BY scientific_name LIMIT 2000"
+            """
+            SELECT DISTINCT scientific_name
+            FROM occurrences
+            WHERE scientific_name IS NOT NULL
+            ORDER BY scientific_name
+            LIMIT 2000
+            """
         )
         species_options = [row["scientific_name"] for row in cursor.fetchall()]
 
         cursor.execute(
-            "SELECT DISTINCT asset_name FROM reserves "
-            "WHERE asset_name IS NOT NULL ORDER BY asset_name"
+            """
+            SELECT DISTINCT asset_name
+            FROM reserves
+            WHERE asset_name IS NOT NULL
+            ORDER BY asset_name
+            """
         )
         reserve_options = [row["asset_name"] for row in cursor.fetchall()]
 
         cursor.execute(
-            "SELECT DISTINCT dataset_name FROM datasets "
-            "WHERE dataset_name IS NOT NULL ORDER BY dataset_name"
+            """
+            SELECT DISTINCT dataset_name
+            FROM datasets
+            WHERE dataset_name IS NOT NULL
+            ORDER BY dataset_name
+            """
         )
         dataset_options = [row["dataset_name"] for row in cursor.fetchall()]
 
         cursor.execute(
-            "SELECT DISTINCT vernacular_name FROM species "
-            "WHERE vernacular_name IS NOT NULL ORDER BY vernacular_name LIMIT 2000"
+            """
+            SELECT DISTINCT vernacular_name
+            FROM species
+            WHERE vernacular_name IS NOT NULL
+            ORDER BY vernacular_name
+            LIMIT 2000
+            """
         )
         vernacular_options = [row["vernacular_name"] for row in cursor.fetchall()]
 
@@ -626,12 +593,8 @@ def query_builder():
                 "vernacular_options": vernacular_options,
             }
         )
+
     except Exception:
         pass
 
     return render_template("query_builder.html", **context)
-=======
-@main.route("/at_risk")
-def at_risk():
-    return render_template("at_risk.html")
->>>>>>> origin/andrio-map-branch
