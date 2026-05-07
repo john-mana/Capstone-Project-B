@@ -92,6 +92,7 @@ body {
     position: relative;
     z-index: 2;
     flex: 1;
+    padding-bottom: 20px;
 }
 
 .left-panel {
@@ -339,7 +340,7 @@ body {
 }
 .footer {
     border-top: 1px solid #c9d0c4;
-    margin-top: 55px;
+    margin-top: 40px;
     padding-top: 18px;
     display: flex;
     justify-content: space-between;
@@ -838,7 +839,7 @@ body {
 
 /* Footer layout */
 .app-footer {
-    margin-top: auto;
+    margin-top: 40px;
     padding: 18px 24px;
 
     background-color: #dcebdd;
