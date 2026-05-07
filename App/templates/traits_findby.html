@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Find Flowers by Trait</title>
+    <title>Find Species by Trait</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -673,7 +673,7 @@
                     <div class="dropdown-content">
                         <a href="/traits">View All</a>
                         <a href="/traits_detail">Traits Detail</a>
-                        <a href="/traits_findby">Find Flowers by Trait</a>
+                        <a href="/traits_findby">Find Species by Trait</a>
                     </div>
                 </div>
 
@@ -726,7 +726,7 @@
     <div class="page-divider"></div>
 
     <div class="content find-trait-content">
-        <h1 class="app-title">Find Flowers by Trait</h1>
+        <h1 class="app-title">Find Species by Trait</h1>
 
         <div class="find-trait-shell">
             {% if error %}
@@ -791,19 +791,19 @@
                 </div>
 
                 <div class="find-trait-actions">
-                    <button type="submit">Find Flowers</button>
+                    <button type="submit">Find Species</button>
                     <a href="/traits_findby">Clear</a>
                 </div>
             </form>
 
             <div class="find-trait-results">
                 <div class="find-trait-results-header">
-                    <h2>Matching Flowers</h2>
+                    <h2>Matching Species</h2>
                 </div>
 
                 {% if selected_traits and matching_species %}
                     <div class="find-trait-table-tools">
-                        <p class="find-trait-count">Showing {{ result_start }}-{{ result_end }} of {{ total_results }} flowers</p>
+                        <p class="find-trait-count">Showing {{ result_start }}-{{ result_end }} of {{ total_results }} Species</p>
                         <form class="find-trait-page-size" method="get" action="/traits_findby">
                             {% for group in selected_groups %}
                                 <input type="hidden" name="trait_group" value="{{ group }}">
@@ -887,9 +887,9 @@
                         {% endif %}
                     </nav>
                 {% elif selected_traits %}
-                    <div class="find-trait-empty">No flowers matched the selected trait filters.</div>
+                    <div class="find-trait-empty">No species matched the selected trait filters.</div>
                 {% else %}
-                    <div class="find-trait-empty">Select one or more traits to show matching flowers.</div>
+                    <div class="find-trait-empty">Select one or more traits to show matching species.</div>
                 {% endif %}
             </div>
         </div>
