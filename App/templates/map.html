@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map Results</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .search-box {
+            padding: 12px;
+            background: #f4f4f4;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .search-box input {
+            padding: 8px;
+            margin-right: 8px;
+        }
+
+        .search-box button {
+            padding: 8px 12px;
+        }
+
+        #map {
+            height: calc(100vh - 70px);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="search-box">
+    <form action="/map" method="GET">
+        <input type="text" name="species" placeholder="Search species name" value="{{ species or '' }}">
+        <input type="date" name="date" value="{{ date or '' }}">
+        <button type="submit">Show on Map</button>
+        <a href="/map">Reset</a>
+    </form>
+</div>
+
+<div id="map"></div>
+
+<script>
+    var map = L.map('map').setView([-33.9, 151.0], 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'OpenStreetMap'
+    }).addTo(map);
+
+    var points = {{ data|tojson }};
+    var bounds = [];
+
+    points.forEach(function(p) {
+        if (p.decimal_latitude && p.decimal_longitude) {
+            var marker = L.marker([p.decimal_latitude, p.decimal_longitude])
+                .addTo(map)
+                .bindPopup(
+                    "<b>" + p.scientific_name + "</b><br>" +
+                    "Date: " + p.event_date
+                );
+
+            bounds.push([p.decimal_latitude, p.decimal_longitude]);
+        }
+    });
+
+    if (bounds.length > 0) {
+        map.fitBounds(bounds);
+    }
+</script>
+
+</body>
+</html>
