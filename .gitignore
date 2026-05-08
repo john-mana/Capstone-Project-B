@@ -19,3 +19,5 @@ bad_rows.csv
 fix_dates.csv
 species_no_traits.csv
 final_species_traits.csv
+.env
+.DS_Store
