@@ -6,6 +6,101 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+    /* force vertical stack layout */
+    .content {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .at-risk-intro {
+        color: #555;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+        line-height: 1.5;
+        max-width: 800px;
+    }
+
+    .result-count {
+        color: #666;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+
+    .at-risk-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-family: Inter, sans-serif;
+    }
+
+    .at-risk-table th {
+        background-color: #d9d9d9;
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #999;
+        font-weight: 600;
+    }
+
+    .at-risk-table td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #999;
+        background-color: #f5f9f5;
+        vertical-align: middle;
+    }
+
+    .at-risk-table a {
+        color: #2d5a2d;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .at-risk-table a:hover {
+        text-decoration: underline;
+    }
+
+    .common-name {
+        color: #888;
+        font-size: 0.85em;
+        font-style: italic;
+    }
+
+    .priority-high {
+        background-color: #e74c3c !important;
+        color: white;
+        font-weight: bold;
+    }
+
+    .priority-medium {
+        background-color: #f39c12 !important;
+        color: white;
+        font-weight: bold;
+    }
+
+    .priority-low {
+        background-color: #27ae60 !important;
+        color: white;
+        font-weight: bold;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #888;
+    }
+
+    .error-box {
+        background-color: #ffe6e6;
+        border: 1px solid #cc0000;
+        color: #cc0000;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
+</style>
 </head>
 
 <body>
@@ -96,10 +191,60 @@
 
     <h1 class="app-title">At Risk Species</h1>
 
-    <!-- PAGE CONTENT -->
-    <div class="content">
-        <p> **dashboard with all species flagged as AT RISK here </p>
+   <!-- PAGE CONTENT -->
+<div class="content">
+    <p class="at-risk-intro">
+        List of species flagged as at-risk based on observation data.
+        Criteria: only found in 1 reserve, 3 or fewer observations,
+        or no observations since 2015.
+    </p>
+
+    {% if error %}
+    <div class="error-box">
+        Database error: {{ error }}
     </div>
+    {% endif %}
+
+    {% if at_risk_list %}
+    <p class="result-count">{{ at_risk_list|length }} species flagged</p>
+
+    <table class="at-risk-table">
+        <thead>
+            <tr>
+                <th>Species Name</th>
+                <th>Alert Reason</th>
+                <th>Alerted Before?</th>
+                <th># of Previous Alerts</th>
+                <th>Priority</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for species in at_risk_list %}
+            <tr>
+                <td>
+                    <a href="/species_detail?species_id={{ species.species_id }}">
+                        {{ species.scientific_name }}
+                    </a>
+                    {% if species.vernacular_name %}
+                    <br><span class="common-name">{{ species.vernacular_name }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ species.alert_reason }}</td>
+                <td>{{ species.alerted_before }}</td>
+                <td>{{ species.previous_alerts }}</td>
+                <td class="priority-{{ species.priority|lower }}">
+                    {{ species.priority }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <p>No at-risk species found.</p>
+    </div>
+    {% endif %}
+</div>
 
     <footer class="app-footer">
         <div class="footer-right">

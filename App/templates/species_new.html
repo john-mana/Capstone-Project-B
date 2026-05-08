@@ -6,6 +6,154 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+    .content {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .page-intro {
+        color: #555;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+
+    .filter-bar {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .filter-bar input,
+    .filter-bar select {
+        padding: 8px 12px;
+        border: 1px solid #c2d7b9;
+        border-radius: 6px;
+        font-size: 0.95em;
+        background-color: white;
+    }
+
+    .filter-bar button {
+        padding: 8px 16px;
+        background-color: #40623f;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .filter-bar button:hover {
+        background-color: #2f4d2e;
+    }
+
+    .filter-bar a.clear-btn {
+        padding: 8px 16px;
+        background-color: #ccc;
+        color: #333;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .result-count {
+        color: #666;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+
+    .species-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Inter, sans-serif;
+    }
+
+    .species-table th {
+        background-color: #d9d9d9;
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #999;
+        font-weight: 600;
+    }
+
+    .species-table td {
+        padding: 10px 12px;
+        text-align: center;
+        border: 1px solid #999;
+        background-color: #f5f9f5;
+    }
+
+    .species-table a {
+        color: #2d5a2d;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .species-table a:hover {
+        text-decoration: underline;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #888;
+    }
+
+    .error-box {
+        background-color: #ffe6e6;
+        border: 1px solid #cc0000;
+        color: #cc0000;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
+
+    .data-note {
+        font-size: 0.85em;
+        color: #888;
+        font-style: italic;
+    }
+
+    .search-wrapper {
+        position: relative;
+    }
+
+    .search-wrapper input {
+        width: 250px;
+    }
+
+    .suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #c2d7b9;
+        border-top: none;
+        border-radius: 0 0 6px 6px;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none;
+        z-index: 100;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .suggestion-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+
+    .suggestion-item:hover {
+        background-color: #eef5ec;
+    }
+</style>
+
 </head>
 
 <body>
@@ -98,7 +246,88 @@
 
     <!-- PAGE CONTENT -->
     <div class="content">
-        <p> **dashboard with all new species in most recent database update here </p>
+        <p class="page-intro">
+            Most recently added species (sorted by species ID, newest first).
+            <span class="data-note">Note: until a created_at column is added, "new" means highest species_id.</span>
+        /p>
+
+        <form class="filter-bar" method="get" action="/species_new">
+            <div class="search-wrapper">
+                <input type="text"
+                        id="search-input"
+                        name="q"
+                        placeholder="Search by name..."
+                        value="{{ search }}"
+                        autocomplete="off"
+                        oninput="filterSuggestions()">
+                <div id="search-suggestions" class="suggestions"></div>
+            </div>
+
+            <select name="family">
+                <option value="">All families</option>
+                {% for fam in family_options %}
+                <option value="{{ fam }}" {% if family_filter == fam %}selected{% endif %}>{{ fam }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Filter</button>
+
+            {% if search or family_filter %}
+            <a href="/species_new" class="clear-btn">Clear</a>
+            {% endif %}
+        </form>
+
+        {% if error %}
+        <div class="error-box">Database error: {{ error }}</div>
+        {% endif %}
+
+        {% if species_list %}
+        <p class="result-count">Showing {{ species_list|length }} species</p>
+
+        <table class="species-table">
+            <thead>
+                <tr>
+                    <th>Species ID</th>
+                    <th>Taxonomy ID</th>
+                    <th>Scientific Name</th>
+                    <th>Vernacular Name</th>
+                    <th>Native?</th>
+                    <th>Endangered Status</th>
+                    <th>Family</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sp in species_list %}
+                <tr>
+                    <td>{{ sp.species_id }}</td>
+                    <td>{{ sp.taxonomy_id or '-' }}</td>
+                    <td>
+                        <a href="/species_detail?species_id={{ sp.species_id }}">
+                            {{ sp.scientific_name }}
+                        </a>
+                    </td>
+                    <td>{{ sp.vernacular_name or '-' }}</td>
+                    <td>
+                        {% if sp.native_flag == 1 %}Native
+                        {% elif sp.native_flag == 0 %}Exotic
+                        {% else %}<span class="data-note">Unknown</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if sp.endangered_status_code %}{{ sp.endangered_status_code }}
+                        {% else %}<span class="data-note">-</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ sp.family or '-' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <p>No species found.</p>
+        </div>
+        {% endif %}
     </div>
 
     <footer class="app-footer">
@@ -109,6 +338,54 @@
     </footer>
 
 </div>
+
+<script id="name-data" type="application/json">{{ name_options | tojson | safe }}</script>
+<script>
+    const nameOptions = JSON.parse(document.getElementById('name-data').textContent);
+
+    function filterSuggestions() {
+        const input = document.getElementById('search-input');
+        const box = document.getElementById('search-suggestions');
+        const value = input.value.toLowerCase();
+
+        if (value.length < 2) {
+            box.style.display = 'none';
+            return;
+        }
+
+        const matches = nameOptions
+            .filter(name => name.toLowerCase().includes(value))
+            .slice(0, 10);
+
+        box.innerHTML = '';
+        if (matches.length === 0) {
+            box.style.display = 'none';
+            return;
+        }
+
+        matches.forEach(name => {
+            const div = document.createElement('div');
+            div.className = 'suggestion-item';
+            div.textContent = name;
+            div.onclick = () => {
+                input.value = name;
+                box.style.display = 'none';
+            };
+            box.appendChild(div);
+        });
+
+        box.style.display = 'block';
+    }
+
+    // hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        const box = document.getElementById('search-suggestions');
+        const input = document.getElementById('search-input');
+        if (!box.contains(e.target) && e.target !== input) {
+            box.style.display = 'none';
+        }
+    });
+</script>
 
 </body>
 </html>

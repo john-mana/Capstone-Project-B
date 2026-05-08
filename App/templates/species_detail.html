@@ -1,11 +1,177 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>*Species Name*</title>
+    <title>Species Detail</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .content {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #2d5a2d;
+            text-decoration: none;
+            font-size: 0.95em;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .detail-page-title {
+            color: #0ba84a;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin: 0 0 5px;
+        }
+
+        .species-name-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .species-name-heading {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 2.2em;
+            color: #40623f;
+            margin: 0;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        .status-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .status-tag {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .tag-native {
+            background-color: #7dd9d8;
+            color: #0d3b3a;
+        }
+
+        .tag-vulnerable {
+            background-color: #f4d03f;
+            color: #5d4404;
+        }
+
+        .tag-at-risk {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .tag-unknown {
+            background-color: #ccc;
+            color: #555;
+            font-style: italic;
+        }
+
+        .tag-explanation {
+            font-size: 0.85em;
+            color: #888;
+            font-style: italic;
+            margin-bottom: 25px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .detail-section h2 {
+            font-family: "Playfair Display", Georgia, serif;
+            color: #40623f;
+            font-size: 1.6em;
+            margin: 0 0 15px;
+        }
+
+        .detail-list {
+            list-style: disc;
+            padding-left: 25px;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .detail-list li {
+            margin: 6px 0;
+        }
+
+        .detail-list strong {
+            color: #2d5a2d;
+        }
+
+        .traits-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Inter, sans-serif;
+        }
+
+        .traits-table td {
+            padding: 10px 14px;
+            border: 1px solid #999;
+            vertical-align: top;
+        }
+
+        .traits-table td:first-child {
+            background-color: #d9d9d9;
+            font-weight: 600;
+            width: 40%;
+        }
+
+        .traits-table td:last-child {
+            background-color: #f9faf8;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            background-color: #f9faf8;
+            border: 1px dashed #ccc;
+            border-radius: 6px;
+        }
+
+        .error-box {
+            background-color: #ffe6e6;
+            border: 1px solid #cc0000;
+            color: #cc0000;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .data-note {
+            font-size: 0.85em;
+            color: #888;
+            font-style: italic;
+        }
+
+        @media (max-width: 900px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -18,15 +184,12 @@
         </div>
 
         <div class="app-nav">
-
             <div class="nav-menu">
 
-                <!-- HOME -->
                 <a href="/home" class="nav-btn">
                     <img src="{{ url_for('static', filename='home.png') }}" class="home-icon">
                 </a>
 
-                <!-- SPECIES -->
                 <div class="nav-dropdown">
                     <button class="nav-btn">Species ▾</button>
                     <div class="dropdown-content">
@@ -36,7 +199,6 @@
                     </div>
                 </div>
 
-                <!-- TRAITS -->
                 <div class="nav-dropdown">
                     <button class="nav-btn">Traits ▾</button>
                     <div class="dropdown-content">
@@ -46,7 +208,6 @@
                     </div>
                 </div>
 
-                <!-- OBSERVATIONS -->
                 <div class="nav-dropdown">
                     <button class="nav-btn">Observations ▾</button>
                     <div class="dropdown-content">
@@ -55,7 +216,6 @@
                     </div>
                 </div>
 
-                <!-- RESERVES -->
                 <div class="nav-dropdown">
                     <button class="nav-btn">Reserves ▾</button>
                     <div class="dropdown-content">
@@ -63,7 +223,6 @@
                     </div>
                 </div>
 
-                <!-- AT RISK -->
                 <div class="nav-dropdown">
                     <button class="nav-btn">At Risk Species ▾</button>
                     <div class="dropdown-content">
@@ -71,7 +230,6 @@
                     </div>
                 </div>
 
-                <!-- ADVANCED SEARCH -->
                 <div class="nav-dropdown">
                     <button class="nav-btn">Advanced Search ▾</button>
                     <div class="dropdown-content">
@@ -79,27 +237,122 @@
                     </div>
                 </div>
 
-                <!-- ADMIN -->
                 <div class="nav-dropdown">
                     <button class="nav-btn">Admin Controls ▾</button>
                     <div class="dropdown-content">
                         <a href="/admin_controls">Dashboard</a>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </header>
 
     <div class="page-divider"></div>
 
-    <h2 class="h2-title">Species Detail</h2>
-    <h1 class="app-title">**Species Name**</h1>
-
-    <!-- PAGE CONTENT -->
     <div class="content">
-        <p> **specific species details here + dashboard to the right of all associated traits + flags to say whether the species is native, the endangered status, at risk</p>
+        <a href="/species" class="back-link">← Go back to Species</a>
+
+        {% if error %}
+        <div class="error-box">{{ error }}</div>
+        {% endif %}
+
+        {% if species %}
+
+        <h2 class="detail-page-title">Species Detail</h2>
+
+        <div class="species-name-row">
+            <h1 class="species-name-heading">
+                {{ species.scientific_name }}
+            </h1>
+
+            <div class="status-tags">
+                {% if species.native_flag == 1 %}
+                <span class="status-tag tag-native">Native</span>
+                {% elif species.native_flag == 0 %}
+                <span class="status-tag tag-unknown">Exotic</span>
+                {% else %}
+                <span class="status-tag tag-unknown">Native? Unknown</span>
+                {% endif %}
+
+                {% if species.endangered_status_code %}
+                <span class="status-tag tag-vulnerable">{{ species.endangered_status_code }}</span>
+                {% endif %}
+
+                {% if is_at_risk %}
+                <span class="status-tag tag-at-risk">At Risk</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <p class="tag-explanation">
+            Status flags - colour coded. Native/exotic comes from species table.
+            At-risk is calculated from observation data.
+        </p>
+
+        <div class="detail-grid">
+
+            <div class="detail-section">
+                <h2>Details</h2>
+                <ul class="detail-list">
+                    <li>
+                        <strong>Taxonomy:</strong>
+                        {% if species.family %}{{ species.family }}{% endif %}
+                        {% if species.genus %} / {{ species.genus }}{% endif %}
+                        {% if species.order_name %} (Order: {{ species.order_name }}){% endif %}
+                    </li>
+                    <li><strong>Scientific Name:</strong> {{ species.scientific_name }}</li>
+                    <li><strong>Vernacular Name:</strong> {{ species.vernacular_name or 'Unknown' }}</li>
+                    <li><strong># of Observations:</strong> {{ observation_count }}</li>
+                    <li>
+                        <strong>Last Observation Date:</strong>
+                        {% if latest_observation %}
+                        <a href="/observations?species_id={{ species.species_id }}">
+                            {{ latest_observation }}
+                        </a>
+                        {% else %}
+                        <span class="data-note">No observations recorded</span>
+                        {% endif %}
+                    </li>
+                    {% if species.kingdom %}
+                    <li><strong>Kingdom:</strong> {{ species.kingdom }}</li>
+                    {% endif %}
+                    {% if species.class_name %}
+                    <li><strong>Class:</strong> {{ species.class_name }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="detail-section">
+                <h2>Traits</h2>
+
+                {% if traits_list %}
+                <table class="traits-table">
+                    <tbody>
+                        {% for trait in traits_list %}
+                        <tr>
+                            <td>{{ trait.trait_label or trait.trait_name }}</td>
+                            <td>
+                                {{ trait.trait_value }}
+                                {% if trait.trait_unit %}<span class="data-note">{{ trait.trait_unit }}</span>{% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state">
+                    <p>No trait data recorded for this species.</p>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+        {% else %}
+        <div class="empty-state">
+            <p>No species selected. <a href="/species">Browse species list</a> and click a species name.</p>
+        </div>
+        {% endif %}
     </div>
 
     <footer class="app-footer">
