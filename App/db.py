@@ -11,3 +11,8 @@ def get_connection():
         database=os.getenv("DB_NAME"),
         cursorclass=pymysql.cursors.DictCursor
     )
+
+    with conn.cursor() as cursor:
+        cursor.execute(f"USE `{os.getenv('DB_NAME')}`")
+    
+    return conn

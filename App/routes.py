@@ -2,6 +2,7 @@ import os
 import socket
 
 from flask import Blueprint, redirect, render_template, request, url_for
+from flask import current_app
 
 from .db import get_connection
 
@@ -349,82 +350,116 @@ def traits_detail():
 # Query Builder
 # =========================
 
-@main.route("/query_builder", methods=["GET", "POST"])
+@main.route("/query_builder", methods=["GET"])
 def query_builder():
-    filters = {key: "" for key in QUERY_FILTERS}
+    # ---------------------
+    # Read filters from GET
+    # ---------------------
+    filters = {k: request.args.get(k, "").strip() for k in QUERY_FILTERS}
 
-    if request.method == "POST":
-        for key in filters:
-            filters[key] = request.form.get(key, "")
-
+    # ---------------------
+    # Pagination
+    # ---------------------
     per_page = int(request.args.get("per_page", 25))
+    if per_page not in (10, 25, 50, 100):
+        per_page = 25
+
     page_num = int(request.args.get("page", 1))
+    if page_num < 1:
+        page_num = 1
+
     offset = (page_num - 1) * per_page
 
     context = {
-        "results": [],
         "filters": filters,
+        "results": [],
         "total_results": 0,
-        "page_num": page_num,
         "total_pages": 1,
+        "page_num": page_num,
         "per_page": per_page,
+
+        # required by template JS
         "species_options": [],
+        "vernacular_options": [],
         "reserve_options": [],
         "dataset_options": [],
-        "vernacular_options": [],
         "locality_options": [],
         "habitat_options": [],
         "basis_options": [],
+
         "username": "Development user",
         "is_admin": False,
+        "error": None,
     }
-
-    if not database_port_open():
-        return render_template("query_builder.html", **context)
 
     try:
         conn = get_connection()
         cursor = conn.cursor()
 
+        # ---------------------
+        # Build WHERE clause
+        # ---------------------
         where = []
         params = []
 
+        def like(col, val):
+            where.append(f"{col} LIKE %s")
+            params.append(f"%{val}%")
+
         if filters["species"]:
-            where.append("o.scientific_name LIKE %s")
-            params.append(f"%{filters['species']}%")
+            like("o.scientific_name", filters["species"])
+
         if filters["vernacular_name"]:
-            where.append("sp.vernacular_name LIKE %s")
-            params.append(f"%{filters['vernacular_name']}%")
+            where.append("""
+                (
+                    sp.vernacular_name = %s
+                    OR sp.vernacular_name LIKE %s
+                    OR sp.vernacular_name LIKE %s
+                    OR sp.vernacular_name LIKE %s
+                )
+            """)
+            params.extend([
+                filters["vernacular_name"],
+                f"{filters['vernacular_name']} %",
+                f"% {filters['vernacular_name']}",
+                f"% {filters['vernacular_name']} %"
+            ])
+
         if filters["reserve"]:
-            where.append("r.asset_name LIKE %s")
-            params.append(f"%{filters['reserve']}%")
+            like("r.asset_name", filters["reserve"])
+
+        if filters["dataset"]:
+            like("d.dataset_name", filters["dataset"])
+
+        #if filters["locality"]:
+            #like("o.locality", filters["locality"])
+
+        #if filters["habitat"]:
+            #like("o.habitat", filters["habitat"])
+
+        #if filters["basis"]:
+            #like("o.basis_of_record", filters["basis"])
+
         if filters["native"]:
             where.append("sp.native_flag = %s")
             params.append(filters["native"])
-        if filters["rare"]:
-            where.append("sp.threatened_species_status LIKE %s")
-            params.append(f"%{filters['rare']}%")
+
+        #if filters["rare"]:
+            #like("sp.threatened_species_status", filters["rare"])
+
         if filters["start_year"]:
             where.append("YEAR(o.event_date) >= %s")
             params.append(filters["start_year"])
+
         if filters["end_year"]:
             where.append("YEAR(o.event_date) <= %s")
             params.append(filters["end_year"])
-        if filters["dataset"]:
-            where.append("d.dataset_name LIKE %s")
-            params.append(f"%{filters['dataset']}%")
-        if filters["locality"]:
-            where.append("o.locality LIKE %s")
-            params.append(f"%{filters['locality']}%")
-        if filters["habitat"]:
-            where.append("o.habitat LIKE %s")
-            params.append(f"%{filters['habitat']}%")
-        if filters["basis"]:
-            where.append("o.basis_of_record LIKE %s")
-            params.append(f"%{filters['basis']}%")
 
         where_clause = "WHERE " + " AND ".join(where) if where else ""
 
+        # ---------------------
+        # Count matching rows
+        # ---------------------
         cursor.execute(
             f"""
             SELECT COUNT(*) AS total
@@ -436,8 +471,18 @@ def query_builder():
             """,
             params,
         )
-        total_results = cursor.fetchone()["total"]
 
+        total_results = cursor.fetchone()["total"]
+        total_pages = max(1, (total_results + per_page - 1) // per_page)
+
+        if page_num > total_pages:
+            page_num = total_pages
+            offset = (page_num - 1) * per_page
+
+        # ---------------------
+        # Results query
+        # Use the simpler, known-good shape
+        # ---------------------
         cursor.execute(
             f"""
             SELECT
@@ -448,65 +493,68 @@ def query_builder():
                 MONTH(o.event_date) AS month,
                 DAY(o.event_date) AS day,
                 d.dataset_name,
-                o.decimal_latitude,
-                o.decimal_longitude,
-                o.locality,
-                o.habitat,
-                o.basis_of_record,
-                o.recorded_by,
-                o.occurrence_remarks,
-                sp.native_flag = 'Exotic' AS exotic,
-                sp.threatened_species_status
+                sp.native_flag,
+                NULL AS threatened_species_status,
+                NULL AS decimal_latitude,
+                NULL AS decimal_longitude,
+                NULL AS locality,
+                NULL AS habitat,
+                NULL AS basis_of_record,
+                NULL AS recorded_by,
+                NULL AS occurrence_remarks
             FROM occurrences o
             LEFT JOIN species sp ON o.species_id = sp.species_id
             LEFT JOIN reserves r ON o.reserve_id = r.reserve_id
             LEFT JOIN datasets d ON o.dataset_id = d.dataset_id
             {where_clause}
+            ORDER BY o.event_date DESC
             LIMIT %s OFFSET %s
             """,
             params + [per_page, offset],
         )
-        results = cursor.fetchall()
 
+
+        context["results"] = cursor.fetchall()
+        context["total_results"] = total_results
+        context["total_pages"] = total_pages
+        context["page_num"] = page_num
+
+        # ---------------------
+        # Dropdown options
+        # ---------------------
         cursor.execute(
             "SELECT DISTINCT scientific_name FROM occurrences "
-            "WHERE scientific_name IS NOT NULL ORDER BY scientific_name LIMIT 2000"
+            "WHERE scientific_name IS NOT NULL ORDER BY scientific_name LIMIT 1000"
         )
-        species_options = [row["scientific_name"] for row in cursor.fetchall()]
+        context["species_options"] = [r["scientific_name"] for r in cursor.fetchall()]
+
+        cursor.execute(
+            "SELECT DISTINCT vernacular_name FROM species "
+            "WHERE vernacular_name IS NOT NULL ORDER BY vernacular_name LIMIT 1000"
+        )
+        context["vernacular_options"] = [r["vernacular_name"] for r in cursor.fetchall()]
 
         cursor.execute(
             "SELECT DISTINCT asset_name FROM reserves "
             "WHERE asset_name IS NOT NULL ORDER BY asset_name"
         )
-        reserve_options = [row["asset_name"] for row in cursor.fetchall()]
+        context["reserve_options"] = [r["asset_name"] for r in cursor.fetchall()]
 
         cursor.execute(
             "SELECT DISTINCT dataset_name FROM datasets "
             "WHERE dataset_name IS NOT NULL ORDER BY dataset_name"
         )
-        dataset_options = [row["dataset_name"] for row in cursor.fetchall()]
+        context["dataset_options"] = [r["dataset_name"] for r in cursor.fetchall()]
 
-        cursor.execute(
-            "SELECT DISTINCT vernacular_name FROM species "
-            "WHERE vernacular_name IS NOT NULL ORDER BY vernacular_name LIMIT 2000"
-        )
-        vernacular_options = [row["vernacular_name"] for row in cursor.fetchall()]
+        context["locality_options"] = []
 
-        cursor.close()
+        context["habitat_options"] = []
+
+        context["basis_options"] = []
+
         conn.close()
 
-        context.update(
-            {
-                "results": results,
-                "total_results": total_results,
-                "total_pages": max(1, -(-total_results // per_page)),
-                "species_options": species_options,
-                "reserve_options": reserve_options,
-                "dataset_options": dataset_options,
-                "vernacular_options": vernacular_options,
-            }
-        )
-    except Exception:
-        pass
+    except Exception as e:
+        context["error"] = str(e)
 
     return render_template("query_builder.html", **context)

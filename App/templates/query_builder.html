@@ -348,6 +348,7 @@
 
     <script>
         const speciesOptions   = {{ species_options   | tojson | safe }};
+        const vernacularOptions = {{ vernacular_options | tojson | safe }};
         const reserveOptions   = {{ reserve_options   | tojson | safe }};
         const datasetOptions   = {{ dataset_options   | tojson | safe }};
         const localityOptions  = {{ locality_options  | tojson | safe }};
@@ -395,10 +396,7 @@
         });
 
         function clearAll() {
-            document.querySelectorAll('.sidebar input[type=text]').forEach(i => i.value = '');
-            document.querySelectorAll('.sidebar select').forEach(s => s.selectedIndex = 0);
-            document.getElementById('start_year').value = '';
-            document.getElementById('end_year').value = '';
+            window.location.href = "/query_builder";
         }
 
         function exportToExcel() {
@@ -443,7 +441,7 @@
             <h2>Query Builder</h2>
             <p class="subtitle">Filter observations using the options below. Leave fields blank to include all records.</p>
 
-            <form id="query-form" action="/query_builder" method="post">
+            <form id="query-form" action="/query_builder" method="get">
 
                 <!-- Scientific Name -->
                 <div class="filter-group">
@@ -460,9 +458,13 @@
                 <!-- Common Name -->
                 <div class="filter-group">
                     <label>Common Name</label>
-                    <input type="text" id="vernacular_name" name="vernacular_name"
-                           value="{{ filters.vernacular_name or '' }}"
-                           placeholder="e.g. Wattle">
+                    <div class="autocomplete-wrapper">
+                        <input type="text" id="vernacular_name" name="vernacular_name" value="{{ filters.vernacular_name or '' }}"
+                                onfocus="showAll('vernacular_name', vernacularOptions)"
+                                oninput="filterSuggestions('vernacular_name', vernacularOptions)"
+                            autocomplete="off" placeholder="e.g. Wattle">
+                        <div id="vernacular_name-suggestions" class="suggestions"></div>
+                    </div>
                 </div>
 
                 <!-- Reserve -->
@@ -590,6 +592,12 @@
             </div>
             {% endif %}
 
+            {% if error %}
+            <div style="margin-bottom:12px; padding:10px; border:1px solid #e0b4b4; background:#fff6f6; color:#9f3a38; border-radius:6px;">
+                <strong>Error:</strong> {{ error }}
+            </div>
+            {% endif %}
+
             <div class="results-header">
                 <h2>Query Results</h2>
                 <div style="display:flex; gap:12px; align-items:center;">
@@ -604,27 +612,116 @@
             {% if total_results > 0 %}
             <div class="per-page-options">
                 Show:
-                <a href="?page=1&per_page=10"  {% if per_page == 10  %}style="font-weight:bold;"{% endif %}>10</a> |
-                <a href="?page=1&per_page=25"  {% if per_page == 25  %}style="font-weight:bold;"{% endif %}>25</a> |
-                <a href="?page=1&per_page=50"  {% if per_page == 50  %}style="font-weight:bold;"{% endif %}>50</a> |
-                <a href="?page=1&per_page=100" {% if per_page == 100 %}style="font-weight:bold;"{% endif %}>100</a>
+                <a href="{{ url_for('main.query_builder',
+                    page=1,
+                    per_page=10,
+                    species=filters.species,
+                    vernacular_name=filters.vernacular_name,
+                    reserve=filters.reserve,
+                    native=filters.native,
+                    rare=filters.rare,
+                    start_year=filters.start_year,
+                    end_year=filters.end_year,
+                    dataset=filters.dataset,
+                    locality=filters.locality,
+                    habitat=filters.habitat,
+                    basis=filters.basis
+                ) }}" {% if per_page == 10 %}style="font-weight:bold;"{% endif %}>10</a> |
+
+                <a href="{{ url_for('main.query_builder',
+                    page=1,
+                    per_page=25,
+                    species=filters.species,
+                    vernacular_name=filters.vernacular_name,
+                    reserve=filters.reserve,
+                    native=filters.native,
+                    rare=filters.rare,
+                    start_year=filters.start_year,
+                    end_year=filters.end_year,
+                    dataset=filters.dataset,
+                    locality=filters.locality,
+                    habitat=filters.habitat,
+                    basis=filters.basis
+                ) }}" {% if per_page == 25 %}style="font-weight:bold;"{% endif %}>25</a> |
+
+                <a href="{{ url_for('main.query_builder',
+                    page=1,
+                    per_page=50,
+                    species=filters.species,
+                    vernacular_name=filters.vernacular_name,
+                    reserve=filters.reserve,
+                    native=filters.native,
+                    rare=filters.rare,
+                    start_year=filters.start_year,
+                    end_year=filters.end_year,
+                    dataset=filters.dataset,
+                    locality=filters.locality,
+                    habitat=filters.habitat,
+                    basis=filters.basis
+                ) }}" {% if per_page == 50 %}style="font-weight:bold;"{% endif %}>50</a> |
+
+                <a href="{{ url_for('main.query_builder',
+                    page=1,
+                    per_page=100,
+                    species=filters.species,
+                    vernacular_name=filters.vernacular_name,
+                    reserve=filters.reserve,
+                    native=filters.native,
+                    rare=filters.rare,
+                    start_year=filters.start_year,
+                    end_year=filters.end_year,
+                    dataset=filters.dataset,
+                    locality=filters.locality,
+                    habitat=filters.habitat,
+                    basis=filters.basis
+                ) }}" {% if per_page == 100 %}style="font-weight:bold;"{% endif %}>100</a>
                 per page
             </div>
 
             <!-- Pagination -->
             <div class="pagination">
                 {% if page_num > 1 %}
-                <a href="?page={{ page_num - 1 }}&per_page={{ per_page }}">← Previous</a>
+                <a href="{{ url_for('main.query_builder',
+                    page=page_num - 1,
+                    per_page=per_page,
+                    species=filters.species,
+                    vernacular_name=filters.vernacular_name,
+                    reserve=filters.reserve,
+                    native=filters.native,
+                    rare=filters.rare,
+                    start_year=filters.start_year,
+                    end_year=filters.end_year,
+                    dataset=filters.dataset,
+                    locality=filters.locality,
+                    habitat=filters.habitat,
+                    basis=filters.basis
+                ) }}">← Previous</a>
                 {% endif %}
+
                 <span>Page {{ page_num }} of {{ total_pages }}</span>
+
                 {% if page_num < total_pages %}
-                <a href="?page={{ page_num + 1 }}&per_page={{ per_page }}">Next →</a>
+                <a href="{{ url_for('main.query_builder',
+                    page=page_num + 1,
+                    per_page=per_page,
+                    species=filters.species,
+                    vernacular_name=filters.vernacular_name,
+                    reserve=filters.reserve,
+                    native=filters.native,
+                    rare=filters.rare,
+                    start_year=filters.start_year,
+                    end_year=filters.end_year,
+                    dataset=filters.dataset,
+                    locality=filters.locality,
+                    habitat=filters.habitat,
+                    basis=filters.basis
+                ) }}">Next →</a>
                 {% endif %}
             </div>
             {% endif %}
-
+            
             <!-- Results Table -->
-            {% if results %}
+            {% if results|length > 0 %}
             <div class="table-wrapper">
                 <table id="results-table">
                     <thead>
@@ -657,7 +754,7 @@
                             <td>{{ row.month or 'N/A' }}</td>
                             <td>{{ row.day or 'N/A' }}</td>
                             <td title="{{ row.dataset_name }}">{{ row.dataset_name or 'N/A' }}</td>
-                            <td>{{ 'Exotic' if row.exotic else 'Native' }}</td>
+                            <td>{{ row.native_flag or 'N/A' }}</td>
                             <td>{{ row.threatened_species_status or '—' }}</td>
                             <td>{{ row.decimal_latitude or 'N/A' }}</td>
                             <td>{{ row.decimal_longitude or 'N/A' }}</td>
