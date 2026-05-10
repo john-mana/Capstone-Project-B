@@ -7,242 +7,212 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        .traits-toolbar {
-            align-items: center;
-            display: flex;
-            gap: 28px;
-            justify-content: space-between;
-            margin-bottom: 24px;
-            width: 100%;
-        }
+    .content {
+        display: block !important;
+        width: 100% !important;
+    }
 
-        .traits-heading {
-            align-items: center;
-            display: flex;
-            gap: 28px;
-        }
+    .page-intro {
+        color: #555;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
 
-        .traits-heading .app-title {
-            color: #40623f;
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: 44px;
-            font-weight: 700;
-            line-height: 1.08;
-            margin: 0;
-        }
+    .filter-bar {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 
-        .traits-search-panel {
-            min-width: min(460px, 100%);
-            position: relative;
-        }
+    .filter-bar input {
+        padding: 8px 12px;
+        border: 1px solid #c2d7b9;
+        border-radius: 6px;
+        font-size: 0.95em;
+        background-color: white;
+    }
 
-        .traits-search-row {
-            display: flex;
-            gap: 10px;
-        }
+    .filter-bar button,
+    .filter-bar a.clear-btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 14px;
+        font-family: inherit;
+        line-height: 1.2;
+    }
 
-        .traits-search-row input {
-            border: 2px solid #b6b6bb;
-            border-radius: 999px;
-            color: #233523;
-            flex: 1;
-            font-family: "Inter", Arial, sans-serif;
-            font-size: 15px;
-            min-width: 0;
-            padding: 12px 18px;
-        }
+    .filter-bar button {
+        background-color: #40623f;
+        color: white;
+    }
 
-        .traits-search-row button {
-            background: #4aa857;
-            border: 0;
-            border-radius: 999px;
-            color: white;
-            cursor: pointer;
-            font-family: "Inter", Arial, sans-serif;
-            font-size: 20px;
-            font-weight: 800;
-            height: 48px;
-            line-height: 1;
-            padding: 0;
-            width: 56px;
-        }
+    .filter-bar button:hover {
+        background-color: #2f4d2e;
+    }
 
-        .traits-search-row a {
-            align-items: center;
-            background: #4aa857;
-            border-radius: 999px;
-            color: white;
-            display: inline-flex;
-            font-family: "Inter", Arial, sans-serif;
-            font-size: 14px;
-            font-weight: 800;
-            padding: 0 18px;
-            text-decoration: none;
-        }
+    .filter-bar a.clear-btn {
+        background-color: #ccc;
+        color: #333;
+        text-decoration: none;
+    }
 
-        .trait-dropdown {
-            background: #f8faf4;
-            border: 2px solid #b6b6bb;
-            border-radius: 14px;
-            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
-            display: none;
-            left: 0;
-            list-style: none;
-            margin: 8px 0 0;
-            max-height: 280px;
-            overflow-y: auto;
-            padding: 6px;
-            position: absolute;
-            top: 48px;
-            width: calc(100% - 66px);
-            z-index: 20;
-        }
+    .filter-bar a.clear-btn:hover {
+        background-color: #b5b5b5;
+    }
 
-        .trait-dropdown.is-open {
-            display: block;
-        }
+    .result-count {
+        color: #666;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
 
-        .trait-dropdown li {
-            border-radius: 10px;
-            color: #1c271c;
-            cursor: pointer;
-            font-family: "Inter", Arial, sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            overflow-wrap: anywhere;
-            padding: 10px 12px;
-        }
+    .traits-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Inter, sans-serif;
+    }
 
-        .trait-dropdown li:hover,
-        .trait-dropdown li.is-highlighted {
-            background: #dcebdd;
-            color: #17351c;
-        }
+    .traits-table th {
+        background-color: #d9d9d9;
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #999;
+        font-weight: 600;
+    }
 
-        .trait-dropdown-empty {
-            color: #526052;
-            cursor: default;
-            font-weight: 500;
-        }
+    .traits-table td {
+        padding: 10px 12px;
+        text-align: center;
+        border: 1px solid #999;
+        background-color: #f5f9f5;
+    }
 
-        .traits-count {
-            color: #466145;
-            font-size: 16px;
-            margin: 0 0 12px;
-        }
+    .traits-table a {
+        color: #2d5a2d;
+        text-decoration: none;
+        font-weight: 500;
+    }
 
-        .traits-table-wrap {
-            border: 1px solid #273827;
-            overflow-x: auto;
-            width: 100%;
-        }
+    .traits-table a:hover {
+        text-decoration: underline;
+    }
 
-        .traits-table {
-            border-collapse: collapse;
-            font-family: "Inter", Arial, sans-serif;
-            table-layout: fixed;
-            width: 100%;
-        }
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #888;
+    }
 
-        .traits-table th,
-        .traits-table td {
-            border: 1px solid #273827;
-            overflow-wrap: anywhere;
-            padding: 18px 16px;
-            text-align: left;
-            vertical-align: top;
-            word-break: break-word;
-        }
+    .error-box {
+        background-color: #ffe6e6;
+        border: 1px solid #cc0000;
+        color: #cc0000;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
 
-        .traits-table th {
-            background: #d8ded5;
-            color: #050505;
-            font-size: 18px;
-            font-weight: 800;
-            text-align: center;
-        }
+    .data-note {
+        font-size: 0.85em;
+        color: #888;
+        font-style: italic;
+    }
 
-        .traits-table td {
-            background: rgba(248, 250, 244, 0.72);
-            color: #172117;
-            font-size: 14px;
-            line-height: 1.45;
-        }
+    .search-wrapper {
+        position: relative;
+    }
 
-        .traits-table a {
-            color: #174c27;
-            display: block;
-            font-weight: 700;
-            overflow-wrap: anywhere;
-            text-decoration: none;
-            word-break: break-word;
-        }
+    .search-wrapper input {
+        width: 250px;
+    }
 
-        .traits-empty {
-            background: rgba(248, 250, 244, 0.72);
-            border: 1px solid #273827;
-            color: #466145;
-            padding: 36px;
-            text-align: center;
-        }
+    .suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #c2d7b9;
+        border-top: none;
+        border-radius: 0 0 6px 6px;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none;
+        z-index: 100;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .suggestion-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+
+    .suggestion-item:hover {
+        background-color: #eef5ec;
+    }
     </style>
+    <script id="trait-data" type="application/json">
+    {{ trait_options | map(attribute='trait_name') | list | tojson | safe }}
+    </script>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const input = document.getElementById("traits-search");
-            const dropdown = document.getElementById("traits-dropdown");
-            const items = Array.from(dropdown.querySelectorAll("[data-trait-name]"));
+    const traitOptions = JSON.parse(
+        document.getElementById('trait-data').textContent
+    );
 
-            function renderDropdown() {
-                const search = input.value.trim().toLowerCase();
-                let visibleCount = 0;
+    function filterSuggestions() {
+        const input = document.getElementById('traits-search');
+        const box = document.getElementById('search-suggestions');
+        const value = input.value.toLowerCase();
 
-                items.forEach(function (item) {
-                    const traitName = item.dataset.traitName.toLowerCase();
-                    const isVisible = !search || traitName.includes(search);
-                    item.style.display = isVisible ? "" : "none";
-                    if (isVisible) {
-                        visibleCount += 1;
-                    }
-                });
+        if (value.length < 2) {
+            box.style.display = 'none';
+            return;
+        }
 
-                let empty = dropdown.querySelector("[data-dropdown-empty]");
-                if (!visibleCount) {
-                    if (!empty) {
-                        empty = document.createElement("li");
-                        empty.className = "trait-dropdown-empty";
-                        empty.dataset.dropdownEmpty = "true";
-                        empty.textContent = "No matching trait names";
-                        dropdown.appendChild(empty);
-                    }
-                } else if (empty) {
-                    empty.remove();
-                }
-            }
+        const matches = traitOptions
+            .filter(name => name.toLowerCase().includes(value))
+            .slice(0, 10);
 
-            input.addEventListener("focus", function () {
-                dropdown.classList.add("is-open");
-                renderDropdown();
-            });
+        box.innerHTML = '';
 
-            input.addEventListener("input", function () {
-                dropdown.classList.add("is-open");
-                renderDropdown();
-            });
+        if (matches.length === 0) {
+            box.style.display = 'none';
+            return;
+        }
 
-            items.forEach(function (item) {
-                item.addEventListener("mousedown", function (event) {
-                    event.preventDefault();
-                    input.value = item.dataset.traitName;
-                    dropdown.classList.remove("is-open");
-                });
-            });
+        matches.forEach(name => {
+            const div = document.createElement('div');
+            div.className = 'suggestion-item';
+            div.textContent = name;
 
-            document.addEventListener("click", function (event) {
-                if (!event.target.closest(".traits-search-panel")) {
-                    dropdown.classList.remove("is-open");
-                }
-            });
+            div.onclick = () => {
+                input.value = name;
+                box.style.display = 'none';
+            };
+
+            box.appendChild(div);
         });
+
+        box.style.display = 'block';
+    }
+
+    document.addEventListener('click', function(e) {
+        const box = document.getElementById('search-suggestions');
+        const input = document.getElementById('traits-search');
+
+        if (!box.contains(e.target) && e.target !== input) {
+            box.style.display = 'none';
+        }
+    });
     </script>
 </head>
 
@@ -333,69 +303,91 @@
     <div class="page-divider"></div>
 
     <!-- PAGE CONTENT -->
+    <h1 class="app-title">Traits</h1>
+
     <div class="content">
-        <div style="width: 100%;">
-            <div class="traits-toolbar">
-                <div class="traits-heading">
-                    <h1 class="app-title">Traits</h1>
-                </div>
-                <form class="traits-search-panel" method="get" action="/traits">
-                    <div class="traits-search-row">
-                        <input id="traits-search" type="search" name="q" value="{{ search or '' }}" placeholder="Search trait name" autocomplete="off">
-                        <button type="submit" aria-label="Search trait">&#128269;</button>
-                        {% if search %}
-                            <a href="/traits">Clear</a>
-                        {% endif %}
-                    </div>
-                    <ul id="traits-dropdown" class="trait-dropdown">
-                        {% for option in trait_options %}
-                            <li data-trait-name="{{ option.trait_name }}">
-                                {{ option.trait_name }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </form>
+
+        <p class="page-intro">
+            Browse all traits in the database. Click a trait name to see full details.
+        </p>
+
+        <form class="filter-bar" method="get" action="/traits">
+
+            <div class="search-wrapper">
+                <input
+                    type="text"
+                    id="traits-search"
+                    name="q"
+                    placeholder="Search trait name..."
+                    value="{{ search }}"
+                    autocomplete="off"
+                    oninput="filterSuggestions()">
+
+                <div id="search-suggestions" class="suggestions"></div>
             </div>
 
-            {% if error %}
-                <div class="traits-empty">Traits could not be loaded from the database yet.</div>
-            {% else %}
-                <p class="traits-count">{{ traits|length }} trait{{ 's' if traits|length != 1 }} shown</p>
+            <button type="submit">Filter</button>
 
-                <div class="traits-table-wrap">
-                    <table class="traits-table">
-                        <thead>
-                            <tr>
-                                <th>Trait Type Name</th>
-                                <th>Trait Name</th>
-                                <th>Trait Label</th>
-                                <th>Trait unit</th>
-                                <th>Trait Type</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for trait in traits %}
-                                <tr>
-                                    <td>{{ trait.trait_type_name or '' }}</td>
-                                    <td>
-                                        <a href="/traits_detail?trait={{ trait.trait_name | urlencode }}">
-                                            {{ trait.trait_name or '' }}
-                                        </a>
-                                    </td>
-                                    <td>{{ trait.trait_label or '' }}</td>
-                                    <td>{{ trait.trait_unit or '' }}</td>
-                                    <td>{{ trait.trait_type or '' }}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="5" class="traits-empty">No traits match this filter.</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+            {% if search %}
+            <a href="/traits" class="clear-btn">Clear</a>
             {% endif %}
+        </form>
+
+        {% if error %}
+        <div class="error-box">
+            Database error: {{ error }}
         </div>
+        {% endif %}
+
+        {% if traits %}
+        <p class="result-count">
+            Showing {{ traits|length }} trait/s
+        </p>
+
+        <table class="traits-table">
+            <thead>
+                <tr>
+                    <th>Trait Type Name</th>
+                    <th>Trait Name</th>
+                    <th>Trait Label</th>
+                    <th>Trait Unit</th>
+                    <th>Trait Type</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for trait in traits %}
+                <tr>
+                    <td>{{ trait.trait_type_name or '-' }}</td>
+
+                    <td>
+                        <a href="/traits_detail?trait={{ trait.trait_name | urlencode }}">
+                            {{ trait.trait_name }}
+                        </a>
+                    </td>
+
+                    <td>{{ trait.trait_label or '-' }}</td>
+
+                    <td>
+                        {% if trait.trait_unit %}
+                            {{ trait.trait_unit }}
+                        {% else %}
+                            <span class="data-note">-</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ trait.trait_type or '-' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+        <div class="empty-state">
+            <p>No traits found.</p>
+        </div>
+        {% endif %}
+
     </div>
 
     <footer class="app-footer">

@@ -7,57 +7,179 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        .detail-shell {
-            padding-bottom: 48px;
-            width: 100%;
+        .content {
+            display: block !important;
+            width: 100% !important;
         }
 
+        .back-link {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #2d5a2d;
+            text-decoration: none;
+            font-size: 0.95em;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .detail-page-title {
+            color: #0ba84a;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin: 30px 0 0 0;
+        }
+
+        .traits-name-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .traits-name-heading {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 2.2em;
+            color: #40623f;
+            margin: 0;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        .status-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .status-tag {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .tag-native {
+            background-color: #7dd9d8;
+            color: #0d3b3a;
+        }
+
+        .tag-vulnerable {
+            background-color: #f4d03f;
+            color: #5d4404;
+        }
+
+        .tag-at-risk {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .tag-unknown {
+            background-color: #ccc;
+            color: #555;
+            font-style: italic;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .detail-section h2 {
+            font-family: "Playfair Display", Georgia, serif;
+            color: #628c60;
+            font-size: 1.6em;
+            margin: 0 0 15px;
+        }
+
+        .detail-list {
+            list-style: disc;
+            padding-left: 25px;
+            font-size: 1.05em;
+        }
+
+        .detail-list li {
+            margin: 6px 0;
+        }
+
+        .detail-list strong {
+            color: #2d5a2d;
+        }
+
+        .traits-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Inter, sans-serif;
+        }
+
+        .traits-table td {
+            padding: 10px 14px;
+            border: 1px solid #999;
+            vertical-align: top;
+        }
+
+        .traits-table td:first-child {
+            background-color: #f9faf8;
+        }
+
+        .traits-table td:last-child {
+            background-color: #f9faf8;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            background-color: #f9faf8;
+            border: 1px dashed #ccc;
+            border-radius: 6px;
+            margin: 30px 0 0 0;
+        }
+
+        .error-box {
+            background-color: #ffe6e6;
+            border: 1px solid #cc0000;
+            color: #cc0000;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .data-note {
+            font-size: 0.85em;
+            color: #888;
+            font-style: italic;
+        }
+
+        @media (max-width: 900px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
         .detail-topline {
             align-items: flex-start;
             display: flex;
             justify-content: space-between;
             gap: 28px;
-            margin-bottom: 30px;
+            margin-bottom: 0px;
         }
 
-        .detail-page-title {
-            color: #40623f;
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: 44px;
-            font-weight: 700;
-            line-height: 1.08;
-            margin: 0;
-        }
-
-        .trait-name-title {
-            color: #1f351f;
-            font-family: "Inter", Arial, sans-serif;
-            font-size: 24px;
-            font-weight: 800;
-            line-height: 1.22;
-            margin: 10px 0 0;
-            overflow-wrap: anywhere;
-        }
-
-        .trait-label-subtitle {
-            color: #466145;
-            font-size: 19px;
-            line-height: 1.4;
-            margin: 10px 0 0;
-            overflow-wrap: anywhere;
-        }
-
-        .trait-search-panel {
+        .traits-search-panel {
             min-width: min(460px, 100%);
             position: relative;
         }
 
-        .trait-search-row {
+        .traits-search-row {
             display: flex;
             gap: 10px;
         }
 
-        .trait-search-row input {
+        .traits-search-row input {
             border: 2px solid #b6b6bb;
             border-radius: 999px;
             color: #233523;
@@ -68,7 +190,7 @@
             padding: 12px 18px;
         }
 
-        .trait-search-row button {
+        .traits-search-row button {
             background: #4aa857;
             border: 0;
             border-radius: 999px;
@@ -83,7 +205,7 @@
             width: 56px;
         }
 
-        .trait-dropdown {
+        .traits-dropdown {
             background: #f8faf4;
             border: 2px solid #b6b6bb;
             border-radius: 14px;
@@ -101,11 +223,11 @@
             z-index: 20;
         }
 
-        .trait-dropdown.is-open {
+        .traits-dropdown.is-open {
             display: block;
         }
 
-        .trait-dropdown li {
+        .traits-dropdown li {
             border-radius: 10px;
             color: #1c271c;
             cursor: pointer;
@@ -116,135 +238,13 @@
             padding: 10px 12px;
         }
 
-        .trait-dropdown li:hover,
-        .trait-dropdown li.is-highlighted {
+        .traits-dropdown li:hover,
+        .traits-dropdown li.is-highlighted {
             background: #dcebdd;
             color: #17351c;
         }
 
-        .trait-dropdown-empty {
-            color: #526052;
-            cursor: default;
-            font-weight: 500;
-        }
-
-        .detail-grid {
-            display: grid;
-            gap: 34px;
-            grid-template-columns: minmax(320px, 0.8fr) minmax(560px, 1.2fr);
-            width: 100%;
-        }
-
-        .detail-panel {
-            background: transparent;
-            border: 0;
-            padding: 0;
-        }
-
-        .detail-panel h2 {
-            color: #40623f;
-            font-family: "Playfair Display", Georgia, serif;
-            font-size: 22px;
-            font-weight: 700;
-            margin: 0 0 14px;
-        }
-
-        .details-heading {
-            margin-top: 34px !important;
-        }
-
-        .metadata-grid {
-            display: grid;
-            gap: 13px;
-            grid-template-columns: 1fr;
-            margin-top: 34px;
-        }
-
-        .metadata-item {
-            border-top: 1px solid #cfd8cb;
-            padding-top: 13px;
-        }
-
-        .metadata-label {
-            color: #526052;
-            display: block;
-            font-size: 13px;
-            font-weight: 800;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        .metadata-value {
-            color: #1c271c;
-            font-size: 16px;
-            line-height: 1.42;
-            overflow-wrap: anywhere;
-        }
-
-        .trait-description {
-            color: #202720;
-            font-size: 18px;
-            line-height: 1.55;
-            margin: 0;
-        }
-
-        .values-header {
-            align-items: end;
-            display: flex;
-            gap: 18px;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .value-table-wrap {
-            border: 1px solid #273827;
-            max-height: 580px;
-            overflow: auto;
-            width: 100%;
-        }
-
-        .value-table {
-            border-collapse: collapse;
-            table-layout: fixed;
-            width: 100%;
-        }
-
-        .value-table th,
-        .value-table td {
-            border: 1px solid #273827;
-            overflow-wrap: anywhere;
-            padding: 14px 16px;
-            text-align: left;
-            vertical-align: middle;
-            word-break: break-word;
-        }
-
-        .value-table th {
-            background: #d8ded5;
-            color: #050505;
-            font-size: 15px;
-            font-weight: 800;
-            position: sticky;
-            top: 0;
-            z-index: 1;
-        }
-
-        .value-table td {
-            background: rgba(248, 250, 244, 0.72);
-            color: #1d271d;
-            font-size: 15px;
-            line-height: 1.4;
-        }
-
-        .empty-detail {
-            background: rgba(248, 250, 244, 0.78);
-            border: 1px solid #c7cfc2;
-            color: #466145;
-            padding: 36px;
-            text-align: center;
-        }
-
-        .empty-detail h1 {
+        .empty-state h1 {
             color: #40623f;
             font-family: "Playfair Display", Georgia, serif;
             font-size: 44px;
@@ -252,36 +252,50 @@
             margin: 0 0 14px;
         }
 
-        .empty-detail p {
+        .empty-state p {
             color: #526052;
             font-size: 17px;
             margin: 0;
         }
 
-        @media (max-width: 1080px) {
-            .detail-topline,
-            .values-header {
-                align-items: stretch;
-                flex-direction: column;
-            }
+        .traits-table th {
+            background-color: #d9d9d9;
+            padding: 10px 14px;
+            border: 1px solid #999;
+            font-weight: 600;
+            text-align: left;
+        }
 
-            .detail-grid,
-            .metadata-grid {
-                grid-template-columns: 1fr;
-            }
+        .traits-table td {
+            padding: 10px 14px;
+            border: 1px solid #999;
+            vertical-align: top;
+            background-color: #f9faf8;
+        }
 
-            .trait-search-row {
-                flex-direction: column;
-            }
+        .trait-label-heading {
+            color: #848d84;
+            font-size: 20px;
+            line-height: 1.4;
+            margin: 10px 0 0;
+            overflow-wrap: anywhere;
+            font-style: italic
         }
     </style>
     <script>
+        
         document.addEventListener("DOMContentLoaded", function () {
             const input = document.getElementById("trait-search");
             const dropdown = document.getElementById("trait-dropdown");
             const form = document.getElementById("trait-search-form");
             const traits = {{ trait_options | map(attribute='trait_name') | list | tojson }};
             let highlightedIndex = -1;
+
+            form.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                }
+            });
 
             function matchesFor(value) {
                 const query = value.trim().toLowerCase();
@@ -311,7 +325,6 @@
                         event.preventDefault();
                         input.value = name;
                         dropdown.classList.remove("is-open");
-                        form.submit();
                     });
                     dropdown.appendChild(item);
                 });
@@ -383,7 +396,7 @@
                     <div class="dropdown-content">
                         <a href="/traits">View All</a>
                         <a href="/traits_detail">Traits Detail</a>
-                        <a href="/traits_findby">Find Species by Trait</a>
+                        <a href="/traits_findby">Find traits by Trait</a>
                     </div>
                 </div>
 
@@ -430,119 +443,184 @@
 
     <div class="page-divider"></div>
 
-    <main class="detail-shell">
+    <div class="content">
+
         <div class="detail-topline">
+
             <div>
+                <a href="/traits" class="back-link">← Go back to Traits</a>
+
                 {% if trait %}
-                    <h1 class="detail-page-title">Trait Detail</h1>
-                    <h2 class="trait-name-title">{{ trait.trait_name }}</h2>
-                    <p class="trait-label-subtitle">{{ trait.trait_label or 'No label recorded' }}</p>
+                <h2 class="detail-page-title">Trait Detail</h2>
                 {% endif %}
             </div>
 
-            <form id="trait-search-form" class="trait-search-panel" method="get" action="/traits_detail">
-                <div class="trait-search-row">
-                    <input id="trait-search" name="trait" placeholder="Search trait" autocomplete="off">
-                    <button type="submit" aria-label="Search trait">&#128269;</button>
+            <form id="trait-search-form"
+                class="traits-search-panel"
+                method="get"
+                action="/traits_detail">
+
+                <div class="traits-search-row">
+
+                    <input
+                        id="trait-search"
+                        name="trait"
+                        placeholder="Search trait"
+                        autocomplete="off"
+                        value="{{ trait_name or '' }}">
+
+                    <button type="submit"
+                            aria-label="Search trait">
+                        &#128269;
+                    </button>
+
                 </div>
-                <ul id="trait-dropdown" class="trait-dropdown"></ul>
+
+                <ul id="trait-dropdown" class="traits-dropdown"></ul>
+
             </form>
+
         </div>
 
         {% if error %}
-            <div class="empty-detail">Trait details could not be loaded from the database yet.</div>
-        {% elif trait %}
-            <div class="detail-grid">
-                <section>
-                    <div class="detail-panel">
-                        <h2>Description</h2>
-                        <p class="trait-description">{{ trait.trait_info or 'No description recorded for this trait.' }}</p>
-
-                        <h2 class="details-heading">Details</h2>
-                        <div class="metadata-grid">
-                            <div class="metadata-item">
-                                <span class="metadata-label">Trait type name</span>
-                                <div class="metadata-value">{{ trait.trait_type_name or 'Not recorded' }}</div>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Trait type</span>
-                                <div class="metadata-value">{{ trait.trait_type or 'Not recorded' }}</div>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Trait unit</span>
-                                <div class="metadata-value">{{ trait.trait_unit or 'Not recorded' }}</div>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Column</span>
-                                <div class="metadata-value">{{ trait.column_number or 'Not recorded' }}</div>
-                            </div>
-                            <div class="metadata-item">
-                                <span class="metadata-label">Latest observation</span>
-                                <div class="metadata-value">
-                                    {% if summary.latest_observation_date %}
-                                        {{ summary.latest_observation_date.strftime('%Y-%m-%d') }}
-                                    {% else %}
-                                        None
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <div class="detail-panel">
-                        <div class="values-header">
-                            <h2>Trait Values</h2>
-                        </div>
-
-                        {% if value_rows %}
-                            <div class="value-table-wrap">
-                                <table class="value-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 46%;">Value</th>
-                                            <th style="width: 28%;">Species associated</th>
-                                            <th style="width: 26%;">Latest observation</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for row in value_rows %}
-                                            <tr>
-                                                <td>{{ row.trait_value }}</td>
-                                                <td>
-                                                    <strong>{{ row.species_count }}</strong>
-                                                </td>
-                                                <td>
-                                                    {% if row.latest_observation_date %}
-                                                        {{ row.latest_observation_date.strftime('%Y-%m-%d') }}
-                                                    {% else %}
-                                                        No observations
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        {% else %}
-                            <div class="empty-detail">No species-trait values are recorded for this trait yet.</div>
-                        {% endif %}
-                    </div>
-                </section>
-            </div>
-        {% else %}
-            <div class="empty-detail">
-                {% if trait_name %}
-                    <h1>No matching trait was found.</h1>
-                    <p>Search for one of the selected trait names to open its details.</p>
-                {% else %}
-                    <h1>Trait Detail</h1>
-                    <p>Search for a trait name to view its description, summary, and values.</p>
-                {% endif %}
-            </div>
+        <div class="error-box">{{ error }}</div>
         {% endif %}
-    </main>
+
+        {% if trait %}
+
+        <div class="traits-name-row">
+            <h1 class="traits-name-heading">
+                {{ trait.trait_name }}
+            </h1>
+        </div>
+        <p class ="trait-label-heading">
+            {{trait.trait_label or '' }}
+        </p>
+
+        <div class="detail-grid">
+
+            <div class="detail-section">
+
+                <h2>Description</h2>
+
+                <p>
+                    {{ trait.trait_info or 'No description recorded for this trait.' }}
+                </p>
+                
+                <h2>Details</h2>
+
+                <ul class="detail-list">
+
+                    <li>
+                        <strong>Trait Label:</strong>
+                        {{ trait.trait_label or 'Unknown' }}
+                    </li>
+
+                    <li>
+                        <strong>Trait Type:</strong>
+                        {{ trait.trait_type or 'Unknown' }}
+                    </li>
+
+                    <li>
+                        <strong>Trait Type Name:</strong>
+                        {{ trait.trait_type_name or 'Unknown' }}
+                    </li>
+
+                    <li>
+                        <strong>Trait Unit:</strong>
+                        {{ trait.trait_unit or 'Unknown' }}
+                    </li>
+
+                    <li>
+                        <strong>Column Number:</strong>
+                        {{ trait.column_number or 'Unknown' }}
+                    </li>
+
+                    <li>
+                        <strong>Latest Observation:</strong>
+
+                        {% if summary.latest_observation_date %}
+                            {{ summary.latest_observation_date.strftime('%Y-%m-%d') }}
+                        {% else %}
+                            <span class="data-note">No observations recorded</span>
+                        {% endif %}
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="detail-section">
+
+                <h2>Trait Values</h2>
+
+                {% if value_rows %}
+
+                <table class="traits-table">
+
+                    <thead>
+                        <tr>
+                            <th>Value</th>
+                            <th>Species Associated</th>
+                            <th>Latest Observation</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for row in value_rows %}
+                        <tr>
+
+                            <td>{{ row.trait_value }}</td>
+
+                            <td>
+                                {{ row.species_count }}
+                            </td>
+
+                            <td>
+                                {% if row.latest_observation_date %}
+                                    {{ row.latest_observation_date.strftime('%Y-%m-%d') }}
+                                {% else %}
+                                    <span class="data-note">No observations</span>
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+                {% else %}
+
+                <div class="empty-state">
+                    <p>No traits-trait values recorded for this trait.</p>
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            {% if trait_name %}
+                <h1>No matching trait was found.</h1>
+                <p>Search for one of the listed trait names to open its details.</p>
+            {% else %}
+                <h1>Trait Detail</h1>
+                <p>Search for a trait name to view descriptions, metadata, and recorded values.</p>
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
 
     <footer class="app-footer">
         <div class="footer-right">

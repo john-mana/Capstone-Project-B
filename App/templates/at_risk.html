@@ -100,6 +100,79 @@
         margin: 10px 0;
         border-radius: 4px;
     }
+    .filter-bar {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .filter-bar input,
+    .filter-bar select {
+        padding: 8px 12px;
+        border: 1px solid #c2d7b9;
+        border-radius: 6px;
+        font-size: 0.95em;
+        background-color: white;
+    }
+
+    .filter-bar button {
+        padding: 8px 16px;
+        background-color: #40623f;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .filter-bar button:hover {
+        background-color: #2f4d2e;
+    }
+
+    .filter-bar a.clear-btn {
+        padding: 8px 16px;
+        background-color: #ccc;
+        color: #333;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .search-wrapper {
+        position: relative;
+    }
+
+    .search-wrapper input {
+        width: 250px;
+    }
+
+    .suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #c2d7b9;
+        border-top: none;
+        border-radius: 0 0 6px 6px;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none;
+        z-index: 100;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .suggestion-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+
+    .suggestion-item:hover {
+        background-color: #eef5ec;
+    }
 </style>
 </head>
 
@@ -199,6 +272,47 @@
         or no observations since 2015.
     </p>
 
+    <form class="filter-bar" method="get" action="/at_risk">
+
+        <div class="search-wrapper">
+            <input type="text"
+                id="search-input"
+                name="q"
+                placeholder="Search by name..."
+                value="{{ search }}"
+                autocomplete="off"
+                oninput="filterSuggestions()">
+
+            <div id="search-suggestions" class="suggestions"></div>
+        </div>
+
+        <select name="priority">
+            <option value="">All priorities</option>
+
+            <option value="High"
+                {% if priority_filter == "High" %}selected{% endif %}>
+                High
+            </option>
+
+            <option value="Medium"
+                {% if priority_filter == "Medium" %}selected{% endif %}>
+                Medium
+            </option>
+
+            <option value="Low"
+                {% if priority_filter == "Low" %}selected{% endif %}>
+                Low
+            </option>
+        </select>
+
+        <button type="submit">Filter</button>
+
+        {% if search or priority_filter %}
+        <a href="/at_risk" class="clear-btn">Clear</a>
+        {% endif %}
+
+    </form>
+
     {% if error %}
     <div class="error-box">
         Database error: {{ error }}
@@ -254,6 +368,63 @@
     </footer>
 
 </div>
+
+<script id="name-data" type="application/json">
+    {{ name_options | tojson | safe }}
+</script>
+
+<script>
+    const nameOptions = JSON.parse(
+        document.getElementById('name-data').textContent
+    );
+
+    function filterSuggestions() {
+        const input = document.getElementById('search-input');
+        const box = document.getElementById('search-suggestions');
+        const value = input.value.toLowerCase();
+
+        if (value.length < 2) {
+            box.style.display = 'none';
+            return;
+        }
+
+        const matches = nameOptions
+            .filter(name => name.toLowerCase().includes(value))
+            .slice(0, 10);
+
+        box.innerHTML = '';
+
+        if (matches.length === 0) {
+            box.style.display = 'none';
+            return;
+        }
+
+        matches.forEach(name => {
+            const div = document.createElement('div');
+
+            div.className = 'suggestion-item';
+            div.textContent = name;
+
+            div.onclick = () => {
+                input.value = name;
+                box.style.display = 'none';
+            };
+
+            box.appendChild(div);
+        });
+
+        box.style.display = 'block';
+    }
+
+    document.addEventListener('click', function(e) {
+        const box = document.getElementById('search-suggestions');
+        const input = document.getElementById('search-input');
+
+        if (!box.contains(e.target) && e.target !== input) {
+            box.style.display = 'none';
+        }
+    });
+</script>
 
 </body>
 </html>
