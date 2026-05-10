@@ -803,7 +803,7 @@
 
                 {% if selected_traits and matching_species %}
                     <div class="find-trait-table-tools">
-                        <p class="find-trait-count">Showing {{ result_start }}-{{ result_end }} of {{ total_results }} Species</p>
+                        <p class="find-trait-count">Showing {{ result_start }}-{{ result_end }} of {{ total_results }} species</p>
                         <form class="find-trait-page-size" method="get" action="/traits_findby">
                             {% for group in selected_groups %}
                                 <input type="hidden" name="trait_group" value="{{ group }}">
@@ -828,7 +828,7 @@
                         <table class="find-trait-table">
                             <thead>
                                 <tr>
-                                    <th>Flower Name</th>
+                                    <th>Species Name</th>
                                     {% for trait_name in selected_traits %}
                                         <th>
                                             <a href="/traits_detail?trait={{ trait_name | urlencode }}">
