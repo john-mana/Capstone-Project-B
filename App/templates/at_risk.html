@@ -117,27 +117,35 @@
         background-color: white;
     }
 
-    .filter-bar button {
+    .filter-bar button,
+    .filter-bar a.clear-btn {
         padding: 8px 16px;
-        background-color: #40623f;
-        color: white;
         border: none;
         border-radius: 6px;
         cursor: pointer;
         font-weight: 500;
+        font-size: 14px;
+        font-family: inherit;
+        line-height: 1.2;
+    }
+
+    .filter-bar button {
+    background-color: #40623f;
+    color: white;
     }
 
     .filter-bar button:hover {
         background-color: #2f4d2e;
     }
 
+    .filter-bar a.clear-btn:hover {
+        background-color: #b5b5b5;
+    }
+
     .filter-bar a.clear-btn {
-        padding: 8px 16px;
         background-color: #ccc;
         color: #333;
-        border-radius: 6px;
         text-decoration: none;
-        font-weight: 500;
     }
 
     .search-wrapper {

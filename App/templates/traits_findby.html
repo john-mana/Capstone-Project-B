@@ -332,54 +332,42 @@
         }
 
         .find-trait-table-wrap {
-            border: 1px solid #273827;
-            overflow-x: auto;
             width: 100%;
+            overflow-x: auto;
         }
 
         .find-trait-table {
-            border-collapse: collapse;
-            font-family: "Inter", Arial, sans-serif;
-            table-layout: fixed;
             width: 100%;
+            border-collapse: collapse;
+            font-family: Inter, sans-serif;
         }
 
-        .find-trait-table th,
-        .find-trait-table td {
-            border: 1px solid #273827;
-            overflow-wrap: anywhere;
-            padding: 15px 14px;
-            text-align: left;
-            vertical-align: top;
-            word-break: break-word;
-        }
-
+        /* HEADER — match Species */
         .find-trait-table th {
-            background: #d8ded5;
-            color: #050505;
-            font-size: 16px;
-            font-weight: 800;
+            background-color: #d9d9d9;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #999;
+            font-weight: 600;
         }
 
+        /* CELLS — match Species */
         .find-trait-table td {
-            background: rgba(248, 250, 244, 0.72);
-            color: #172117;
-            font-size: 14px;
-            line-height: 1.45;
+            padding: 10px 12px;
+            text-align: center;
+            border: 1px solid #999;
+            background-color: #f5f9f5;
         }
 
+        /* LINKS — match Species */
         .find-trait-table a {
-            color: #174c27;
-            font-weight: 800;
+            color: #2d5a2d;
             text-decoration: none;
+            font-weight: 500;
         }
 
-        .find-trait-table th a {
-            color: #050505;
-            display: block;
+        .find-trait-table a:hover {
             text-decoration: underline;
-            text-decoration-thickness: 2px;
-            text-underline-offset: 4px;
         }
 
         .find-trait-alert {
@@ -396,6 +384,22 @@
                 flex-direction: column;
             }
         }
+
+        .find-trait-actions button:hover {
+            background: #3d8f49;
+        }
+
+        .find-trait-actions a:hover {
+            background: #d6ddd2;
+        }
+
+        .page-intro {
+            color: #555;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -799,6 +803,9 @@
             <div class="find-trait-results">
                 <div class="find-trait-results-header">
                     <h2>Matching Species</h2>
+                </div>
+                <div class="page-intro">
+                    <p> Click a species name or trait name to see full details. </p>
                 </div>
 
                 {% if selected_traits and matching_species %}
