@@ -86,17 +86,333 @@ def logout():
 
 @main.route("/species")
 def species():
-    return render_template("species.html")
+    """
+    Show all species with taxonomy info.
+    """
+    species_list = []
+    error = None
+
+    search = request.args.get("q", "").strip()
+    family_filter = request.args.get("family", "").strip()
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            params = []
+            where_parts = []
+
+            if search:
+                where_parts.append(
+                    "(sp.scientific_name LIKE %s OR sp.vernacular_name LIKE %s)"
+                )
+                params.extend([f"%{search}%", f"%{search}%"])
+
+            if family_filter:
+                where_parts.append("tx.family = %s")
+                params.append(family_filter)
+
+            where_clause = "WHERE " + " AND ".join(where_parts) if where_parts else ""
+
+            cursor.execute(
+                f"""
+                SELECT
+                    sp.species_id,
+                    sp.taxonomy_id,
+                    sp.scientific_name,
+                    sp.vernacular_name,
+                    sp.native_flag,
+                    sp.endangered_status_code,
+                    tx.family,
+                    tx.genus
+                FROM species sp
+                LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
+                {where_clause}
+                ORDER BY sp.scientific_name
+                LIMIT 500
+                """,
+                params,
+            )
+            species_list = cursor.fetchall()
+
+            cursor.execute(
+                """
+                SELECT DISTINCT family
+                FROM taxonomy
+                WHERE family IS NOT NULL AND family != ''
+                ORDER BY family
+                """
+            )
+            family_options = [row["family"] for row in cursor.fetchall()]
+
+            # also get all species names for autocomplete
+            cursor.execute(
+                """
+                SELECT scientific_name, vernacular_name
+                FROM species
+                WHERE scientific_name IS NOT NULL
+                ORDER BY scientific_name
+                """
+            )
+            name_rows = cursor.fetchall()
+            name_options = []
+            for row in name_rows:
+                if row["scientific_name"]:
+                    name_options.append(row["scientific_name"])
+                if row["vernacular_name"]:
+                    name_options.append(row["vernacular_name"])
+
+        conn.close()
+
+    except Exception as exc:
+        error = str(exc)
+        family_options = []
+        name_options = []
+
+    return render_template(
+        "species.html",
+        species_list=species_list,
+        family_options=family_options,
+        name_options=name_options,
+        search=search,
+        family_filter=family_filter,
+        error=error,
+    )
 
 
 @main.route("/species_new")
 def species_new():
-    return render_template("species_new.html")
+    """
+    Show newest species (by species_id desc since no created_at column exists).
+    """
+    species_list = []
+    error = None
+
+    search = request.args.get("q", "").strip()
+    family_filter = request.args.get("family", "").strip()
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            params = []
+            where_parts = []
+
+            if search:
+                where_parts.append(
+                    "(sp.scientific_name LIKE %s OR sp.vernacular_name LIKE %s)"
+                )
+                params.extend([f"%{search}%", f"%{search}%"])
+
+            if family_filter:
+                where_parts.append("tx.family = %s")
+                params.append(family_filter)
+
+            where_clause = "WHERE " + " AND ".join(where_parts) if where_parts else ""
+
+            cursor.execute(
+                f"""
+                SELECT
+                    sp.species_id,
+                    sp.taxonomy_id,
+                    sp.scientific_name,
+                    sp.vernacular_name,
+                    sp.native_flag,
+                    sp.endangered_status_code,
+                    tx.family,
+                    tx.genus
+                FROM species sp
+                LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
+                {where_clause}
+                ORDER BY sp.species_id DESC
+                LIMIT 50
+                """,
+                params,
+            )
+            species_list = cursor.fetchall()
+
+            cursor.execute(
+                """
+                SELECT DISTINCT family
+                FROM taxonomy
+                WHERE family IS NOT NULL AND family != ''
+                ORDER BY family
+                """
+            )
+            family_options = [row["family"] for row in cursor.fetchall()]
+
+            cursor.execute(
+                """
+                SELECT scientific_name, vernacular_name
+                FROM species
+                WHERE scientific_name IS NOT NULL
+                ORDER BY scientific_name
+                """
+            )
+            name_rows = cursor.fetchall()
+            name_options = []
+            for row in name_rows:
+                if row["scientific_name"]:
+                    name_options.append(row["scientific_name"])
+                if row["vernacular_name"]:
+                    name_options.append(row["vernacular_name"])
+
+        conn.close()
+
+    except Exception as exc:
+        error = str(exc)
+        family_options = []
+        name_options = []
+
+    return render_template(
+        "species_new.html",
+        species_list=species_list,
+        family_options=family_options,
+        name_options=name_options,
+        search=search,
+        family_filter=family_filter,
+        error=error,
+    )
+
 
 
 @main.route("/species_detail")
 def species_detail():
-    return render_template("species_detail.html")
+    """
+    Show full detail of one species:
+      - taxonomy
+      - native/vulnerable/at-risk status tags
+      - traits with values
+      - observation count and latest date
+    """
+    species_id = request.args.get("species_id", "").strip()
+    species = None
+    traits_list = []
+    observation_count = 0
+    latest_observation = None
+    is_at_risk = False
+    error = None
+
+    if not species_id:
+        return render_template(
+            "species_detail.html",
+            species=None,
+            traits_list=[],
+            observation_count=0,
+            latest_observation=None,
+            is_at_risk=False,
+            error="No species selected. Please pick a species from the species list.",
+        )
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            # main species info with taxonomy
+            cursor.execute(
+                """
+                SELECT
+                    sp.species_id,
+                    sp.taxonomy_id,
+                    sp.scientific_name,
+                    sp.vernacular_name,
+                    sp.native_flag,
+                    sp.endangered_status_code,
+                    tx.kingdom,
+                    tx.phylum,
+                    tx.class_name,
+                    tx.order_name,
+                    tx.family,
+                    tx.genus,
+                    tx.species_epithet
+                FROM species sp
+                LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
+                WHERE sp.species_id = %s
+                LIMIT 1
+                """,
+                [species_id],
+            )
+            species = cursor.fetchone()
+
+            if species:
+                # observation count and latest date
+                cursor.execute(
+                    """
+                    SELECT
+                        COUNT(*) AS obs_count,
+                        MAX(event_date) AS latest_date
+                    FROM occurrences
+                    WHERE species_id = %s
+                    """,
+                    [species_id],
+                )
+                obs_summary = cursor.fetchone()
+                observation_count = obs_summary["obs_count"] or 0
+                latest_observation = obs_summary["latest_date"]
+
+                # check if at-risk based on the same criteria as the at-risk page
+                cursor.execute(
+                    """
+                    SELECT
+                        COUNT(*) AS obs_count,
+                        COUNT(DISTINCT reserve_id) AS reserve_count,
+                        MAX(YEAR(event_date)) AS latest_year
+                    FROM occurrences
+                    WHERE species_id = %s
+                    """,
+                    [species_id],
+                )
+                risk_data = cursor.fetchone()
+
+                criteria_hits = 0
+                if risk_data["obs_count"] > 0:
+                    if risk_data["reserve_count"] == 1:
+                        criteria_hits += 1
+                    if risk_data["obs_count"] <= 3:
+                        criteria_hits += 1
+                    if risk_data["latest_year"] and risk_data["latest_year"] < 2015:
+                        criteria_hits += 1
+
+                is_at_risk = criteria_hits >= 1
+
+                # traits for this species with values
+                cursor.execute(
+                    """
+                    SELECT
+                        t.trait_name,
+                        t.trait_label,
+                        t.trait_info,
+                        t.trait_unit,
+                        COALESCE(
+                            NULLIF(TRIM(stj.working_value), ''),
+                            NULLIF(TRIM(stj.original_value), ''),
+                            '(no value)'
+                        ) AS trait_value,
+                        stj.source_code
+                    FROM species_traits_junction stj
+                    JOIN traits t ON t.trait_id = stj.trait_id
+                    WHERE stj.species_id = %s
+                    AND t.of_interest = 1
+                    ORDER BY t.column_number, t.trait_name
+                    """,
+                    [species_id],
+                )
+                traits_list = cursor.fetchall()
+
+        conn.close()
+
+    except Exception as exc:
+        error = str(exc)
+
+    return render_template(
+        "species_detail.html",
+        species=species,
+        traits_list=traits_list,
+        observation_count=observation_count,
+        latest_observation=latest_observation,
+        is_at_risk=is_at_risk,
+        error=error,
+    )
 
 
 # =========================
@@ -128,7 +444,112 @@ def reserves():
 
 @main.route("/at_risk")
 def at_risk():
-    return render_template("at_risk.html")
+    """
+    Show species flagged as at-risk based on observation data.
+
+    Criteria used (from Dorothy's spec, simplified for current data):
+      1. Few reserves: species in only 1 reserve
+      2. Few observations: 3 or less total observations
+      3. No recent records: no observations since 2015
+
+    Priority is based on how many criteria a species hits:
+      3 criteria = High, 2 = Medium, 1 = Low
+
+    Note: native_flag and endangered_status_code columns are NULL in DB,
+    so we cannot filter to natives only or use endangered status yet.
+    """
+    at_risk_list = []
+    error = None
+
+    # threshold for "no recent records" criteria
+    recent_year_cutoff = 2015
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            # build a single query that:
+            # - groups by species
+            # - counts observations and reserves
+            # - finds latest observation year
+            # - flags each criteria
+            # - filters to species hitting at least one criteria
+            cursor.execute(
+                """
+                SELECT
+                    sp.species_id,
+                    sp.scientific_name,
+                    sp.vernacular_name,
+                    COUNT(o.occurrence_id) AS obs_count,
+                    COUNT(DISTINCT o.reserve_id) AS reserve_count,
+                    MAX(YEAR(o.event_date)) AS latest_year
+                FROM species sp
+                LEFT JOIN occurrences o ON o.species_id = sp.species_id
+                GROUP BY sp.species_id, sp.scientific_name, sp.vernacular_name
+                HAVING
+                    obs_count > 0
+                    AND (
+                        reserve_count = 1
+                        OR obs_count <= 3
+                        OR latest_year < %s
+                    )
+                ORDER BY sp.scientific_name
+                """,
+                [recent_year_cutoff],
+            )
+            rows = cursor.fetchall()
+
+        conn.close()
+
+        # process each row to determine reasons and priority
+        for row in rows:
+            reasons = []
+            criteria_count = 0
+
+            if row["reserve_count"] == 1:
+                reasons.append("Only found in 1 reserve")
+                criteria_count += 1
+
+            if row["obs_count"] <= 3:
+                reasons.append(f"Only {row['obs_count']} observation(s)")
+                criteria_count += 1
+
+            if row["latest_year"] is not None and row["latest_year"] < recent_year_cutoff:
+                reasons.append(f"No recent observations (since {row['latest_year']})")
+                criteria_count += 1
+
+            # determine priority based on number of criteria
+            if criteria_count >= 3:
+                priority = "High"
+            elif criteria_count == 2:
+                priority = "Medium"
+            else:
+                priority = "Low"
+
+            at_risk_list.append({
+                "species_id": row["species_id"],
+                "scientific_name": row["scientific_name"],
+                "vernacular_name": row["vernacular_name"],
+                "alert_reason": "; ".join(reasons),
+                "alerted_before": "No",  # placeholder - alert history not tracked yet
+                "previous_alerts": 0,    # placeholder - alert history not tracked yet
+                "priority": priority,
+            })
+
+        # sort by priority (High > Medium > Low) then by name
+        priority_order = {"High": 0, "Medium": 1, "Low": 2}
+        at_risk_list.sort(
+            key=lambda x: (priority_order[x["priority"]], x["scientific_name"])
+        )
+
+    except Exception as exc:
+        error = str(exc)
+
+    return render_template(
+        "at_risk.html",
+        at_risk_list=at_risk_list,
+        error=error,
+    )
 
 
 # =========================
