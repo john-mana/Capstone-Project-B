@@ -345,6 +345,16 @@
             Showing {{ traits|length }} trait/s
         </p>
 
+        <div class="filter-bar">
+            <a href="/traits/export/csv?q={{ search or '' }}" class="clear-btn">
+                Export CSV
+            </a>
+
+            <a href="/traits/export/xlsx?q={{ search or '' }}" class="clear-btn">
+                Export Excel
+            </a>
+        </div>
+
         <table class="traits-table">
             <thead>
                 <tr>

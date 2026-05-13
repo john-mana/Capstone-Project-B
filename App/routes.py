@@ -1,6 +1,11 @@
+import pymysql
 import os
 import socket
 from urllib.parse import urlencode
+import csv
+import io
+from flask import Response, send_file
+import pandas as pd
 
 from flask import Blueprint, redirect, render_template, request, url_for
 
@@ -1577,3 +1582,1017 @@ def query_builder():
         pass
 
     return render_template("query_builder.html", **context)
+
+# =========================
+# Traits Export XLSX
+# =========================
+
+@main.route("/traits/export/xlsx")
+def export_traits_xlsx():
+
+    search = request.args.get("q", "").strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    sql = """
+        SELECT
+            trait_type_name,
+            trait_name,
+            trait_label,
+            trait_unit,
+            trait_type
+        FROM traits
+        WHERE of_interest = 1
+    """
+
+    params = []
+
+    if search:
+        sql += """
+            AND (
+                trait_name LIKE %s
+                OR trait_label LIKE %s
+                OR trait_type_name LIKE %s
+            )
+        """
+
+        params.extend([
+            f"%{search}%",
+            f"%{search}%",
+            f"%{search}%"
+        ])
+
+    sql += """
+        ORDER BY
+            column_number,
+            trait_type_name,
+            trait_name
+    """
+
+    cursor.execute(sql, params)
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    df = pd.DataFrame(rows)
+
+    # nicer column names
+    df.columns = [
+        "Trait Type Name",
+        "Trait Name",
+        "Trait Label",
+        "Trait Unit",
+        "Trait Type"
+    ]
+
+    output = io.BytesIO()
+
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+        df.to_excel(
+            writer,
+            index=False,
+            sheet_name="Traits"
+        )
+
+    output.seek(0)
+
+    return send_file(
+        output,
+        as_attachment=True,
+        download_name="traits_export.xlsx",
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+
+# =========================
+# Traits Export CSV
+# =========================
+
+@main.route("/traits/export/csv")
+def export_traits_csv():
+
+    search = request.args.get("q", "").strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    sql = """
+        SELECT
+            trait_type_name,
+            trait_name,
+            trait_label,
+            trait_unit,
+            trait_type
+        FROM traits
+        WHERE of_interest = 1
+    """
+
+    params = []
+
+    if search:
+        sql += """
+            AND (
+                trait_name LIKE %s
+                OR trait_label LIKE %s
+                OR trait_type_name LIKE %s
+            )
+        """
+
+        params.extend([
+            f"%{search}%",
+            f"%{search}%",
+            f"%{search}%"
+        ])
+
+    sql += """
+        ORDER BY
+            column_number,
+            trait_type_name,
+            trait_name
+    """
+
+    cursor.execute(sql, params)
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    output = io.StringIO()
+
+    writer = csv.writer(output)
+
+    writer.writerow([
+        "Trait Type Name",
+        "Trait Name",
+        "Trait Label",
+        "Trait Unit",
+        "Trait Type"
+    ])
+
+    for row in rows:
+        writer.writerow([
+            row["trait_type_name"],
+            row["trait_name"],
+            row["trait_label"],
+            row["trait_unit"],
+            row["trait_type"]
+        ])
+
+    output.seek(0)
+
+    return Response(
+        output.getvalue(),
+        mimetype="text/csv",
+        headers={
+            "Content-Disposition": "attachment; filename=traits_export.csv"
+        }
+    )
+
+# =========================
+# Traits FindBy Export CSV
+# =========================
+
+@main.route("/traits_findby/export/csv")
+def export_traits_findby_csv():
+
+    selected_traits = request.args.getlist("trait")
+    selected_values = request.args.getlist("trait_value")
+
+    if not selected_traits:
+        return Response(
+            "No traits selected",
+            mimetype="text/plain"
+        )
+
+    selected_value_filters = {}
+
+    for value in selected_values:
+        if ":::" in value:
+            trait_name, trait_value = value.split(":::", 1)
+            selected_value_filters.setdefault(trait_name, []).append(trait_value)
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    required_value_filters = {
+        trait_name: values
+        for trait_name, values in selected_value_filters.items()
+        if trait_name in selected_traits and values
+    }
+
+    filter_traits = list(required_value_filters.keys()) or selected_traits
+
+    filter_trait_placeholders = ", ".join(["%s"] * len(filter_traits))
+
+    value_expression = """
+        COALESCE(
+            NULLIF(TRIM(match_stj.working_value), ''),
+            NULLIF(TRIM(match_stj.original_value), ''),
+            '(blank)'
+        )
+    """
+
+    match_where = [
+        f"match_trait.trait_name IN ({filter_trait_placeholders})"
+    ]
+
+    match_having = []
+    having_params = []
+
+    for trait_name, values in required_value_filters.items():
+
+        match_having.append(
+            f"""
+            SUM(
+                CASE
+                    WHEN match_trait.trait_name = %s
+                    AND {value_expression} IN ({', '.join(['%s'] * len(values))})
+                    THEN 1
+                    ELSE 0
+                END
+            ) > 0
+            """
+        )
+
+        having_params.append(trait_name)
+        having_params.extend(values)
+
+    having_clause = (
+        f"HAVING {' AND '.join(match_having)}"
+        if match_having else ""
+    )
+
+    match_params = filter_traits + having_params
+
+    cursor.execute(
+        f"""
+        SELECT
+            sp.species_id,
+            sp.scientific_name
+        FROM species_traits_junction match_stj
+        JOIN traits match_trait
+            ON match_trait.trait_id = match_stj.trait_id
+        JOIN species sp
+            ON sp.species_id = match_stj.species_id
+        WHERE {' AND '.join(match_where)}
+        GROUP BY sp.species_id, sp.scientific_name
+        {having_clause}
+        ORDER BY sp.scientific_name
+        """,
+        match_params,
+    )
+
+    species_rows = cursor.fetchall()
+
+    species_ids = [row["species_id"] for row in species_rows]
+
+    if not species_ids:
+        return Response(
+            "No matching species",
+            mimetype="text/plain"
+        )
+
+    cursor.execute(
+        f"""
+        SELECT
+            sp.species_id,
+            t.trait_name,
+            COALESCE(
+                NULLIF(TRIM(stj.working_value), ''),
+                NULLIF(TRIM(stj.original_value), ''),
+                '(blank)'
+            ) AS trait_value
+        FROM species_traits_junction stj
+        JOIN traits t
+            ON t.trait_id = stj.trait_id
+        JOIN species sp
+            ON sp.species_id = stj.species_id
+        WHERE sp.species_id IN ({', '.join(['%s'] * len(species_ids))})
+        AND t.trait_name IN ({', '.join(['%s'] * len(selected_traits))})
+        ORDER BY sp.scientific_name
+        """,
+        species_ids + selected_traits,
+    )
+
+    value_rows = cursor.fetchall()
+
+    species_map = {}
+
+    for row in species_rows:
+        species_map[row["species_id"]] = {
+            "Species Name": row["scientific_name"]
+        }
+
+        for trait in selected_traits:
+            species_map[row["species_id"]][trait] = ""
+
+    for row in value_rows:
+
+        current = species_map[row["species_id"]][row["trait_name"]]
+
+        if current:
+            species_map[row["species_id"]][row["trait_name"]] += ", " + row["trait_value"]
+        else:
+            species_map[row["species_id"]][row["trait_name"]] = row["trait_value"]
+
+    output = io.StringIO()
+
+    writer = csv.writer(output)
+
+    headers = ["Species Name"] + selected_traits
+
+    writer.writerow(headers)
+
+    for species in species_map.values():
+        writer.writerow([species.get(h, "") for h in headers])
+
+    cursor.close()
+    conn.close()
+
+    output.seek(0)
+
+    return Response(
+        output.getvalue(),
+        mimetype="text/csv",
+        headers={
+            "Content-Disposition":
+            "attachment; filename=traits_findby_export.csv"
+        }
+    )
+
+
+# =========================
+# Traits FindBy Export XLSX
+# =========================
+
+@main.route("/traits_findby/export/xlsx")
+def export_traits_findby_xlsx():
+
+    selected_traits = request.args.getlist("trait")
+    selected_values = request.args.getlist("trait_value")
+
+    if not selected_traits:
+        return Response(
+            "No traits selected",
+            mimetype="text/plain"
+        )
+
+    selected_value_filters = {}
+
+    for value in selected_values:
+        if ":::" in value:
+            trait_name, trait_value = value.split(":::", 1)
+            selected_value_filters.setdefault(trait_name, []).append(trait_value)
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    required_value_filters = {
+        trait_name: values
+        for trait_name, values in selected_value_filters.items()
+        if trait_name in selected_traits and values
+    }
+
+    filter_traits = list(required_value_filters.keys()) or selected_traits
+
+    filter_trait_placeholders = ", ".join(["%s"] * len(filter_traits))
+
+    value_expression = """
+        COALESCE(
+            NULLIF(TRIM(match_stj.working_value), ''),
+            NULLIF(TRIM(match_stj.original_value), ''),
+            '(blank)'
+        )
+    """
+
+    match_where = [
+        f"match_trait.trait_name IN ({filter_trait_placeholders})"
+    ]
+
+    match_having = []
+    having_params = []
+
+    for trait_name, values in required_value_filters.items():
+
+        match_having.append(
+            f"""
+            SUM(
+                CASE
+                    WHEN match_trait.trait_name = %s
+                    AND {value_expression} IN ({', '.join(['%s'] * len(values))})
+                    THEN 1
+                    ELSE 0
+                END
+            ) > 0
+            """
+        )
+
+        having_params.append(trait_name)
+        having_params.extend(values)
+
+    having_clause = (
+        f"HAVING {' AND '.join(match_having)}"
+        if match_having else ""
+    )
+
+    match_params = filter_traits + having_params
+
+    cursor.execute(
+        f"""
+        SELECT
+            sp.species_id,
+            sp.scientific_name
+        FROM species_traits_junction match_stj
+        JOIN traits match_trait
+            ON match_trait.trait_id = match_stj.trait_id
+        JOIN species sp
+            ON sp.species_id = match_stj.species_id
+        WHERE {' AND '.join(match_where)}
+        GROUP BY sp.species_id, sp.scientific_name
+        {having_clause}
+        ORDER BY sp.scientific_name
+        """,
+        match_params,
+    )
+
+    species_rows = cursor.fetchall()
+
+    species_ids = [row["species_id"] for row in species_rows]
+
+    cursor.execute(
+        f"""
+        SELECT
+            sp.species_id,
+            t.trait_name,
+            COALESCE(
+                NULLIF(TRIM(stj.working_value), ''),
+                NULLIF(TRIM(stj.original_value), ''),
+                '(blank)'
+            ) AS trait_value
+        FROM species_traits_junction stj
+        JOIN traits t
+            ON t.trait_id = stj.trait_id
+        JOIN species sp
+            ON sp.species_id = stj.species_id
+        WHERE sp.species_id IN ({', '.join(['%s'] * len(species_ids))})
+        AND t.trait_name IN ({', '.join(['%s'] * len(selected_traits))})
+        ORDER BY sp.scientific_name
+        """,
+        species_ids + selected_traits,
+    )
+
+    value_rows = cursor.fetchall()
+
+    species_map = {}
+
+    for row in species_rows:
+
+        species_map[row["species_id"]] = {
+            "Species Name": row["scientific_name"]
+        }
+
+        for trait in selected_traits:
+            species_map[row["species_id"]][trait] = ""
+
+    for row in value_rows:
+
+        current = species_map[row["species_id"]][row["trait_name"]]
+
+        if current:
+            species_map[row["species_id"]][row["trait_name"]] += ", " + row["trait_value"]
+        else:
+            species_map[row["species_id"]][row["trait_name"]] = row["trait_value"]
+
+    df = pd.DataFrame(species_map.values())
+
+    output = io.BytesIO()
+
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+        df.to_excel(
+            writer,
+            index=False,
+            sheet_name="Trait Search"
+        )
+
+    output.seek(0)
+
+    cursor.close()
+    conn.close()
+
+    return send_file(
+        output,
+        as_attachment=True,
+        download_name="traits_findby_export.xlsx",
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+# Species Page Export CSV
+@main.route("/species/export/csv")
+def export_species_csv():
+
+    search = request.args.get("q", "").strip()
+    family_filter = request.args.get("family", "").strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    sql = """
+        SELECT
+            sp.taxonomy_id,
+            sp.scientific_name,
+            sp.vernacular_name,
+            sp.native_flag,
+            sp.endangered_status_code,
+            tx.family
+        FROM species sp
+        LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
+        WHERE 1=1
+    """
+
+    params = []
+
+    if search:
+        sql += """
+            AND (
+                sp.scientific_name LIKE %s
+                OR sp.vernacular_name LIKE %s
+            )
+        """
+        params.extend([f"%{search}%", f"%{search}%"])
+
+    if family_filter:
+        sql += " AND tx.family = %s"
+        params.append(family_filter)
+
+    sql += " ORDER BY sp.scientific_name"
+
+    cursor.execute(sql, params)
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow([
+        "Taxonomy ID",
+        "Scientific Name",
+        "Vernacular Name",
+        "Native Flag",
+        "Endangered Status",
+        "Family"
+    ])
+
+    for row in rows:
+        writer.writerow([
+            row["taxonomy_id"],
+            row["scientific_name"],
+            row["vernacular_name"],
+            row["native_flag"],
+            row["endangered_status_code"],
+            row["family"],
+        ])
+
+    output.seek(0)
+
+    return Response(
+        output.getvalue(),
+        mimetype="text/csv",
+        headers={
+            "Content-Disposition": "attachment; filename=species_export.csv"
+        }
+    )
+
+# Species Page Export XLSX
+@main.route("/species/export/xlsx")
+def export_species_xlsx():
+
+    search = request.args.get("q", "").strip()
+    family_filter = request.args.get("family", "").strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    sql = """
+        SELECT
+            sp.taxonomy_id,
+            sp.scientific_name,
+            sp.vernacular_name,
+            sp.native_flag,
+            sp.endangered_status_code,
+            tx.family
+        FROM species sp
+        LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
+        WHERE 1=1
+    """
+
+    params = []
+
+    if search:
+        sql += """
+            AND (
+                sp.scientific_name LIKE %s
+                OR sp.vernacular_name LIKE %s
+            )
+        """
+        params.extend([f"%{search}%", f"%{search}%"])
+
+    if family_filter:
+        sql += " AND tx.family = %s"
+        params.append(family_filter)
+
+    sql += " ORDER BY sp.scientific_name"
+
+    cursor.execute(sql, params)
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    df = pd.DataFrame(rows)
+
+    df.columns = [
+        "Taxonomy ID",
+        "Scientific Name",
+        "Vernacular Name",
+        "Native Flag",
+        "Endangered Status",
+        "Family"
+    ]
+
+    output = io.BytesIO()
+
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+        df.to_excel(writer, index=False, sheet_name="Species")
+
+    output.seek(0)
+
+    return send_file(
+        output,
+        as_attachment=True,
+        download_name="species_export.xlsx",
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    
+# Species New Page Export CSV
+
+@main.route("/species_new/export/csv")
+def export_species_new_csv():
+
+    search = request.args.get("q", "").strip()
+    family_filter = request.args.get("family", "").strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    sql = """
+        SELECT
+            sp.species_id,
+            sp.taxonomy_id,
+            sp.scientific_name,
+            sp.vernacular_name,
+            sp.native_flag,
+            sp.endangered_status_code,
+            tx.family
+        FROM species sp
+        LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
+        WHERE 1=1
+    """
+
+    params = []
+
+    if search:
+        sql += """
+            AND (
+                sp.scientific_name LIKE %s
+                OR sp.vernacular_name LIKE %s
+            )
+        """
+        params.extend([f"%{search}%", f"%{search}%"])
+
+    if family_filter:
+        sql += " AND tx.family = %s"
+        params.append(family_filter)
+
+    # 🔥 KEY DIFFERENCE: newest first
+    sql += " ORDER BY sp.species_id DESC"
+
+    cursor.execute(sql, params)
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow([
+        "Species ID",
+        "Taxonomy ID",
+        "Scientific Name",
+        "Vernacular Name",
+        "Native Flag",
+        "Endangered Status",
+        "Family"
+    ])
+
+    for row in rows:
+        writer.writerow([
+            row["species_id"],
+            row["taxonomy_id"],
+            row["scientific_name"],
+            row["vernacular_name"],
+            row["native_flag"],
+            row["endangered_status_code"],
+            row["family"],
+        ])
+
+    output.seek(0)
+
+    return Response(
+        output.getvalue(),
+        mimetype="text/csv",
+        headers={
+            "Content-Disposition": "attachment; filename=species_new_export.csv"
+        }
+    )
+
+#Species New Page Export XLSX
+@main.route("/species_new/export/xlsx")
+def export_species_new_xlsx():
+
+    search = request.args.get("q", "").strip()
+    family_filter = request.args.get("family", "").strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    sql = """
+        SELECT
+            sp.species_id,
+            sp.taxonomy_id,
+            sp.scientific_name,
+            sp.vernacular_name,
+            sp.native_flag,
+            sp.endangered_status_code,
+            tx.family
+        FROM species sp
+        LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
+        WHERE 1=1
+    """
+
+    params = []
+
+    if search:
+        sql += """
+            AND (
+                sp.scientific_name LIKE %s
+                OR sp.vernacular_name LIKE %s
+            )
+        """
+        params.extend([f"%{search}%", f"%{search}%"])
+
+    if family_filter:
+        sql += " AND tx.family = %s"
+        params.append(family_filter)
+
+    # 🔥 KEY DIFFERENCE: newest first
+    sql += " ORDER BY sp.species_id DESC"
+
+    cursor.execute(sql, params)
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    df = pd.DataFrame(rows)
+
+    df.columns = [
+        "Species ID",
+        "Taxonomy ID",
+        "Scientific Name",
+        "Vernacular Name",
+        "Native Flag",
+        "Endangered Status",
+        "Family"
+    ]
+
+    output = io.BytesIO()
+
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+        df.to_excel(writer, index=False, sheet_name="New Species")
+
+    output.seek(0)
+
+    return send_file(
+        output,
+        as_attachment=True,
+        download_name="species_new_export.xlsx",
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    
+# At Risk Page Export CSV
+
+@main.route("/at_risk/export/csv")
+def export_at_risk_csv():
+
+    search = request.args.get("q", "").strip()
+    priority_filter = request.args.get("priority", "").strip()
+
+    recent_year_cutoff = 2015
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    cursor.execute(
+        """
+        SELECT
+            sp.species_id,
+            sp.scientific_name,
+            sp.vernacular_name,
+            COUNT(o.occurrence_id) AS obs_count,
+            COUNT(DISTINCT o.reserve_id) AS reserve_count,
+            MAX(YEAR(o.event_date)) AS latest_year
+        FROM species sp
+        LEFT JOIN occurrences o
+            ON o.species_id = sp.species_id
+        GROUP BY sp.species_id, sp.scientific_name, sp.vernacular_name
+        HAVING
+            obs_count > 0
+            AND (
+                reserve_count = 1
+                OR obs_count <= 3
+                OR latest_year < %s
+            )
+        ORDER BY sp.scientific_name
+        """,
+        [recent_year_cutoff],
+    )
+
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow([
+        "Scientific Name",
+        "Common Name",
+        "Alert Reason",
+        "Priority"
+    ])
+
+    for row in rows:
+
+        reasons = []
+        criteria = 0
+
+        if row["reserve_count"] == 1:
+            reasons.append("Only 1 reserve")
+            criteria += 1
+
+        if row["obs_count"] <= 3:
+            reasons.append("Low observations")
+            criteria += 1
+
+        if row["latest_year"] and row["latest_year"] < recent_year_cutoff:
+            reasons.append("No recent observations")
+            criteria += 1
+
+        if criteria >= 3:
+            priority = "High"
+        elif criteria == 2:
+            priority = "Medium"
+        else:
+            priority = "Low"
+
+        # apply filters
+        if search:
+            text = f"{row['scientific_name']} {row['vernacular_name'] or ''}".lower()
+            if search.lower() not in text:
+                continue
+
+        if priority_filter and priority != priority_filter:
+            continue
+
+        writer.writerow([
+            row["scientific_name"],
+            row["vernacular_name"],
+            "; ".join(reasons),
+            priority
+        ])
+
+    output.seek(0)
+
+    return Response(
+        output.getvalue(),
+        mimetype="text/csv",
+        headers={
+            "Content-Disposition": "attachment; filename=at_risk_species.csv"
+        }
+    )
+
+#At Risk Species Page Export XLSX
+@main.route("/at_risk/export/xlsx")
+def export_at_risk_xlsx():
+
+    search = request.args.get("q", "").strip()
+    priority_filter = request.args.get("priority", "").strip()
+
+    recent_year_cutoff = 2015
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    cursor.execute(
+        """
+        SELECT
+            sp.species_id,
+            sp.scientific_name,
+            sp.vernacular_name,
+            COUNT(o.occurrence_id) AS obs_count,
+            COUNT(DISTINCT o.reserve_id) AS reserve_count,
+            MAX(YEAR(o.event_date)) AS latest_year
+        FROM species sp
+        LEFT JOIN occurrences o
+            ON o.species_id = sp.species_id
+        GROUP BY sp.species_id, sp.scientific_name, sp.vernacular_name
+        HAVING
+            obs_count > 0
+            AND (
+                reserve_count = 1
+                OR obs_count <= 3
+                OR latest_year < %s
+            )
+        ORDER BY sp.scientific_name
+        """,
+        [recent_year_cutoff],
+    )
+
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    export_data = []
+
+    for row in rows:
+
+        reasons = []
+        criteria = 0
+
+        if row["reserve_count"] == 1:
+            reasons.append("Only 1 reserve")
+            criteria += 1
+
+        if row["obs_count"] <= 3:
+            reasons.append("Low observations")
+            criteria += 1
+
+        if row["latest_year"] and row["latest_year"] < recent_year_cutoff:
+            reasons.append("No recent observations")
+            criteria += 1
+
+        if criteria >= 3:
+            priority = "High"
+        elif criteria == 2:
+            priority = "Medium"
+        else:
+            priority = "Low"
+
+        # filters
+        if search:
+            text = f"{row['scientific_name']} {row['vernacular_name'] or ''}".lower()
+            if search.lower() not in text:
+                continue
+
+        if priority_filter and priority != priority_filter:
+            continue
+
+        export_data.append({
+            "Scientific Name": row["scientific_name"],
+            "Common Name": row["vernacular_name"],
+            "Alert Reason": "; ".join(reasons),
+            "Priority": priority
+        })
+
+    df = pd.DataFrame(export_data)
+
+    output = io.BytesIO()
+
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+        df.to_excel(writer, index=False, sheet_name="At Risk Species")
+
+    output.seek(0)
+
+    return send_file(
+        output,
+        as_attachment=True,
+        download_name="at_risk_species.xlsx",
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
