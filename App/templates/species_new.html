@@ -292,6 +292,22 @@
         {% if species_list %}
         <p class="result-count">Showing {{ species_list|length }} species</p>
 
+        <div class="filter-bar">
+            <a
+                href="/species_new/export/csv?{{ request.query_string.decode('utf-8') }}"
+                class="clear-btn"
+            >
+                Export CSV
+            </a>
+
+            <a
+                href="/species_new/export/xlsx?{{ request.query_string.decode('utf-8') }}"
+                class="clear-btn"
+            >
+                Export Excel
+            </a>
+        </div>
+
         <table class="species-table">
             <thead>
                 <tr>

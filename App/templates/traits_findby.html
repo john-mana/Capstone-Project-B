@@ -49,7 +49,7 @@
             align-items: center;
             background: #f8faf4;
             border: 2px solid #b6b6bb;
-            border-radius: 999px;
+            border-radius: 6px;
             box-sizing: border-box;
             display: flex;
             flex-wrap: wrap;
@@ -184,7 +184,7 @@
         .find-trait-chip {
             align-items: center;
             background: #4aa857;
-            border-radius: 999px;
+            border-radius: 6px;
             color: #fff;
             display: inline-flex;
             font-family: "Inter", Arial, sans-serif;
@@ -217,24 +217,25 @@
 
         .find-trait-actions button,
         .find-trait-actions a {
-            border: 0;
-            border-radius: 999px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
             cursor: pointer;
-            font-family: "Inter", Arial, sans-serif;
-            font-size: 15px;
-            font-weight: 800;
-            padding: 13px 24px;
+            font-weight: 500;
+            font-size: 14px;
+            font-family: inherit;
+            line-height: 1.2;
             text-decoration: none;
         }
 
         .find-trait-actions button {
-            background: #4aa857;
+            background: #40623f;
             color: #fff;
         }
 
         .find-trait-actions a {
-            background: #e4e9e1;
-            color: #254125;
+            background: #ccc;
+            color: #333;
         }
 
         .find-trait-results {
@@ -386,11 +387,11 @@
         }
 
         .find-trait-actions button:hover {
-            background: #3d8f49;
+            background: #2f4d2e;
         }
 
         .find-trait-actions a:hover {
-            background: #d6ddd2;
+            background: #b5b5b5;
         }
 
         .page-intro {
@@ -811,6 +812,23 @@
                 {% if selected_traits and matching_species %}
                     <div class="find-trait-table-tools">
                         <p class="find-trait-count">Showing {{ result_start }}-{{ result_end }} of {{ total_results }} species</p>
+                    </div>
+                    <div class="find-trait-table-tools">    
+                        <div class="find-trait-actions">
+                            <a
+                                href="/traits_findby/export/csv?{{ request.query_string.decode('utf-8') }}"
+                                class="btn btn-export"
+                            >
+                                Export CSV
+                            </a>
+
+                            <a
+                                href="/traits_findby/export/xlsx?{{ request.query_string.decode('utf-8') }}"
+                                class="btn btn-export"
+                            >
+                                Export Excel
+                            </a>
+                        </div>
                         <form class="find-trait-page-size" method="get" action="/traits_findby">
                             {% for group in selected_groups %}
                                 <input type="hidden" name="trait_group" value="{{ group }}">

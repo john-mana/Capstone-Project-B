@@ -295,6 +295,22 @@
         {% if species_list|length == 500 %}<span class="data-note">(limited to 500 - use filters to narrow)</span>{% endif %}
     </p>
 
+    <div class="filter-bar">
+        <a
+            href="/species/export/csv?{{ request.query_string.decode('utf-8') }}"
+            class="clear-btn"
+        >
+            Export CSV
+        </a>
+
+        <a
+            href="/species/export/xlsx?{{ request.query_string.decode('utf-8') }}"
+            class="clear-btn"
+        >
+            Export Excel
+        </a>
+    </div>
+
     <table class="species-table">
         <thead>
             <tr>
