@@ -387,6 +387,24 @@
             </div>
         </div>
 
+        <div class="filter-bar">
+
+            <a
+                href="/at_risk/export/csv?{{ request.query_string.decode('utf-8') }}"
+                class="clear-btn"
+            >
+                Export CSV
+            </a>
+
+            <a
+                href="/at_risk/export/xlsx?{{ request.query_string.decode('utf-8') }}"
+                class="clear-btn"
+            >
+                Export Excel
+            </a>
+
+        </div>
+
         {% if total_pages > 1 %}
         <div class="pagination-controls">
             {% if page_num > 1 %}
@@ -413,21 +431,6 @@
         </div>
         {% endif %}
 
-        <div class="filter-bar">
-            <a
-                href="/species_new/export/csv?{{ request.query_string.decode('utf-8') }}"
-                class="clear-btn"
-            >
-                Export CSV
-            </a>
-
-            <a
-                href="/species_new/export/xlsx?{{ request.query_string.decode('utf-8') }}"
-                class="clear-btn"
-            >
-                Export Excel
-            </a>
-        </div>
 
         <table class="species-table">
             <thead>

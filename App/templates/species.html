@@ -240,7 +240,6 @@
         background-color: #eef5ec;
     }
 
-    
 </style>
 
 {% macro pagination_controls() %}
@@ -414,23 +413,28 @@
         </div>
     </div>
 
-    {{ pagination_controls() }}
-
     <div class="filter-bar">
-        
-            href="/species/export/csv?{{ request.query_string.decode('utf-8') }}"
+
+        <a
+            href="/at_risk/export/csv?{{ request.query_string.decode('utf-8') }}"
             class="clear-btn"
         >
             Export CSV
         </a>
 
-        
-            href="/species/export/xlsx?{{ request.query_string.decode('utf-8') }}"
+        <a
+            href="/at_risk/export/xlsx?{{ request.query_string.decode('utf-8') }}"
             class="clear-btn"
         >
             Export Excel
         </a>
+
     </div>
+
+    {{ pagination_controls() }}
+    
+
+
 
     <table class="species-table">
         <thead>
