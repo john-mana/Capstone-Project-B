@@ -5,6 +5,9 @@ from urllib.parse import urlencode
 import csv
 import io
 from flask import Response, send_file
+from flask import session, redirect, url_for
+from werkzeug.security import check_password_hash, generate_password_hash
+from functools import wraps
 import pandas as pd
 
 from flask import Blueprint, redirect, render_template, request, url_for
@@ -41,6 +44,30 @@ def database_port_open(timeout=1):
     except OSError:
         return False
 
+# session helpers
+
+
+def login_required(view_func):
+    """Block routes if user is not logged in."""
+    @wraps(view_func)
+    def wrapper(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('main.login'))
+        return view_func(*args, **kwargs)
+    return wrapper
+
+
+def admin_required(view_func):
+    """Block routes if user is not an admin."""
+    @wraps(view_func)
+    def wrapper(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('main.login'))
+        if session.get('role') != 'admin':
+            return redirect(url_for('main.home'))
+        return view_func(*args, **kwargs)
+    return wrapper
+
 
 # =========================
 # Home
@@ -62,7 +89,55 @@ def home():
 
 @main.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    """
+    GET: show login page.
+    POST: verify email + hashed password. If valid, set session and redirect.
+    """
+    error = None
+
+    if request.method == "POST":
+        email = request.form.get("email", "").strip()
+        password = request.form.get("password", "").strip()
+
+        if not email or not password:
+            error = "Please enter both email and password."
+        else:
+            try:
+                conn = get_connection()
+
+                with conn.cursor() as cursor:
+                    cursor.execute(
+                        """
+                        SELECT user_id, email, password, first_name, last_name, role
+                        FROM users
+                        WHERE email = %s
+                        LIMIT 1
+                        """,
+                        [email],
+                    )
+                    user = cursor.fetchone()
+
+                conn.close()
+
+                if user is None:
+                    error = "Invalid email or password."
+                elif not check_password_hash(user["password"], password):
+                    error = "Invalid email or password."
+                else:
+                    # login success - set session
+                    session.clear()
+                    session["user_id"] = user["user_id"]
+                    session["email"] = user["email"]
+                    session["first_name"] = user["first_name"]
+                    session["last_name"] = user["last_name"]
+                    session["role"] = user["role"]
+
+                    return redirect(url_for("main.home"))
+
+            except Exception as exc:
+                error = f"Login error: {str(exc)}"
+
+    return render_template("login.html", error=error)
 
 
 @main.route("/register", methods=["GET", "POST"])
@@ -82,6 +157,8 @@ def contact():
 
 @main.route("/logout")
 def logout():
+    """Clear session and go back to login."""
+    session.clear()
     return redirect(url_for("main.login"))
 
 
@@ -819,8 +896,210 @@ def taxonomy_detail():
 # =========================
 
 @main.route("/admin_controls")
+@admin_required
 def admin_controls():
-    return render_template("admin_controls.html")
+    """
+    Admin dashboard - shows users list and ALA update info.
+    Only accessible to admin users.
+    """
+    users_list = []
+    error = None
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT user_id, email, first_name, last_name, role, date_created
+                FROM users
+                ORDER BY user_id
+                """
+            )
+            users_list = cursor.fetchall()
+
+        conn.close()
+
+    except Exception as exc:
+        error = str(exc)
+
+    return render_template(
+        "admin_controls.html",
+        users_list=users_list,
+        error=error,
+    )
+
+
+
+@main.route("/admin/add_user", methods=["GET", "POST"])
+@admin_required
+def admin_add_user():
+    """Add a new user. Admin only."""
+    error = None
+    success = None
+
+    if request.method == "POST":
+        first_name = request.form.get("first_name", "").strip()
+        last_name = request.form.get("last_name", "").strip()
+        email = request.form.get("email", "").strip()
+        password = request.form.get("password", "").strip()
+        role = request.form.get("role", "viewer").strip()
+
+        # validate
+        if not email or not password:
+            error = "Email and password are required."
+        elif role not in ("admin", "viewer"):
+            error = "Invalid role."
+        else:
+            try:
+                conn = get_connection()
+
+                with conn.cursor() as cursor:
+                    # check if email already exists
+                    cursor.execute(
+                        "SELECT user_id FROM users WHERE email = %s",
+                        [email]
+                    )
+                    existing = cursor.fetchone()
+
+                    if existing:
+                        error = "A user with this email already exists."
+                    else:
+                        # hash the password
+                        hashed_pw = generate_password_hash(password)
+
+                        cursor.execute(
+                            """
+                            INSERT INTO users (email, password, first_name, last_name, role, date_created)
+                            VALUES (%s, %s, %s, %s, %s, NOW())
+                            """,
+                            [email, hashed_pw, first_name, last_name, role]
+                        )
+                        conn.commit()
+                        success = f"User {email} added successfully."
+
+                conn.close()
+
+                if success:
+                    return redirect(url_for("main.admin_controls"))
+
+            except Exception as exc:
+                error = str(exc)
+
+    return render_template(
+        "add_user.html",
+        error=error,
+        success=success,
+    )
+
+
+@main.route("/admin/edit_user/<int:user_id>", methods=["GET", "POST"])
+@admin_required
+def admin_edit_user(user_id):
+    """Edit user info. Admin only."""
+    error = None
+    user = None
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            # load the user
+            cursor.execute(
+                """
+                SELECT user_id, email, first_name, last_name, role
+                FROM users
+                WHERE user_id = %s
+                """,
+                [user_id]
+            )
+            user = cursor.fetchone()
+
+            if not user:
+                conn.close()
+                return redirect(url_for("main.admin_controls"))
+
+            if request.method == "POST":
+                first_name = request.form.get("first_name", "").strip()
+                last_name = request.form.get("last_name", "").strip()
+                email = request.form.get("email", "").strip()
+                new_password = request.form.get("password", "").strip()
+                role = request.form.get("role", "viewer").strip()
+
+                if not email:
+                    error = "Email is required."
+                elif role not in ("admin", "viewer"):
+                    error = "Invalid role."
+                else:
+                    # check if email is taken by another user
+                    cursor.execute(
+                        "SELECT user_id FROM users WHERE email = %s AND user_id != %s",
+                        [email, user_id]
+                    )
+                    existing = cursor.fetchone()
+
+                    if existing:
+                        error = "Another user already has this email."
+                    else:
+                        # update name, email, role
+                        cursor.execute(
+                            """
+                            UPDATE users
+                            SET email = %s, first_name = %s, last_name = %s, role = %s
+                            WHERE user_id = %s
+                            """,
+                            [email, first_name, last_name, role, user_id]
+                        )
+
+                        # only update password if a new one was given
+                        if new_password:
+                            hashed_pw = generate_password_hash(new_password)
+                            cursor.execute(
+                                "UPDATE users SET password = %s WHERE user_id = %s",
+                                [hashed_pw, user_id]
+                            )
+
+                        conn.commit()
+                        conn.close()
+                        return redirect(url_for("main.admin_controls"))
+
+        conn.close()
+
+    except Exception as exc:
+        error = str(exc)
+
+    return render_template(
+        "edit_user.html",
+        user=user,
+        error=error,
+    )
+
+
+
+@main.route("/admin/delete_user/<int:user_id>", methods=["POST"])
+@admin_required
+def admin_delete_user(user_id):
+    """Delete a user. Admin only. Cannot delete yourself."""
+    # safety - can't delete yourself
+    if user_id == session.get("user_id"):
+        return redirect(url_for("main.admin_controls"))
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "DELETE FROM users WHERE user_id = %s",
+                [user_id]
+            )
+            conn.commit()
+
+        conn.close()
+
+    except Exception as exc:
+        print(f"Delete error: {exc}")
+
+    return redirect(url_for("main.admin_controls"))
 
 
 # =========================

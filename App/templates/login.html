@@ -65,17 +65,23 @@
 
             <section class="right-panel">
 
+                {% if error %}
+                <div style="background: #ffe6e6; border: 1px solid #cc0000; color: #cc0000; padding: 10px; margin-bottom: 15px; border-radius: 6px;">
+                    {{ error }}
+                </div>
+                {% endif %}
+
                 <form action="{{ url_for('main.login') }}" method="POST" class="login-box">
 
                     <input type="email" name="email" placeholder="Username" required>
-
+                
                     <div class="password-area">
                         <input type="password" name="password" placeholder="Password" required>
                         <span>VIEW</span>
                     </div>
 
                     <div class="small-links">
-                        <a href="{{ url_for('main.register') }}">Register New Account</a>
+                        <!-- Register link removed - admin creates users -->
                         <div class="link-divider"></div>
                         <a href="#">Forgot my Password</a>
                     </div>

@@ -12,21 +12,15 @@ def create_app():
     from .routes import main
     app.register_blueprint(main)
 
+    # generic pages with no logic - just render the template
+    # auth and admin pages are handled in routes.py because they need real logic
     page_aliases = {
-        "admin_controls": "admin_controls.html",
-        "at_risk": "at_risk.html",
         "contact": "contact.html",
         "forgot_password": "forgot_password.html",
         "home": "home.html",
-        "login": "login.html",
         "observations": "observations.html",
         "observations_new": "observations_new.html",
-        "register": "register.html",
         "reserves": "reserves.html",
-        "species": "species.html",
-        "species_detail": "species_detail.html",
-        "species_new": "species_new.html",
-        "traits_findby": "traits_findby.html",
     }
 
     for endpoint, template_name in page_aliases.items():

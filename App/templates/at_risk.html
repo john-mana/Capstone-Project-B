@@ -343,12 +343,14 @@
                 </div>
 
                 <!-- ADMIN -->
+                {% if session.role == 'admin' %}
                 <div class="nav-dropdown">
                     <button class="nav-btn">Admin Controls ▾</button>
                     <div class="dropdown-content">
                         <a href="/admin_controls">Dashboard</a>
                     </div>
                 </div>
+                {% endif %}
 
             </div>
 

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add User</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .content {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #2d5a2d;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .form-card {
+            max-width: 500px;
+            background-color: white;
+            border: 1px solid #d6ddd2;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            margin: 20px auto;
+        }
+
+        .form-card h2 {
+            font-family: "Playfair Display", Georgia, serif;
+            color: #40623f;
+            margin: 0 0 25px;
+        }
+
+        .form-field {
+            margin-bottom: 15px;
+        }
+
+        .form-field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #444;
+        }
+
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #c2d7b9;
+            border-radius: 6px;
+            font-size: 0.95em;
+            box-sizing: border-box;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus {
+            outline: none;
+            border-color: #40623f;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .form-buttons button {
+            padding: 10px 24px;
+            background-color: #40623f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .form-buttons button:hover {
+            background-color: #2f4d2e;
+        }
+
+        .form-buttons a {
+            padding: 10px 24px;
+            background-color: #ccc;
+            color: #333;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .error-box {
+            background-color: #ffe6e6;
+            border: 1px solid #cc0000;
+            color: #cc0000;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <header class="app-header">
+        <div class="app-header-image">
+            <img src="{{ url_for('static', filename='header.png') }}" alt="Header">
+        </div>
+
+        <div class="app-nav">
+            <div class="nav-menu">
+                <a href="/home" class="nav-btn">
+                    <img src="{{ url_for('static', filename='home.png') }}" class="home-icon">
+                </a>
+                {% if session.role == 'admin' %}
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Admin Controls ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/admin_controls">Dashboard</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <div class="page-divider"></div>
+
+    <div class="content">
+        <a href="/admin_controls" class="back-link">← Back to Admin Menu</a>
+
+        <div class="form-card">
+            <h2>Add New User</h2>
+
+            {% if error %}
+            <div class="error-box">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST" action="/admin/add_user">
+
+                <div class="form-field">
+                    <label>First Name</label>
+                    <input type="text" name="first_name" placeholder="John">
+                </div>
+
+                <div class="form-field">
+                    <label>Last Name</label>
+                    <input type="text" name="last_name" placeholder="Smith">
+                </div>
+
+                <div class="form-field">
+                    <label>Email *</label>
+                    <input type="email" name="email" required placeholder="user@example.com">
+                </div>
+
+                <div class="form-field">
+                    <label>Password *</label>
+                    <div style="position: relative;">
+                        <input type="password" id="password-input" name="password" required placeholder="Min 6 characters" minlength="6" style="padding-right: 70px;">
+                        <button type="button" onclick="togglePassword()" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: #40623f; color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.85em;">Show</button>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Role</label>
+                    <select name="role">
+                        <option value="viewer">Viewer (read only)</option>
+                        <option value="admin">Admin (full access)</option>
+                    </select>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit">Add User</button>
+                    <a href="/admin_controls">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-right">
+            <a href="/logout" class="logout-btn">Log Out</a>
+        </div>
+        <p>Bio Geographic Data Analysts | ABN 579 423 418 07</p>
+    </footer>
+
+</div>
+
+
+<script>
+    function togglePassword() {
+        const input = document.getElementById('password-input');
+        const btn = event.target;
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = 'Hide';
+        } else {
+            input.type = 'password';
+            btn.textContent = 'Show';
+        }
+    }
+</script>
+
+
+</body>
+</html>
