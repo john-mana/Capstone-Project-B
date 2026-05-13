@@ -86,14 +86,29 @@ def logout():
 
 @main.route("/species")
 def species():
-    """
-    Show all species with taxonomy info.
-    """
     species_list = []
     error = None
 
     search = request.args.get("q", "").strip()
     family_filter = request.args.get("family", "").strip()
+    
+    # pagination params
+    per_page_options = [50, 100, 200]
+    try:
+        per_page = int(request.args.get("per_page", 50))
+    except ValueError:
+        per_page = 50
+    if per_page not in per_page_options:
+        per_page = 50
+    
+    try:
+        page_num = int(request.args.get("page", 1))
+    except ValueError:
+        page_num = 1
+    page_num = max(1, page_num)
+    
+    offset = (page_num - 1) * per_page
+    total_count = 0
 
     try:
         conn = get_connection()
@@ -114,6 +129,19 @@ def species():
 
             where_clause = "WHERE " + " AND ".join(where_parts) if where_parts else ""
 
+            # count total for pagination
+            cursor.execute(
+                f"""
+                SELECT COUNT(*) AS total
+                FROM species sp
+                LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
+                {where_clause}
+                """,
+                params,
+            )
+            total_count = cursor.fetchone()["total"]
+
+            # get paginated results
             cursor.execute(
                 f"""
                 SELECT
@@ -129,9 +157,9 @@ def species():
                 LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
                 {where_clause}
                 ORDER BY sp.scientific_name
-                LIMIT 500
+                LIMIT %s OFFSET %s
                 """,
-                params,
+                params + [per_page, offset],
             )
             species_list = cursor.fetchall()
 
@@ -145,7 +173,6 @@ def species():
             )
             family_options = [row["family"] for row in cursor.fetchall()]
 
-            # also get all species names for autocomplete
             cursor.execute(
                 """
                 SELECT scientific_name, vernacular_name
@@ -169,6 +196,9 @@ def species():
         family_options = []
         name_options = []
 
+    total_pages = max(1, -(-total_count // per_page))
+    page_num = min(page_num, total_pages)
+
     return render_template(
         "species.html",
         species_list=species_list,
@@ -177,19 +207,39 @@ def species():
         search=search,
         family_filter=family_filter,
         error=error,
+        per_page=per_page,
+        per_page_options=per_page_options,
+        page_num=page_num,
+        total_pages=total_pages,
+        total_count=total_count,
     )
 
 
 @main.route("/species_new")
 def species_new():
-    """
-    Show newest species (by species_id desc since no created_at column exists).
-    """
     species_list = []
     error = None
 
     search = request.args.get("q", "").strip()
     family_filter = request.args.get("family", "").strip()
+
+    # pagination
+    per_page_options = [50, 100, 200]
+    try:
+        per_page = int(request.args.get("per_page", 50))
+    except ValueError:
+        per_page = 50
+    if per_page not in per_page_options:
+        per_page = 50
+
+    try:
+        page_num = int(request.args.get("page", 1))
+    except ValueError:
+        page_num = 1
+    page_num = max(1, page_num)
+
+    offset = (page_num - 1) * per_page
+    total_count = 0
 
     try:
         conn = get_connection()
@@ -209,6 +259,17 @@ def species_new():
                 params.append(family_filter)
 
             where_clause = "WHERE " + " AND ".join(where_parts) if where_parts else ""
+
+            cursor.execute(
+                f"""
+                SELECT COUNT(*) AS total
+                FROM species sp
+                LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
+                {where_clause}
+                """,
+                params,
+            )
+            total_count = cursor.fetchone()["total"]
 
             cursor.execute(
                 f"""
@@ -225,9 +286,9 @@ def species_new():
                 LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
                 {where_clause}
                 ORDER BY sp.species_id DESC
-                LIMIT 50
+                LIMIT %s OFFSET %s
                 """,
-                params,
+                params + [per_page, offset],
             )
             species_list = cursor.fetchall()
 
@@ -264,6 +325,9 @@ def species_new():
         family_options = []
         name_options = []
 
+    total_pages = max(1, -(-total_count // per_page))
+    page_num = min(page_num, total_pages)
+
     return render_template(
         "species_new.html",
         species_list=species_list,
@@ -272,6 +336,11 @@ def species_new():
         search=search,
         family_filter=family_filter,
         error=error,
+        per_page=per_page,
+        per_page_options=per_page_options,
+        page_num=page_num,
+        total_pages=total_pages,
+        total_count=total_count,
     )
 
 
@@ -505,38 +574,74 @@ def reserves():
 def at_risk():
     """
     Show species flagged as at-risk based on observation data.
-    """
 
+    Criteria used:
+      1. Few reserves: species in only 1 reserve
+      2. Few observations: 3 or less total observations
+      3. No recent records: no observations since 2015
+
+    Priority is based on how many criteria a species hits:
+      3 criteria = High, 2 = Medium, 1 = Low
+
+    Filters:
+      - native_filter: 'native', 'exotic', '' (all)
+      - priority_filter: 'High', 'Medium', 'Low', '' (all)
+    """
     at_risk_list = []
     error = None
+    total_count = 0
+    total_pages = 1
+
+    native_filter = request.args.get("native", "").strip()
+    priority_filter = request.args.get("priority", "").strip()
+
+    # pagination
+    per_page_options = [50, 100, 200]
+    try:
+        per_page = int(request.args.get("per_page", 50))
+    except ValueError:
+        per_page = 50
+    if per_page not in per_page_options:
+        per_page = 50
+
+    try:
+        page_num = int(request.args.get("page", 1))
+    except ValueError:
+        page_num = 1
+    page_num = max(1, page_num)
 
     recent_year_cutoff = 2015
-
-    # NEW
-    search = request.args.get("q", "").strip()
-    priority_filter = request.args.get("priority", "").strip()
 
     try:
         conn = get_connection()
 
         with conn.cursor() as cursor:
+            native_where = ""
+            params = []
+
+            if native_filter == "native":
+                native_where = "WHERE sp.native_flag = 1"
+            elif native_filter == "exotic":
+                native_where = "WHERE sp.native_flag = 0"
+
+            params.append(recent_year_cutoff)
 
             cursor.execute(
-                """
+                f"""
                 SELECT
                     sp.species_id,
                     sp.scientific_name,
                     sp.vernacular_name,
+                    sp.native_flag,
+                    sp.endangered_status_code,
                     COUNT(o.occurrence_id) AS obs_count,
                     COUNT(DISTINCT o.reserve_id) AS reserve_count,
                     MAX(YEAR(o.event_date)) AS latest_year
                 FROM species sp
-                LEFT JOIN occurrences o
-                    ON o.species_id = sp.species_id
-                GROUP BY
-                    sp.species_id,
-                    sp.scientific_name,
-                    sp.vernacular_name
+                LEFT JOIN occurrences o ON o.species_id = sp.species_id
+                {native_where}
+                GROUP BY sp.species_id, sp.scientific_name, sp.vernacular_name,
+                         sp.native_flag, sp.endangered_status_code
                 HAVING
                     obs_count > 0
                     AND (
@@ -546,37 +651,15 @@ def at_risk():
                     )
                 ORDER BY sp.scientific_name
                 """,
-                [recent_year_cutoff],
+                params,
             )
-
             rows = cursor.fetchall()
-
-            # autocomplete names
-            cursor.execute(
-                """
-                SELECT scientific_name, vernacular_name
-                FROM species
-                WHERE scientific_name IS NOT NULL
-                ORDER BY scientific_name
-                """
-            )
-
-            name_rows = cursor.fetchall()
-
-            name_options = []
-
-            for row in name_rows:
-                if row["scientific_name"]:
-                    name_options.append(row["scientific_name"])
-
-                if row["vernacular_name"]:
-                    name_options.append(row["vernacular_name"])
 
         conn.close()
 
-        # process/filter rows
+        # process rows into full list
+        full_list = []
         for row in rows:
-
             reasons = []
             criteria_count = 0
 
@@ -588,16 +671,10 @@ def at_risk():
                 reasons.append(f"Only {row['obs_count']} observation(s)")
                 criteria_count += 1
 
-            if (
-                row["latest_year"] is not None
-                and row["latest_year"] < recent_year_cutoff
-            ):
-                reasons.append(
-                    f"No recent observations (since {row['latest_year']})"
-                )
+            if row["latest_year"] is not None and row["latest_year"] < recent_year_cutoff:
+                reasons.append(f"No recent observations (since {row['latest_year']})")
                 criteria_count += 1
 
-            # priority
             if criteria_count >= 3:
                 priority = "High"
             elif criteria_count == 2:
@@ -605,56 +682,129 @@ def at_risk():
             else:
                 priority = "Low"
 
-            # NEW FILTER LOGIC
-
-            # search filter
-            if search:
-                combined_text = (
-                    f"{row['scientific_name']} "
-                    f"{row['vernacular_name'] or ''}"
-                ).lower()
-
-                if search.lower() not in combined_text:
-                    continue
-
-            # priority filter
+            # apply priority filter
             if priority_filter and priority != priority_filter:
                 continue
 
-            at_risk_list.append({
+            if row["native_flag"] == 1:
+                native_label = "Native"
+            elif row["native_flag"] == 0:
+                native_label = "Exotic"
+            else:
+                native_label = "Unknown"
+
+            full_list.append({
                 "species_id": row["species_id"],
                 "scientific_name": row["scientific_name"],
                 "vernacular_name": row["vernacular_name"],
+                "native_label": native_label,
+                "endangered_status_code": row["endangered_status_code"],
                 "alert_reason": "; ".join(reasons),
-                "alerted_before": "No",
-                "previous_alerts": 0,
                 "priority": priority,
             })
 
-        # sort results
-        priority_order = {
-            "High": 0,
-            "Medium": 1,
-            "Low": 2
-        }
-
-        at_risk_list.sort(
-            key=lambda x: (
-                priority_order[x["priority"]],
-                x["scientific_name"]
-            )
+        priority_order = {"High": 0, "Medium": 1, "Low": 2}
+        full_list.sort(
+            key=lambda x: (priority_order[x["priority"]], x["scientific_name"])
         )
+
+        # paginate the full list
+        total_count = len(full_list)
+        total_pages = max(1, -(-total_count // per_page))
+        page_num = min(page_num, total_pages)
+        offset = (page_num - 1) * per_page
+        at_risk_list = full_list[offset:offset + per_page]
 
     except Exception as exc:
         error = str(exc)
-        name_options = []
 
     return render_template(
         "at_risk.html",
         at_risk_list=at_risk_list,
-        search=search,
+        error=error,
+        native_filter=native_filter,
         priority_filter=priority_filter,
-        name_options=name_options,
+        per_page=per_page,
+        per_page_options=per_page_options,
+        page_num=page_num,
+        total_pages=total_pages,
+        total_count=total_count,
+    )
+
+
+# =========================
+# Taxonomy
+# =========================
+
+@main.route("/taxonomy_detail")
+def taxonomy_detail():
+    """
+    Show taxonomy hierarchy and all species sharing this taxonomy_id.
+    """
+    taxonomy_id = request.args.get("taxonomy_id", "").strip()
+    taxonomy = None
+    species_in_taxonomy = []
+    error = None
+
+    if not taxonomy_id:
+        return render_template(
+            "taxonomy_detail.html",
+            taxonomy=None,
+            species_in_taxonomy=[],
+            error="No taxonomy selected. Click a taxonomy ID from species pages.",
+        )
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            # main taxonomy info
+            cursor.execute(
+                """
+                SELECT
+                    taxonomy_id,
+                    kingdom,
+                    phylum,
+                    class_name,
+                    order_name,
+                    family,
+                    genus,
+                    species_epithet
+                FROM taxonomy
+                WHERE taxonomy_id = %s
+                LIMIT 1
+                """,
+                [taxonomy_id],
+            )
+            taxonomy = cursor.fetchone()
+
+            if taxonomy:
+                # species linked to this taxonomy
+                cursor.execute(
+                    """
+                    SELECT
+                        species_id,
+                        scientific_name,
+                        vernacular_name,
+                        native_flag,
+                        endangered_status_code
+                    FROM species
+                    WHERE taxonomy_id = %s
+                    ORDER BY scientific_name
+                    """,
+                    [taxonomy_id],
+                )
+                species_in_taxonomy = cursor.fetchall()
+
+        conn.close()
+
+    except Exception as exc:
+        error = str(exc)
+
+    return render_template(
+        "taxonomy_detail.html",
+        taxonomy=taxonomy,
+        species_in_taxonomy=species_in_taxonomy,
         error=error,
     )
 
@@ -1188,19 +1338,26 @@ def traits_detail():
 
                 cursor.execute(
                     """
-                    SELECT
-                        COALESCE(
+                   SELECT
+                       COALESCE(
                             NULLIF(TRIM(stj.working_value), ''),
-                            NULLIF(TRIM(stj.original_value), ''),
                             '(blank)'
                         ) AS trait_value,
+                        COALESCE(
+                           NULLIF(TRIM(stj.original_value), ''),
+                            '(blank)'
+                        ) AS original_value,
+                        COALESCE(
+                            NULLIF(TRIM(stj.source_code), ''),
+                            '-'
+                        ) AS source_code,
                         COUNT(DISTINCT stj.species_id) AS species_count,
                         MAX(o.event_date) AS latest_observation_date
                     FROM species_traits_junction stj
                     LEFT JOIN occurrences o ON o.species_id = stj.species_id
                     WHERE stj.trait_id = %s
-                    GROUP BY trait_value
-                    ORDER BY species_count DESC, trait_value
+                    GROUP BY trait_value, original_value, source_code
+                    ORDER BY species_count DESC, trait_value, original_value
                     """,
                     [trait["trait_id"]],
                 )

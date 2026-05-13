@@ -394,6 +394,7 @@
                         <a href="/species">View All</a>
                         <a href="/species_new">New Species</a>
                         <a href="/species_detail">Species Detail</a>
+                        <a href="/taxonomy_detail">Taxonomy Detail</a>
                     </div>
                 </div>
 
@@ -566,10 +567,12 @@
 
                     <thead>
                         <tr>
-                            <th>Value</th>
+                            <th>Working Value</th>
+                            <th>Original Value</th>
+                            <th>Source Code</th>
                             <th>Species Associated</th>
                             <th>Latest Observation</th>
-                        </tr>
+                           </tr>
                     </thead>
 
                     <tbody>
@@ -578,6 +581,10 @@
                         <tr>
 
                             <td>{{ row.trait_value }}</td>
+
+                            <td>{{ row.original_value }}</td>
+
+                            <td>{{ row.source_code }}</td>
 
                             <td>
                                 {{ row.species_count }}

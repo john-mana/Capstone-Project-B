@@ -160,6 +160,87 @@
     .suggestion-item:hover {
         background-color: #eef5ec;
     }
+
+        .results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0 10px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .results-info {
+        color: #555;
+        font-size: 0.95em;
+    }
+
+    .per-page-dropdown {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #555;
+        font-size: 0.95em;
+    }
+
+    .per-page-dropdown select {
+        padding: 4px 10px;
+        border: 1px solid #c2d7b9;
+        border-radius: 4px;
+        background-color: white;
+        font-size: 0.9em;
+        cursor: pointer;
+    }
+
+    .pagination-controls {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        margin-top: 15px;
+        justify-content: center;
+    }
+
+    .pagination-controls a,
+    .pagination-controls span {
+        padding: 6px 12px;
+        border: 1px solid #c2d7b9;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #2d5a2d;
+        background: white;
+        font-size: 0.9em;
+    }
+
+    .pagination-controls a:hover {
+        background-color: #eef5ec;
+    }
+
+    .pagination-controls .current-page {
+        background-color: #40623f;
+        color: white;
+        border-color: #40623f;
+    }
+
+    .pagination-controls .disabled {
+        color: #aaa;
+        background: #f5f5f5;
+        border-color: #ddd;
+    }
+
+    .page-jump {
+        padding: 6px 12px;
+        border: 1px solid #c2d7b9;
+        border-radius: 4px;
+        background: white;
+        color: #2d5a2d;
+        font-size: 0.9em;
+        cursor: pointer;
+    }
+
+    .page-jump:hover {
+        background-color: #eef5ec;
+    }
+    
 </style>
 
 </head>
@@ -189,6 +270,7 @@
                         <a href="/species">View All</a>
                         <a href="/species_new">New Species</a>
                         <a href="/species_detail">Species Detail</a>
+                        <a href="/taxonomy_detail">Taxonomy Detail</a>
                     </div>
                 </div>
 
@@ -290,7 +372,46 @@
         {% endif %}
 
         {% if species_list %}
-        <p class="result-count">Showing {{ species_list|length }} species</p>
+        <div class="results-header">
+            <div class="results-info">
+                Showing {{ (page_num - 1) * per_page + 1 }}–{{ (page_num - 1) * per_page + species_list|length }} of {{ total_count }} species
+            </div>
+
+            <div class="per-page-dropdown">
+                Show
+                <select onchange="window.location.href='?q={{ search }}&family={{ family_filter }}&per_page=' + this.value + '&page=1'">
+                    {% for opt in per_page_options %}
+                    <option value="{{ opt }}" {% if per_page == opt %}selected{% endif %}>{{ opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        {% if total_pages > 1 %}
+        <div class="pagination-controls">
+            {% if page_num > 1 %}
+            <a href="?q={{ search }}&family={{ family_filter }}&per_page={{ per_page }}&page=1">«</a>
+            <a href="?q={{ search }}&family={{ family_filter }}&per_page={{ per_page }}&page={{ page_num - 1 }}">‹</a>
+            {% else %}
+            <span class="disabled">«</span>
+            <span class="disabled">‹</span>
+            {% endif %}
+
+            <select class="page-jump" onchange="window.location.href='?q={{ search }}&family={{ family_filter }}&per_page={{ per_page }}&page=' + this.value">
+                {% for p in range(1, total_pages + 1) %}
+                <option value="{{ p }}" {% if p == page_num %}selected{% endif %}>{{ p }}</option>
+                {% endfor %}
+            </select>
+
+            {% if page_num < total_pages %}
+            <a href="?q={{ search }}&family={{ family_filter }}&per_page={{ per_page }}&page={{ page_num + 1 }}">›</a>
+            <a href="?q={{ search }}&family={{ family_filter }}&per_page={{ per_page }}&page={{ total_pages }}">»</a>
+            {% else %}
+            <span class="disabled">›</span>
+            <span class="disabled">»</span>
+            {% endif %}
+        </div>
+        {% endif %}
 
         <table class="species-table">
             <thead>
@@ -299,7 +420,7 @@
                     <th>Taxonomy ID</th>
                     <th>Scientific Name</th>
                     <th>Vernacular Name</th>
-                    <th>Native?</th>
+                    <th>Native</th>
                     <th>Endangered Status</th>
                     <th>Family</th>
                 </tr>
@@ -331,6 +452,33 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        {% if total_pages > 1 %}
+        <div class="pagination-controls">
+            {% if page_num > 1 %}
+            <a href="?q={{ search }}&family={{ family_filter }}&per_page={{ per_page }}&page=1">«</a>
+            <a href="?q={{ search }}&family={{ family_filter }}&per_page={{ per_page }}&page={{ page_num - 1 }}">‹</a>
+            {% else %}
+            <span class="disabled">«</span>
+            <span class="disabled">‹</span>
+            {% endif %}
+
+            <select class="page-jump" onchange="window.location.href='?q={{ search }}&family={{ family_filter }}&per_page={{ per_page }}&page=' + this.value">
+                {% for p in range(1, total_pages + 1) %}
+                <option value="{{ p }}" {% if p == page_num %}selected{% endif %}>{{ p }}</option>
+                {% endfor %}
+            </select>
+
+            {% if page_num < total_pages %}
+            <a href="?q={{ search }}&family={{ family_filter }}&per_page={{ per_page }}&page={{ page_num + 1 }}">›</a>
+            <a href="?q={{ search }}&family={{ family_filter }}&per_page={{ per_page }}&page={{ total_pages }}">»</a>
+            {% else %}
+            <span class="disabled">›</span>
+            <span class="disabled">»</span>
+            {% endif %}
+        </div>
+        {% endif %}
+
         {% else %}
         <div class="empty-state">
             <p>No species found.</p>

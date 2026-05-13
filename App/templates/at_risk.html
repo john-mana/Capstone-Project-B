@@ -100,52 +100,52 @@
         margin: 10px 0;
         border-radius: 4px;
     }
+
     .filter-bar {
         display: flex;
-        gap: 12px;
+        gap: 16px;
         margin-bottom: 20px;
         align-items: center;
         flex-wrap: wrap;
     }
 
-    .filter-bar input,
-    .filter-bar select {
-        padding: 8px 12px;
-        border: 1px solid #c2d7b9;
-        border-radius: 6px;
+    .filter-bar label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
         font-size: 0.95em;
-        background-color: white;
+        color: #555;
     }
 
-    .filter-bar button,
-    .filter-bar a.clear-btn {
+    .filter-bar select {
+        padding: 6px 10px;
+        border: 1px solid #c2d7b9;
+        border-radius: 6px;
+        background-color: white;
+        font-size: 0.95em;
+    }
+
+    .filter-bar button {
         padding: 8px 16px;
+        background-color: #40623f;
+        color: white;
         border: none;
         border-radius: 6px;
         cursor: pointer;
         font-weight: 500;
-        font-size: 14px;
-        font-family: inherit;
-        line-height: 1.2;
-    }
-
-    .filter-bar button {
-    background-color: #40623f;
-    color: white;
     }
 
     .filter-bar button:hover {
         background-color: #2f4d2e;
     }
 
-    .filter-bar a.clear-btn:hover {
-        background-color: #b5b5b5;
-    }
-
-    .filter-bar a.clear-btn {
+    .filter-bar .clear-btn {
+        padding: 8px 16px;
         background-color: #ccc;
         color: #333;
+        border-radius: 6px;
         text-decoration: none;
+        font-weight: 500;
     }
 
     .search-wrapper {
@@ -181,6 +181,92 @@
     .suggestion-item:hover {
         background-color: #eef5ec;
     }
+
+    .empty-cell {
+        color: #aaa;
+        font-style: italic;
+    }
+
+        .results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0 10px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .results-info {
+        color: #555;
+        font-size: 0.95em;
+    }
+
+    .per-page-dropdown {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #555;
+        font-size: 0.95em;
+    }
+
+    .per-page-dropdown select {
+        padding: 4px 10px;
+        border: 1px solid #c2d7b9;
+        border-radius: 4px;
+        background-color: white;
+        font-size: 0.9em;
+        cursor: pointer;
+    }
+
+    .pagination-controls {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        margin-top: 15px;
+        justify-content: center;
+    }
+
+    .pagination-controls a,
+    .pagination-controls span {
+        padding: 6px 12px;
+        border: 1px solid #c2d7b9;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #2d5a2d;
+        background: white;
+        font-size: 0.9em;
+    }
+
+    .pagination-controls a:hover {
+        background-color: #eef5ec;
+    }
+
+    .pagination-controls .current-page {
+        background-color: #40623f;
+        color: white;
+        border-color: #40623f;
+    }
+
+    .pagination-controls .disabled {
+        color: #aaa;
+        background: #f5f5f5;
+        border-color: #ddd;
+    }
+
+    .page-jump {
+        padding: 6px 12px;
+        border: 1px solid #c2d7b9;
+        border-radius: 4px;
+        background: white;
+        color: #2d5a2d;
+        font-size: 0.9em;
+        cursor: pointer;
+    }
+
+    .page-jump:hover {
+        background-color: #eef5ec;
+    }
+
 </style>
 </head>
 
@@ -209,6 +295,7 @@
                         <a href="/species">View All</a>
                         <a href="/species_new">New Species</a>
                         <a href="/species_detail">Species Detail</a>
+                        <a href="/taxonomy_detail">Taxonomy Detail</a>
                     </div>
                 </div>
 
@@ -276,67 +363,91 @@
 <div class="content">
     <p class="at-risk-intro">
         List of species flagged as at-risk based on observation data.
-        Criteria: only found in 1 reserve, 3 or fewer observations,
-        or no observations since 2015.
     </p>
 
     <form class="filter-bar" method="get" action="/at_risk">
+        <label>
+            Native status:
+            <select name="native">
+                <option value="">All</option>
+                <option value="native" {% if native_filter == 'native' %}selected{% endif %}>Native</option>
+                <option value="exotic" {% if native_filter == 'exotic' %}selected{% endif %}>Exotic</option>
+            </select>
+        </label>
 
-        <div class="search-wrapper">
-            <input type="text"
-                id="search-input"
-                name="q"
-                placeholder="Search by name..."
-                value="{{ search }}"
-                autocomplete="off"
-                oninput="filterSuggestions()">
-
-            <div id="search-suggestions" class="suggestions"></div>
-        </div>
-
-        <select name="priority">
-            <option value="">All priorities</option>
-
-            <option value="High"
-                {% if priority_filter == "High" %}selected{% endif %}>
-                High
-            </option>
-
-            <option value="Medium"
-                {% if priority_filter == "Medium" %}selected{% endif %}>
-                Medium
-            </option>
-
-            <option value="Low"
-                {% if priority_filter == "Low" %}selected{% endif %}>
-                Low
-            </option>
-        </select>
+        <label>
+            Priority:
+            <select name="priority">
+                <option value="">All</option>
+                <option value="High" {% if priority_filter == 'High' %}selected{% endif %}>High</option>
+                <option value="Medium" {% if priority_filter == 'Medium' %}selected{% endif %}>Medium</option>
+                <option value="Low" {% if priority_filter == 'Low' %}selected{% endif %}>Low</option>
+            </select>
+        </label>
 
         <button type="submit">Filter</button>
 
-        {% if search or priority_filter %}
+        {% if native_filter or priority_filter %}
         <a href="/at_risk" class="clear-btn">Clear</a>
         {% endif %}
-
     </form>
 
     {% if error %}
-    <div class="error-box">
-        Database error: {{ error }}
-    </div>
+    <div class="error-box">Database error: {{ error }}</div>
     {% endif %}
 
     {% if at_risk_list %}
-    <p class="result-count">{{ at_risk_list|length }} species flagged</p>
+    <div class="results-header">
+        <div class="results-info">
+            {{ total_count }} species flagged
+            {% if total_count > 0 %}
+            — showing {{ (page_num - 1) * per_page + 1 }}–{{ (page_num - 1) * per_page + at_risk_list|length }}
+            {% endif %}
+        </div>
+
+        <div class="per-page-dropdown">
+            Show
+            <select onchange="window.location.href='?native={{ native_filter }}&priority={{ priority_filter }}&per_page=' + this.value + '&page=1'">
+                {% for opt in per_page_options %}
+                <option value="{{ opt }}" {% if per_page == opt %}selected{% endif %}>{{ opt }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    {% if total_pages > 1 %}
+    <div class="pagination-controls">
+        {% if page_num > 1 %}
+        <a href="?native={{ native_filter }}&priority={{ priority_filter }}&per_page={{ per_page }}&page=1">«</a>
+        <a href="?native={{ native_filter }}&priority={{ priority_filter }}&per_page={{ per_page }}&page={{ page_num - 1 }}">‹</a>
+        {% else %}
+        <span class="disabled">«</span>
+        <span class="disabled">‹</span>
+        {% endif %}
+
+        <select class="page-jump" onchange="window.location.href='?native={{ native_filter }}&priority={{ priority_filter }}&per_page={{ per_page }}&page=' + this.value">
+            {% for p in range(1, total_pages + 1) %}
+            <option value="{{ p }}" {% if p == page_num %}selected{% endif %}>{{ p }}</option>
+            {% endfor %}
+        </select>
+
+        {% if page_num < total_pages %}
+        <a href="?native={{ native_filter }}&priority={{ priority_filter }}&per_page={{ per_page }}&page={{ page_num + 1 }}">›</a>
+        <a href="?native={{ native_filter }}&priority={{ priority_filter }}&per_page={{ per_page }}&page={{ total_pages }}">»</a>
+        {% else %}
+        <span class="disabled">›</span>
+       <span class="disabled">»</span>
+       {% endif %}
+    </div>
+    {% endif %}
 
     <table class="at-risk-table">
         <thead>
             <tr>
                 <th>Species Name</th>
+                <th>Native</th>
+                <th>Endangered Status</th>
                 <th>Alert Reason</th>
-                <th>Alerted Before?</th>
-                <th># of Previous Alerts</th>
                 <th>Priority</th>
             </tr>
         </thead>
@@ -351,9 +462,15 @@
                     <br><span class="common-name">{{ species.vernacular_name }}</span>
                     {% endif %}
                 </td>
+                <td>{{ species.native_label }}</td>
+                <td>
+                    {% if species.endangered_status_code %}
+                        {{ species.endangered_status_code }}
+                    {% else %}
+                        <span class="empty-cell">-</span>
+                    {% endif %}
+                </td>
                 <td>{{ species.alert_reason }}</td>
-                <td>{{ species.alerted_before }}</td>
-                <td>{{ species.previous_alerts }}</td>
                 <td class="priority-{{ species.priority|lower }}">
                     {{ species.priority }}
                 </td>
@@ -361,9 +478,36 @@
             {% endfor %}
         </tbody>
     </table>
+
+    {% if total_pages > 1 %}
+    <div class="pagination-controls">
+        {% if page_num > 1 %}
+        <a href="?native={{ native_filter }}&priority={{ priority_filter }}&per_page={{ per_page }}&page=1">«</a>
+        <a href="?native={{ native_filter }}&priority={{ priority_filter }}&per_page={{ per_page }}&page={{ page_num - 1 }}">‹</a>
+        {% else %}
+        <span class="disabled">«</span>
+        <span class="disabled">‹</span>
+        {% endif %}
+
+        <select class="page-jump" onchange="window.location.href='?native={{ native_filter }}&priority={{ priority_filter }}&per_page={{ per_page }}&page=' + this.value">
+            {% for p in range(1, total_pages + 1) %}
+            <option value="{{ p }}" {% if p == page_num %}selected{% endif %}>{{ p }}</option>
+            {% endfor %}
+        </select>
+
+        {% if page_num < total_pages %}
+        <a href="?native={{ native_filter }}&priority={{ priority_filter }}&per_page={{ per_page }}&page={{ page_num + 1 }}">›</a>
+        <a href="?native={{ native_filter }}&priority={{ priority_filter }}&per_page={{ per_page }}&page={{ total_pages }}">»</a>
+        {% else %}
+        <span class="disabled">›</span>
+       <span class="disabled">»</span>
+       {% endif %}
+    </div>
+    {% endif %}
+    
     {% else %}
     <div class="empty-state">
-        <p>No at-risk species found.</p>
+        <p>No at-risk species found with current filters.</p>
     </div>
     {% endif %}
 </div>
@@ -377,62 +521,7 @@
 
 </div>
 
-<script id="name-data" type="application/json">
-    {{ name_options | tojson | safe }}
-</script>
 
-<script>
-    const nameOptions = JSON.parse(
-        document.getElementById('name-data').textContent
-    );
-
-    function filterSuggestions() {
-        const input = document.getElementById('search-input');
-        const box = document.getElementById('search-suggestions');
-        const value = input.value.toLowerCase();
-
-        if (value.length < 2) {
-            box.style.display = 'none';
-            return;
-        }
-
-        const matches = nameOptions
-            .filter(name => name.toLowerCase().includes(value))
-            .slice(0, 10);
-
-        box.innerHTML = '';
-
-        if (matches.length === 0) {
-            box.style.display = 'none';
-            return;
-        }
-
-        matches.forEach(name => {
-            const div = document.createElement('div');
-
-            div.className = 'suggestion-item';
-            div.textContent = name;
-
-            div.onclick = () => {
-                input.value = name;
-                box.style.display = 'none';
-            };
-
-            box.appendChild(div);
-        });
-
-        box.style.display = 'block';
-    }
-
-    document.addEventListener('click', function(e) {
-        const box = document.getElementById('search-suggestions');
-        const input = document.getElementById('search-input');
-
-        if (!box.contains(e.target) && e.target !== input) {
-            box.style.display = 'none';
-        }
-    });
-</script>
 
 </body>
 </html>

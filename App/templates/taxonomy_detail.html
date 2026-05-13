@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Taxonomy Detail</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .content {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #2d5a2d;
+            text-decoration: none;
+            font-size: 0.95em;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .detail-page-title {
+            color: #0ba84a;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin: 0 0 5px;
+        }
+
+        .taxonomy-heading {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 2.2em;
+            color: #40623f;
+            margin: 0 0 25px;
+            font-weight: 700;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .detail-section h2 {
+            font-family: "Playfair Display", Georgia, serif;
+            color: #40623f;
+            font-size: 1.6em;
+            margin: 0 0 15px;
+        }
+
+        .hierarchy-list {
+            list-style: none;
+            padding: 0;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        .hierarchy-list li {
+            padding: 8px 0 8px 20px;
+            border-left: 3px solid #c2d7b9;
+            margin-left: 10px;
+            position: relative;
+        }
+
+        .hierarchy-list li:before {
+            content: "›";
+            position: absolute;
+            left: -8px;
+            top: 6px;
+            color: #40623f;
+            font-weight: bold;
+        }
+
+        .hierarchy-list .level {
+            font-weight: 600;
+            color: #2d5a2d;
+        }
+
+        .hierarchy-list .value {
+            color: #444;
+        }
+
+        .species-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Inter, sans-serif;
+        }
+
+        .species-table th {
+            background-color: #d9d9d9;
+            padding: 10px 12px;
+            text-align: center;
+            border: 1px solid #999;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .species-table td {
+            padding: 8px 12px;
+            text-align: center;
+            border: 1px solid #999;
+            background-color: #f5f9f5;
+        }
+
+        .species-table a {
+            color: #2d5a2d;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .species-table a:hover {
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            background-color: #f9faf8;
+            border: 1px dashed #ccc;
+            border-radius: 6px;
+        }
+
+        .error-box {
+            background-color: #ffe6e6;
+            border: 1px solid #cc0000;
+            color: #cc0000;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .data-note {
+            font-size: 0.85em;
+            color: #888;
+            font-style: italic;
+        }
+
+        @media (max-width: 900px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <header class="app-header">
+        <div class="app-header-image">
+            <img src="{{ url_for('static', filename='header.png') }}" alt="Header">
+        </div>
+
+        <div class="app-nav">
+            <div class="nav-menu">
+
+                <a href="/home" class="nav-btn">
+                    <img src="{{ url_for('static', filename='home.png') }}" class="home-icon">
+                </a>
+
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Species ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/species">View All</a>
+                        <a href="/species_new">New Species</a>
+                        <a href="/species_detail">Species Detail</a>
+                        <a href="/taxonomy_detail">Taxonomy Detail</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Traits ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/traits">View All</a>
+                        <a href="/traits_detail">Traits Detail</a>
+                        <a href="/traits_findby">Find Species by Trait</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Observations ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/observations">View All</a>
+                        <a href="/observations_new">New Observations</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Reserves ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/reserves">View All</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown">
+                    <button class="nav-btn">At Risk Species ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/at_risk">View All</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Advanced Search ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/query_builder">Query Builder</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Admin Controls ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/admin_controls">Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-divider"></div>
+
+    <div class="content">
+        <a href="/species" class="back-link">← Go back to Species</a>
+
+        {% if error %}
+        <div class="error-box">{{ error }}</div>
+        {% endif %}
+
+        {% if taxonomy %}
+
+        <h2 class="detail-page-title">Taxonomy Detail</h2>
+
+        <h1 class="taxonomy-heading">
+            {{ taxonomy.family or taxonomy.genus or 'Taxonomy #' ~ taxonomy.taxonomy_id }}
+        </h1>
+
+        <div class="detail-grid">
+
+            <div class="detail-section">
+                <h2>Hierarchy</h2>
+                <ul class="hierarchy-list">
+                    {% if taxonomy.kingdom %}
+                    <li><span class="level">Kingdom:</span> <span class="value">{{ taxonomy.kingdom }}</span></li>
+                    {% endif %}
+                    {% if taxonomy.phylum %}
+                    <li><span class="level">Phylum:</span> <span class="value">{{ taxonomy.phylum }}</span></li>
+                    {% endif %}
+                    {% if taxonomy.class_name %}
+                    <li><span class="level">Class:</span> <span class="value">{{ taxonomy.class_name }}</span></li>
+                    {% endif %}
+                    {% if taxonomy.order_name %}
+                    <li><span class="level">Order:</span> <span class="value">{{ taxonomy.order_name }}</span></li>
+                    {% endif %}
+                    {% if taxonomy.family %}
+                    <li><span class="level">Family:</span> <span class="value">{{ taxonomy.family }}</span></li>
+                    {% endif %}
+                    {% if taxonomy.genus %}
+                    <li><span class="level">Genus:</span> <span class="value">{{ taxonomy.genus }}</span></li>
+                    {% endif %}
+                    {% if taxonomy.species_epithet %}
+                    <li><span class="level">Species epithet:</span> <span class="value">{{ taxonomy.species_epithet }}</span></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="detail-section">
+                <h2>Species in this Taxonomy ({{ species_in_taxonomy|length }})</h2>
+
+                {% if species_in_taxonomy %}
+                <table class="species-table">
+                    <thead>
+                        <tr>
+                            <th>Scientific Name</th>
+                            <th>Common Name</th>
+                            <th>Native</th>
+                            <th>Endangered Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sp in species_in_taxonomy %}
+                        <tr>
+                            <td>
+                                <a href="/species_detail?species_id={{ sp.species_id }}">
+                                    {{ sp.scientific_name }}
+                                </a>
+                            </td>
+                            <td>{{ sp.vernacular_name or '-' }}</td>
+                            <td>
+                                {% if sp.native_flag == 1 %}Native
+                                {% elif sp.native_flag == 0 %}Exotic
+                                {% else %}<span class="data-note">Unknown</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if sp.endangered_status_code %}{{ sp.endangered_status_code }}
+                                {% else %}<span class="data-note">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state">
+                    <p>No species found for this taxonomy.</p>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+        {% else %}
+        <div class="empty-state">
+            <p>No taxonomy selected. <a href="/species">Browse species list</a> and click a taxonomy ID.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-right">
+            <a href="/login" class="logout-btn">Log Out</a>
+        </div>
+        <p>Bio Geographic Data Analysts | ABN 579 423 418 07</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
