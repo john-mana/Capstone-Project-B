@@ -6,6 +6,225 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+    .content {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .page-intro {
+        color: #555;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+
+    .filter-bar {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .filter-bar input {
+        padding: 8px 12px;
+        border: 1px solid #c2d7b9;
+        border-radius: 6px;
+        font-size: 0.95em;
+        background-color: white;
+    }
+
+    .filter-bar button,
+    .filter-bar a.clear-btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 14px;
+        font-family: inherit;
+        line-height: 1.2;
+    }
+
+    .filter-bar button {
+        background-color: #40623f;
+        color: white;
+    }
+
+    .filter-bar button:hover {
+        background-color: #2f4d2e;
+    }
+
+    .filter-bar a.clear-btn {
+        background-color: #ccc;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .filter-bar a.clear-btn:hover {
+        background-color: #b5b5b5;
+    }
+
+    .result-count {
+        color: #666;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+
+    .observations-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Inter, sans-serif;
+    }
+
+    .observations-table th {
+        background-color: #d9d9d9;
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #999;
+        font-weight: 600;
+    }
+
+    .observations-table td {
+        padding: 10px 12px;
+        text-align: center;
+        border: 1px solid #999;
+        background-color: #f5f9f5;
+    }
+
+    .observations-table a {
+        color: #2d5a2d;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .observations-table a:hover {
+        text-decoration: underline;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #888;
+    }
+
+    .error-box {
+        background-color: #ffe6e6;
+        border: 1px solid #cc0000;
+        color: #cc0000;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
+
+    .data-note {
+        font-size: 0.85em;
+        color: #888;
+        font-style: italic;
+    }
+
+    .search-wrapper {
+        position: relative;
+    }
+
+    .search-wrapper input {
+        width: 250px;
+    }
+
+    .suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #c2d7b9;
+        border-top: none;
+        border-radius: 0 0 6px 6px;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none;
+        z-index: 100;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .suggestion-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+
+    .suggestion-item:hover {
+        background-color: #eef5ec;
+    }
+
+    .table-scroll {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .observations-table {
+        min-width: 1100px;
+    }
+    </style>
+
+    <script id="observation-data" type="application/json">
+    {{ observation_options | map(attribute='scientific_name') | list | tojson | safe }}
+    </script>
+
+    <script>
+    const observationOptions = JSON.parse(
+        document.getElementById('observation-data').textContent
+    );
+
+    function filterObservationSuggestions() {
+        const input = document.getElementById('observations-search');
+        const box = document.getElementById('search-suggestions');
+        const value = input.value.toLowerCase();
+
+        if (value.length < 2) {
+            box.style.display = 'none';
+            return;
+        }
+
+        const matches = observationOptions
+            .filter(name => name && name.toLowerCase().includes(value))
+            .slice(0, 10);
+
+        box.innerHTML = '';
+
+        if (matches.length === 0) {
+            box.style.display = 'none';
+            return;
+        }
+
+        matches.forEach(name => {
+            const div = document.createElement('div');
+            div.className = 'suggestion-item';
+            div.textContent = name;
+
+            div.onclick = () => {
+                input.value = name;
+                box.style.display = 'none';
+            };
+
+            box.appendChild(div);
+        });
+
+        box.style.display = 'block';
+    }
+
+    document.addEventListener('click', function(e) {
+        const box = document.getElementById('search-suggestions');
+        const input = document.getElementById('observations-search');
+
+        if (box && input && !box.contains(e.target) && e.target !== input) {
+            box.style.display = 'none';
+        }
+    });
+    </script>
 </head>
 
 <body>
@@ -94,11 +313,126 @@
 
     <div class="page-divider"></div>
 
+    <!-- PAGE CONTENT -->
     <h1 class="app-title">Observations</h1>
 
-    <!-- PAGE CONTENT -->
     <div class="content">
-        <p> **dashboard with all observations here ** </p>
+
+        <p class="page-intro">
+            Browse all observations in the database. Search by scientific name, common name, reserve, or dataset.
+        </p>
+
+        <form class="filter-bar" method="get" action="/observations">
+
+            <div class="search-wrapper">
+                <input
+                    type="text"
+                    id="observations-search"
+                    name="q"
+                    placeholder="Search observation..."
+                    value="{{ search }}"
+                    autocomplete="off"
+                    oninput="filterObservationSuggestions()">
+
+                <div id="search-suggestions" class="suggestions"></div>
+            </div>
+
+            <button type="submit">Filter</button>
+
+            {% if search %}
+            <a href="/observations" class="clear-btn">Clear</a>
+            {% endif %}
+        </form>
+
+        {% if error %}
+        <div class="error-box">
+            Database error: {{ error }}
+        </div>
+        {% endif %}
+
+        {% if observations %}
+        <p class="result-count">
+            Showing {{ observations|length }} observation/s
+        </p>
+
+        <div class="filter-bar">
+            <a href="/observations/export/csv?q={{ search or '' }}" class="clear-btn">
+                Export CSV
+            </a>
+
+            <a href="/observations/export/xlsx?q={{ search or '' }}" class="clear-btn">
+                Export Excel
+            </a>
+        </div>
+
+        <div class="table-scroll">
+            <table class="observations-table">
+                <thead>
+                    <tr>
+                        <th>Occurrence ID</th>
+                        <th>Scientific Name</th>
+                        <th>Common Name</th>
+                        <th>Reserve</th>
+                        <th>Event Date</th>
+                        <th>Year</th>
+                        <th>Dataset</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for obs in observations %}
+                    <tr>
+                        <td>{{ obs.occurrence_id or '-' }}</td>
+
+                        <td>
+                            {{ obs.scientific_name or '-' }}
+                        </td>
+
+                        <td>{{ obs.vernacular_name or '-' }}</td>
+
+                        <td>{{ obs.reserve_name or '-' }}</td>
+
+                        <td>
+                            {% if obs.event_date %}
+                                {{ obs.event_date }}
+                            {% else %}
+                                <span class="data-note">-</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ obs.year or '-' }}</td>
+
+                        <td>{{ obs.dataset_name or '-' }}</td>
+
+                        <td>
+                            {% if obs.decimal_latitude %}
+                                {{ obs.decimal_latitude }}
+                            {% else %}
+                                <span class="data-note">-</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if obs.decimal_longitude %}
+                                {{ obs.decimal_longitude }}
+                            {% else %}
+                                <span class="data-note">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+        <div class="empty-state">
+            <p>No observations found.</p>
+        </div>
+        {% endif %}
+
     </div>
 
     <footer class="app-footer">
