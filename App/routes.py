@@ -780,7 +780,151 @@ def observations():
 
 @main.route("/reserves")
 def reserves():
-    return render_template("reserves.html")
+    """
+    Show all reserves with summary info and filtering.
+    Filters: search by name, suburb, asset type.
+    """
+    reserves_list = []
+    error = None
+
+    search = request.args.get("q", "").strip()
+    suburb_filter = request.args.get("suburb", "").strip()
+    type_filter = request.args.get("type", "").strip()
+
+    # pagination
+    per_page_options = [50, 100, 200]
+    try:
+        per_page = int(request.args.get("per_page", 50))
+    except ValueError:
+        per_page = 50
+    if per_page not in per_page_options:
+        per_page = 50
+
+    try:
+        page_num = int(request.args.get("page", 1))
+    except ValueError:
+        page_num = 1
+    page_num = max(1, page_num)
+
+    offset = (page_num - 1) * per_page
+    total_count = 0
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            params = []
+            where_parts = []
+
+            if search:
+                where_parts.append("r.asset_name LIKE %s")
+                params.append(f"%{search}%")
+
+            if suburb_filter:
+                where_parts.append("r.suburb = %s")
+                params.append(suburb_filter)
+
+            if type_filter:
+                where_parts.append("r.asset_type = %s")
+                params.append(type_filter)
+
+            where_clause = "WHERE " + " AND ".join(where_parts) if where_parts else ""
+
+            # count total for pagination
+            cursor.execute(
+                f"""
+                SELECT COUNT(*) AS total
+                FROM reserves r
+                {where_clause}
+                """,
+                params,
+            )
+            total_count = cursor.fetchone()["total"]
+
+            # get paginated results
+            cursor.execute(
+                f"""
+                SELECT
+                    r.reserve_id,
+                    r.asset_name,
+                    r.location,
+                    r.suburb,
+                    r.asset_type,
+                    COUNT(o.occurrence_id) AS observation_count,
+                    COUNT(DISTINCT o.species_id) AS species_count,
+                    MAX(o.event_date) AS last_observation
+                FROM reserves r
+                LEFT JOIN occurrences o ON o.reserve_id = r.reserve_id
+                {where_clause}
+                GROUP BY r.reserve_id, r.asset_name, r.location,
+                         r.suburb, r.asset_type
+                ORDER BY r.asset_name
+                LIMIT %s OFFSET %s
+                """,
+                params + [per_page, offset],
+            )
+            reserves_list = cursor.fetchall()
+
+            # suburb options for filter dropdown
+            cursor.execute(
+                """
+                SELECT DISTINCT suburb
+                FROM reserves
+                WHERE suburb IS NOT NULL AND suburb != ''
+                ORDER BY suburb
+                """
+            )
+            suburb_options = [row["suburb"] for row in cursor.fetchall()]
+
+            # asset type options for filter dropdown
+            cursor.execute(
+                """
+                SELECT DISTINCT asset_type
+                FROM reserves
+                WHERE asset_type IS NOT NULL AND asset_type != ''
+                ORDER BY asset_type
+                """
+            )
+            type_options = [row["asset_type"] for row in cursor.fetchall()]
+
+            # all reserve names for autocomplete
+            cursor.execute(
+                """
+                SELECT asset_name
+                FROM reserves
+                WHERE asset_name IS NOT NULL
+                ORDER BY asset_name
+                """
+            )
+            name_options = [row["asset_name"] for row in cursor.fetchall()]
+
+        conn.close()
+
+    except Exception as exc:
+        error = str(exc)
+        suburb_options = []
+        type_options = []
+        name_options = []
+
+    total_pages = max(1, -(-total_count // per_page))
+    page_num = min(page_num, total_pages)
+
+    return render_template(
+        "reserves.html",
+        reserves_list=reserves_list,
+        suburb_options=suburb_options,
+        type_options=type_options,
+        name_options=name_options,
+        search=search,
+        suburb_filter=suburb_filter,
+        type_filter=type_filter,
+        error=error,
+        per_page=per_page,
+        per_page_options=per_page_options,
+        page_num=page_num,
+        total_pages=total_pages,
+        total_count=total_count,
+    )
 
 
 # =========================

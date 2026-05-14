@@ -20,7 +20,6 @@ def create_app():
         "home": "home.html",
         "observations": "observations.html",
         "observations_new": "observations_new.html",
-        "reserves": "reserves.html",
     }
 
     for endpoint, template_name in page_aliases.items():
