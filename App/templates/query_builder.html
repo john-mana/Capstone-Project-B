@@ -2,756 +2,566 @@
 <html>
 <head>
     <title>Query Builder</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-        }
+    .query-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 24px;
+        width: 100%;
+        margin-top: 20px;
+    }
 
-        .top-bar {
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .query-sidebar {
+        border-right: 1px solid #d8d8d8;
+        padding-right: 22px;
+    }
 
-        .menu-item-container {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+    .query-sidebar h2 {
+        color: #123b20;
+        font-size: 22px;
+        margin-bottom: 8px;
+        font-family: Inter, sans-serif;
+    }
 
-        .menu-item {
-            padding: 10px 15px;
-            cursor: pointer;
-            background-color: #e0e0e0;
-            color: black;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
+    .query-sidebar p {
+        color: #555;
+        font-size: 0.95em;
+        line-height: 1.4;
+        margin-bottom: 18px;
+    }
 
-        .menu-item:hover {
-            background-color: #ccc;
-        }
+    .query-sidebar label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin: 14px 0 6px;
+        font-family: Inter, sans-serif;
+        font-size: 0.9em;
+    }
 
-        .user-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+    .query-sidebar input,
+    .query-sidebar select {
+        width: 100%;
+        padding: 9px 10px;
+        border: 1px solid #cfcfcf;
+        border-radius: 6px;
+        font-size: 0.95em;
+        background: white;
+        box-sizing: border-box;
+    }
 
-        .hamburger-menu {
-            font-size: 1.5em;
-            cursor: pointer;
-            color: white;
-        }
+    .year-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
 
-        .user-dropdown {
-            position: absolute;
-            right: 20px;
-            top: 60px;
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            display: none;
-            z-index: 500;
-        }
+    .query-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 18px;
+    }
 
-        .user-dropdown a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 8px;
-        }
+    .query-buttons button,
+    .query-buttons a {
+        padding: 9px 14px;
+        border-radius: 6px;
+        border: none;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        font-family: Inter, sans-serif;
+        cursor: pointer;
+    }
 
-        .user-dropdown a:hover {
-            background-color: #555;
-        }
+    .query-buttons button {
+        background: #40623f;
+        color: white;
+    }
 
-        .page-container {
-            display: flex;
-            height: calc(100vh - 60px);
-        }
+    .query-buttons a {
+        background: #ccc;
+        color: #333;
+    }
 
-        /* ── SIDEBAR ── */
-        .sidebar {
-            width: 280px;
-            flex-shrink: 0;
-            background-color: #f9f9f9;
-            border-right: 1px solid #ddd;
-            padding: 20px;
-            overflow-y: auto;
-        }
+    .query-buttons button:hover {
+        background: #2f4d2e;
+    }
 
-        .sidebar h2 {
-            font-size: 1.1em;
-            margin-top: 0;
-            margin-bottom: 4px;
-            color: #333;
-        }
+    .query-buttons a:hover {
+        background: #b5b5b5;
+    }
 
-        .sidebar p.subtitle {
-            font-size: 0.85em;
-            color: #666;
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
+    .query-main {
+        min-width: 0;
+    }
 
-        .filter-group {
-            margin-bottom: 16px;
-        }
+    .query-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+    }
 
-        .filter-group label {
-            display: block;
-            font-size: 0.85em;
-            font-weight: bold;
-            color: #444;
-            margin-bottom: 4px;
-        }
+    .query-header h2 {
+        color: #123b20;
+        font-size: 22px;
+        margin: 0;
+        font-family: Inter, sans-serif;
+    }
 
-        .filter-group input,
-        .filter-group select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 0.9em;
-            box-sizing: border-box;
-            background-color: white;
-        }
+    .query-count {
+        color: #555;
+        font-weight: 500;
+    }
 
-        .filter-group input:focus,
-        .filter-group select:focus {
-            outline: none;
-            border-color: #666;
-        }
+    .active-filter-box {
+        background: #f8fbf6;
+        border: 1px solid #d6ddd2;
+        border-radius: 8px;
+        padding: 12px 14px;
+        margin-bottom: 12px;
+    }
 
-        .year-range {
-            display: flex;
-            gap: 8px;
-        }
+    .active-filter-box h3 {
+        margin: 0 0 8px;
+        color: #315b31;
+        font-size: 15px;
+    }
 
-        .year-range input {
-            width: 50%;
-        }
+    .active-tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
 
-        .suggestions {
-            border: 1px solid #ccc;
-            max-height: 150px;
-            overflow-y: auto;
-            background-color: white;
-            border-radius: 0 0 5px 5px;
-            display: none;
-            z-index: 100;
-            position: absolute;
-            width: 240px;
-        }
+    .active-tags span {
+        background: #e3eadf;
+        border: 1px solid #c7d3c2;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 13px;
+    }
 
-        .suggestion-item {
-            padding: 6px 10px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
+    #query-map {
+        width: 100%;
+        height: 360px;
+        border: 1px solid #d6ddd2;
+        border-radius: 8px;
+        margin-bottom: 14px;
+        background: #dcebdd;
+    }
 
-        .suggestion-item:hover {
-            background-color: #f0f0f0;
-        }
+    .results-box {
+        margin-top: 12px;
+    }
 
-        .autocomplete-wrapper {
-            position: relative;
-        }
+    .result-count {
+        color: #666;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
 
-        .btn-search {
-            width: 100%;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 8px;
-        }
+    .query-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
 
-        .btn-search:hover {
-            background-color: #555;
-        }
+    .query-table {
+        width: 100%;
+        min-width: 1100px;
+        border-collapse: collapse;
+        font-family: Inter, sans-serif;
+    }
 
-        .btn-clear {
-            width: 100%;
-            padding: 8px;
-            background-color: #f0f0f0;
-            color: #333;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            margin-top: 6px;
-        }
+    .query-table th {
+        background-color: #d9d9d9;
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #999;
+        font-weight: 600;
+    }
 
-        .btn-clear:hover {
-            background-color: #e0e0e0;
-        }
+    .query-table td {
+        padding: 10px 12px;
+        text-align: center;
+        border: 1px solid #999;
+        background-color: #f5f9f5;
+    }
 
-        /* ── MAIN CONTENT ── */
-        .main-content {
-            flex-grow: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
+    .empty-state {
+        text-align: center;
+        padding: 35px;
+        color: #888;
+        border: 1px dashed #ccc;
+        border-radius: 8px;
+        margin-top: 12px;
+    }
 
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .results-header h2 {
-            margin: 0;
-            font-size: 1.2em;
-        }
-
-        .results-meta {
-            font-size: 0.9em;
-            color: #666;
-        }
-
-        .btn-export {
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-
-        .btn-export:hover {
-            background-color: #45a049;
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-bottom: 12px;
-            font-size: 0.9em;
-        }
-
-        .pagination a {
-            padding: 4px 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .pagination a:hover {
-            background-color: #f0f0f0;
-        }
-
-        .per-page-options {
-            font-size: 0.85em;
-            color: #555;
-            margin-bottom: 12px;
-        }
-
-        .per-page-options a {
-            margin: 0 4px;
-            color: #333;
-        }
-
-        /* Result table */
-        .table-wrapper {
-            overflow-x: auto;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.88em;
-            white-space: nowrap;
-        }
-
-        thead th {
-            background-color: #f2f2f2;
-            padding: 10px 12px;
-            text-align: left;
-            font-weight: bold;
-            border-bottom: 2px solid #ddd;
-            position: sticky;
-            top: 0;
-        }
-
-        tbody td {
-            padding: 8px 12px;
-            border-bottom: 1px solid #eee;
-            max-width: 220px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        tbody tr:nth-child(odd) {
-            background-color: #fafafa;
-        }
-
-        tbody tr:hover {
-            background-color: #f0f4ff;
-        }
-
-        /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #888;
-        }
-
-        .empty-state h3 {
-            font-size: 1.1em;
-            margin-bottom: 8px;
-        }
-
-        .empty-state p {
-            font-size: 0.9em;
-        }
-
-        /* Active filter tags */
-        .active-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-
-        .filter-tag {
-            background-color: #e8f0fe;
-            border: 1px solid #aac4f7;
-            border-radius: 12px;
-            padding: 3px 10px;
-            font-size: 0.8em;
-            color: #333;
-        }
+    .error-box {
+        background-color: #ffe6e6;
+        border: 1px solid #cc0000;
+        color: #cc0000;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+    }
     </style>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-    <script>
-        const speciesOptions   = {{ species_options   | tojson | safe }};
-        const reserveOptions   = {{ reserve_options   | tojson | safe }};
-        const datasetOptions   = {{ dataset_options   | tojson | safe }};
-        const localityOptions  = {{ locality_options  | tojson | safe }};
-        const habitatOptions   = {{ habitat_options   | tojson | safe }};
-        const basisOptions     = {{ basis_options     | tojson | safe }};
-
-        function filterSuggestions(fieldId, allOptions) {
-            const input = document.getElementById(fieldId).value.toLowerCase();
-            const box   = document.getElementById(fieldId + '-suggestions');
-            box.innerHTML = '';
-            const matches = allOptions.filter(o => o.toLowerCase().includes(input));
-            matches.slice(0, 50).forEach(opt => {
-                const div = document.createElement('div');
-                div.className = 'suggestion-item';
-                div.textContent = opt;
-                div.onclick = () => {
-                    document.getElementById(fieldId).value = opt;
-                    box.style.display = 'none';
-                };
-                box.appendChild(div);
-            });
-            box.style.display = matches.length ? 'block' : 'none';
-        }
-
-        function showAll(fieldId, allOptions) {
-            const box = document.getElementById(fieldId + '-suggestions');
-            box.innerHTML = '';
-            allOptions.slice(0, 80).forEach(opt => {
-                const div = document.createElement('div');
-                div.className = 'suggestion-item';
-                div.textContent = opt;
-                div.onclick = () => {
-                    document.getElementById(fieldId).value = opt;
-                    box.style.display = 'none';
-                };
-                box.appendChild(div);
-            });
-            box.style.display = 'block';
-        }
-
-        document.addEventListener('click', function(e) {
-            document.querySelectorAll('.suggestions').forEach(box => {
-                if (!box.contains(e.target)) box.style.display = 'none';
-            });
-        });
-
-        function clearAll() {
-            document.querySelectorAll('.sidebar input[type=text]').forEach(i => i.value = '');
-            document.querySelectorAll('.sidebar select').forEach(s => s.selectedIndex = 0);
-            document.getElementById('start_year').value = '';
-            document.getElementById('end_year').value = '';
-        }
-
-        function exportToExcel() {
-            const table = document.getElementById('results-table');
-            if (!table) return;
-            const wb = XLSX.utils.table_to_book(table, { sheet: "Query Results" });
-            XLSX.writeFile(wb, 'query_results.xlsx');
-        }
-
-        function toggleHamburgerMenu() {
-            const menu = document.getElementById('hamburger-dropdown');
-            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-        }
-    </script>
 </head>
 
-    <body>
-    <div class="page">
+<body>
 
-        <!-- TOP BAR -->
-        <header class="app-header">
-            <div class="app-header-image">
-                <img src="{{ url_for('static', filename='header.png') }}" alt="Header">
-            </div>
+<div class="page">
 
-            <div class="app-nav">
+    <header class="app-header">
+        <div class="app-header-image">
+            <img src="{{ url_for('static', filename='header.png') }}" alt="Header">
+        </div>
 
-                <div class="nav-menu">
+        <div class="app-nav">
 
-                    <a href="/home" class="nav-btn">
-                        <img src="{{ url_for('static', filename='home.png') }}" class="home-icon">
-                    </a>
+            <div class="nav-menu">
 
-                    <div class="nav-dropdown">
-                        <button class="nav-btn">Species ▾</button>
-                        <div class="dropdown-content">
-                            <a href="/species">View All</a>
-                            <a href="/species_new">New Species</a>
-                            <a href="/species_detail">Species Detail</a>
-                            <a href="/taxonomy_detail">Taxonomy Detail</a>
-                        </div>
+                <a href="/home" class="nav-btn">
+                    <img src="{{ url_for('static', filename='home.png') }}" class="home-icon">
+                </a>
+
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Species ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/species">View All</a>
+                        <a href="/species_new">New Species</a>
+                        <a href="/species_detail">Species Detail</a>
+                        <a href="/taxonomy_detail">Taxonomy Detail</a>
                     </div>
+                </div>
 
-                    <div class="nav-dropdown">
-                        <button class="nav-btn">Traits ▾</button>
-                        <div class="dropdown-content">
-                            <a href="/traits">View All</a>
-                            <a href="/traits_detail">Traits Detail</a>
-                            <a href="/traits_findby">Find Species by Trait</a>
-                        </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Traits ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/traits">View All</a>
+                        <a href="/traits_detail">Traits Detail</a>
+                        <a href="/traits_findby">Find Species by Trait</a>
                     </div>
+                </div>
 
-                    <div class="nav-dropdown">
-                        <button class="nav-btn">Observations ▾</button>
-                        <div class="dropdown-content">
-                            <a href="/observations">View All</a>
-                            <a href="/observations_new">New Observations</a>
-                        </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Observations ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/observations">View All</a>
+                        <a href="/observations_new">New Observations</a>
                     </div>
+                </div>
 
-                    <div class="nav-dropdown">
-                        <button class="nav-btn">Reserves ▾</button>
-                        <div class="dropdown-content">
-                            <a href="/reserves">View All</a>
-                        </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Reserves ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/reserves">View All</a>
                     </div>
+                </div>
 
-                    <div class="nav-dropdown">
-                        <button class="nav-btn">At Risk Species ▾</button>
-                        <div class="dropdown-content">
-                            <a href="/at_risk">View All</a>
-                        </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn">At Risk Species ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/at_risk">View All</a>
                     </div>
+                </div>
 
-                    <div class="nav-dropdown">
-                        <button class="nav-btn">Advanced Search ▾</button>
-                        <div class="dropdown-content">
-                            <a href="/query_builder">Query Builder</a>
-                        </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Advanced Search ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/query_builder">Query Builder</a>
                     </div>
+                </div>
 
-                    {% if session.role == 'admin' %}
-                    <div class="nav-dropdown">
-                        <button class="nav-btn">Admin Controls ▾</button>
-                        <div class="dropdown-content">
-                            <a href="/admin_controls">Dashboard</a>
-                        </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn">Admin Controls ▾</button>
+                    <div class="dropdown-content">
+                        <a href="/admin_controls">Dashboard</a>
                     </div>
-                    {% endif %}
-
                 </div>
 
             </div>
-        </header>
 
-        <div class="page-container">
+        </div>
+    </header>
 
-            <!-- SIDEBAR FILTERS -->
-            <div class="sidebar">
-                <h2>Query Builder</h2>
-                <p class="subtitle">Filter observations using the options below. Leave fields blank to include all records.</p>
+    <div class="page-divider"></div>
 
-                <form id="query-form" action="/query_builder" method="get">
+    <h1 class="app-title">Query Builder</h1>
 
-                    <!-- Scientific Name -->
-                    <div class="filter-group">
-                        <label>Scientific Name</label>
-                        <div class="autocomplete-wrapper">
-                            <input type="text" id="species" name="species" value="{{ filters.species or '' }}"
-                                onfocus="showAll('species', speciesOptions)"
-                                oninput="filterSuggestions('species', speciesOptions)"
-                                autocomplete="off" placeholder="e.g. Acacia pubescens">
-                            <div id="species-suggestions" class="suggestions"></div>
-                        </div>
+    <div class="content">
+
+        {% if error %}
+        <div class="error-box">
+            Database error: {{ error }}
+        </div>
+        {% endif %}
+
+        <div class="query-layout">
+
+            <aside class="query-sidebar">
+                <p>
+                    Filter observations using the options below.
+                    Leave fields blank to include all records.
+                </p>
+
+                <form method="get" action="/query_builder">
+
+                    <label>Scientific Name</label>
+                    <input
+                        type="text"
+                        name="species"
+                        placeholder="e.g. Acacia pubescens"
+                        value="{{ filters.species }}"
+                    >
+
+                    <label>Common Name</label>
+                    <input
+                        type="text"
+                        name="vernacular_name"
+                        placeholder="e.g. Wattle"
+                        value="{{ filters.vernacular_name }}"
+                    >
+
+                    <label>Reserve</label>
+                    <input
+                        type="text"
+                        name="reserve"
+                        placeholder="e.g. Lansdowne"
+                        value="{{ filters.reserve }}"
+                    >
+
+                    <label>Native / Exotic Status</label>
+                    <select name="native">
+                        <option value="">All</option>
+                        <option value="Native" {% if filters.native == "Native" %}selected{% endif %}>Native</option>
+                        <option value="Exotic" {% if filters.native == "Exotic" %}selected{% endif %}>Exotic</option>
+                    </select>
+
+                    <label>Threatened Status</label>
+                    <select name="rare">
+                        <option value="">All</option>
+                        <option value="Endangered" {% if filters.rare == "Endangered" %}selected{% endif %}>Endangered</option>
+                        <option value="Critically Endangered" {% if filters.rare == "Critically Endangered" %}selected{% endif %}>Critically Endangered</option>
+                        <option value="Vulnerable" {% if filters.rare == "Vulnerable" %}selected{% endif %}>Vulnerable</option>
+                    </select>
+
+                    <label>Year Range</label>
+                    <div class="year-row">
+                        <input
+                            type="number"
+                            name="start_year"
+                            placeholder="From"
+                            value="{{ filters.start_year }}"
+                        >
+
+                        <input
+                            type="number"
+                            name="end_year"
+                            placeholder="To"
+                            value="{{ filters.end_year }}"
+                        >
                     </div>
 
-                    <!-- Common Name -->
-                    <div class="filter-group">
-                        <label>Common Name</label>
-                        <input type="text" id="vernacular_name" name="vernacular_name"
-                            value="{{ filters.vernacular_name or '' }}"
-                            placeholder="e.g. Wattle">
+                    <label>Dataset</label>
+                    <input
+                        type="text"
+                        name="dataset"
+                        placeholder="e.g. ALA"
+                        value="{{ filters.dataset }}"
+                    >
+
+                    <div class="query-buttons">
+                        <button type="submit">Search</button>
+                        <a href="/query_builder">Clear</a>
                     </div>
 
-                    <!-- Reserve -->
-                    <div class="filter-group">
-                        <label>Reserve</label>
-                        <div class="autocomplete-wrapper">
-                            <input type="text" id="reserve" name="reserve" value="{{ filters.reserve or '' }}"
-                                onfocus="showAll('reserve', reserveOptions)"
-                                oninput="filterSuggestions('reserve', reserveOptions)"
-                                autocomplete="off" placeholder="e.g. Lansdowne">
-                            <div id="reserve-suggestions" class="suggestions"></div>
-                        </div>
-                    </div>
-
-                    <!-- Native / Exotic Status -->
-                    <div class="filter-group">
-                        <label>Native / Exotic Status</label>
-                        <select name="native" id="native">
-                            <option value="">All</option>
-                            <option value="Native"          {% if filters.native == "Native" %}selected{% endif %}>Native</option>
-                            <option value="Exotic"          {% if filters.native == "Exotic" %}selected{% endif %}>Exotic</option>
-                            <option value="Planted Native"  {% if filters.native == "Planted Native" %}selected{% endif %}>Planted Native</option>
-                            <option value="unknown origin"  {% if filters.native == "unknown origin" %}selected{% endif %}>Unknown Origin</option>
-                        </select>
-                    </div>
-
-                    <!-- Threatened Status -->
-                    <div class="filter-group">
-                        <label>Threatened Status</label>
-                        <select name="rare" id="rare">
-                            <option value="">All</option>
-                            <option value="endangered"             {% if filters.rare == "endangered" %}selected{% endif %}>Endangered</option>
-                            <option value="critically endangered"  {% if filters.rare == "critically endangered" %}selected{% endif %}>Critically Endangered</option>
-                            <option value="endangered population"  {% if filters.rare == "endangered population" %}selected{% endif %}>Endangered Population</option>
-                            <option value="vulnerable"             {% if filters.rare == "vulnerable" %}selected{% endif %}>Vulnerable</option>
-                        </select>
-                    </div>
-
-                    <!-- Year Range -->
-                    <div class="filter-group">
-                        <label>Year Range</label>
-                        <div class="year-range">
-                            <input type="number" id="start_year" name="start_year"
-                                value="{{ filters.start_year or '' }}" placeholder="From" min="1800" max="2100">
-                            <input type="number" id="end_year" name="end_year"
-                                value="{{ filters.end_year or '' }}" placeholder="To" min="1800" max="2100">
-                        </div>
-                    </div>
-
-                    <!-- Dataset -->
-                    <div class="filter-group">
-                        <label>Dataset</label>
-                        <div class="autocomplete-wrapper">
-                            <input type="text" id="dataset" name="dataset" value="{{ filters.dataset or '' }}"
-                                onfocus="showAll('dataset', datasetOptions)"
-                                oninput="filterSuggestions('dataset', datasetOptions)"
-                                autocomplete="off" placeholder="e.g. iNaturalist">
-                            <div id="dataset-suggestions" class="suggestions"></div>
-                        </div>
-                    </div>
-
-                    <!-- Locality -->
-                    <div class="filter-group">
-                        <label>Locality</label>
-                        <div class="autocomplete-wrapper">
-                            <input type="text" id="locality" name="locality" value="{{ filters.locality or '' }}"
-                                onfocus="showAll('locality', localityOptions)"
-                                oninput="filterSuggestions('locality', localityOptions)"
-                                autocomplete="off" placeholder="e.g. Bankstown">
-                            <div id="locality-suggestions" class="suggestions"></div>
-                        </div>
-                    </div>
-
-                    <!-- Habitat -->
-                    <div class="filter-group">
-                        <label>Habitat</label>
-                        <div class="autocomplete-wrapper">
-                            <input type="text" id="habitat" name="habitat" value="{{ filters.habitat or '' }}"
-                                onfocus="showAll('habitat', habitatOptions)"
-                                oninput="filterSuggestions('habitat', habitatOptions)"
-                                autocomplete="off" placeholder="e.g. Woodland">
-                            <div id="habitat-suggestions" class="suggestions"></div>
-                        </div>
-                    </div>
-
-                    <!-- Basis of Record -->
-                    <div class="filter-group">
-                        <label>Basis of Record</label>
-                        <div class="autocomplete-wrapper">
-                            <input type="text" id="basis" name="basis" value="{{ filters.basis or '' }}"
-                                onfocus="showAll('basis', basisOptions)"
-                                oninput="filterSuggestions('basis', basisOptions)"
-                                autocomplete="off" placeholder="e.g. HumanObservation">
-                            <div id="basis-suggestions" class="suggestions"></div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-search">🔍 Search</button>
-                    <button type="button" class="btn-clear" onclick="clearAll()">✕ Clear Filters</button>
                 </form>
-            </div>
+            </aside>
 
-            <!-- MAIN RESULTS AREA -->
-            <div class="main-content">
+            <section class="query-main">
 
-                <!-- Active filter tags -->
-                {% set active = [] %}
-                {% if filters.species %}          {% set _ = active.append("Species: " ~ filters.species) %}          {% endif %}
-                {% if filters.vernacular_name %}  {% set _ = active.append("Common name: " ~ filters.vernacular_name) %}{% endif %}
-                {% if filters.reserve %}          {% set _ = active.append("Reserve: " ~ filters.reserve) %}          {% endif %}
-                {% if filters.native %}           {% set _ = active.append("Status: " ~ filters.native) %}            {% endif %}
-                {% if filters.rare %}             {% set _ = active.append("Threatened: " ~ filters.rare) %}          {% endif %}
-                {% if filters.start_year %}       {% set _ = active.append("From: " ~ filters.start_year) %}          {% endif %}
-                {% if filters.end_year %}         {% set _ = active.append("To: " ~ filters.end_year) %}              {% endif %}
-                {% if filters.dataset %}          {% set _ = active.append("Dataset: " ~ filters.dataset) %}          {% endif %}
-                {% if filters.locality %}         {% set _ = active.append("Locality: " ~ filters.locality) %}        {% endif %}
-                {% if filters.habitat %}          {% set _ = active.append("Habitat: " ~ filters.habitat) %}          {% endif %}
-                {% if filters.basis %}            {% set _ = active.append("Basis: " ~ filters.basis) %}              {% endif %}
-
-                {% if active %}
-                <div class="active-filters">
-                    {% for tag in active %}
-                    <span class="filter-tag">{{ tag }}</span>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                <div class="results-header">
+                <div class="query-header">
                     <h2>Query Results</h2>
-                    <div style="display:flex; gap:12px; align-items:center;">
-                        <span class="results-meta">{{ total_results }} record{{ 's' if total_results != 1 }}</span>
-                        {% if results %}
-                        <button class="btn-export" onclick="exportToExcel()">⬇ Export to Excel</button>
+                    <span class="query-count">{{ total_results }} records</span>
+                </div>
+
+                <div class="active-filter-box">
+                    <h3>Active Filter</h3>
+
+                    <div class="active-tags">
+                        {% if filters.species %}
+                            <span>Species: {{ filters.species }}</span>
+                        {% endif %}
+
+                        {% if filters.vernacular_name %}
+                            <span>Common Name: {{ filters.vernacular_name }}</span>
+                        {% endif %}
+
+                        {% if filters.reserve %}
+                            <span>Reserve: {{ filters.reserve }}</span>
+                        {% endif %}
+
+                        {% if filters.native %}
+                            <span>Status: {{ filters.native }}</span>
+                        {% endif %}
+
+                        {% if filters.rare %}
+                            <span>Threatened: {{ filters.rare }}</span>
+                        {% endif %}
+
+                        {% if filters.start_year %}
+                            <span>From: {{ filters.start_year }}</span>
+                        {% endif %}
+
+                        {% if filters.end_year %}
+                            <span>To: {{ filters.end_year }}</span>
+                        {% endif %}
+
+                        {% if filters.dataset %}
+                            <span>Dataset: {{ filters.dataset }}</span>
+                        {% endif %}
+
+                        {% if not filters.species
+                            and not filters.vernacular_name
+                            and not filters.reserve
+                            and not filters.native
+                            and not filters.rare
+                            and not filters.start_year
+                            and not filters.end_year
+                            and not filters.dataset %}
+                            <span>No active filters. Map is showing available observation locations.</span>
                         {% endif %}
                     </div>
                 </div>
 
-                <!-- Per-page selector -->
-                {% if total_results > 0 %}
-                <div class="per-page-options">
-                    Show:
-                    <a href="?page=1&per_page=10"  {% if per_page == 10  %}style="font-weight:bold;"{% endif %}>10</a> |
-                    <a href="?page=1&per_page=25"  {% if per_page == 25  %}style="font-weight:bold;"{% endif %}>25</a> |
-                    <a href="?page=1&per_page=50"  {% if per_page == 50  %}style="font-weight:bold;"{% endif %}>50</a> |
-                    <a href="?page=1&per_page=100" {% if per_page == 100 %}style="font-weight:bold;"{% endif %}>100</a>
-                    per page
-                </div>
+                <div id="query-map"></div>
 
-                <!-- Pagination -->
-                <div class="pagination">
-                    {% if page_num > 1 %}
-                    <a href="?page={{ page_num - 1 }}&per_page={{ per_page }}">← Previous</a>
-                    {% endif %}
-                    <span>Page {{ page_num }} of {{ total_pages }}</span>
-                    {% if page_num < total_pages %}
-                    <a href="?page={{ page_num + 1 }}&per_page={{ per_page }}">Next →</a>
-                    {% endif %}
-                </div>
-                {% endif %}
-
-                <!-- Results Table -->
                 {% if results %}
-                <div class="table-wrapper">
-                    <table id="results-table">
-                        <thead>
-                            <tr>
-                                <th>Scientific Name</th>
-                                <th>Common Name</th>
-                                <th>Reserve</th>
-                                <th>Year</th>
-                                <th>Month</th>
-                                <th>Day</th>
-                                <th>Dataset</th>
-                                <th>Native / Exotic</th>
-                                <th>Threatened Status</th>
-                                <th>Latitude</th>
-                                <th>Longitude</th>
-                                <th>Locality</th>
-                                <th>Habitat</th>
-                                <th>Basis of Record</th>
-                                <th>Recorded By</th>
-                                <th>Occurrence Remarks</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in results %}
-                            <tr>
-                                <td title="{{ row.scientific_name }}">{{ row.scientific_name or 'N/A' }}</td>
-                                <td title="{{ row.vernacular_name }}">{{ row.vernacular_name or 'N/A' }}</td>
-                                <td title="{{ row.reserve_name }}">{{ row.reserve_name or 'N/A' }}</td>
-                                <td>{{ row.year or 'N/A' }}</td>
-                                <td>{{ row.month or 'N/A' }}</td>
-                                <td>{{ row.day or 'N/A' }}</td>
-                                <td title="{{ row.dataset_name }}">{{ row.dataset_name or 'N/A' }}</td>
-                                <td>{{ 'Exotic' if row.exotic else 'Native' }}</td>
-                                <td>{{ row.threatened_species_status or '—' }}</td>
-                                <td>{{ row.decimal_latitude or 'N/A' }}</td>
-                                <td>{{ row.decimal_longitude or 'N/A' }}</td>
-                                <td title="{{ row.locality }}">{{ row.locality or 'N/A' }}</td>
-                                <td title="{{ row.habitat }}">{{ row.habitat or 'N/A' }}</td>
-                                <td>{{ row.basis_of_record or 'N/A' }}</td>
-                                <td title="{{ row.recorded_by }}">{{ row.recorded_by or 'N/A' }}</td>
-                                <td title="{{ row.occurrence_remarks }}">{{ row.occurrence_remarks or '—' }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    <p class="result-count">
+                        Showing {{ results|length }} result/s
+                    </p>
 
+                    <div class="query-buttons" style="margin-bottom: 14px;">
+                        <a href="/query_builder/export/csv?{{ request.query_string.decode('utf-8') }}">
+                            Export CSV
+                        </a>
+
+                        <a href="/query_builder/export/xlsx?{{ request.query_string.decode('utf-8') }}">
+                            Export Excel
+                        </a>
+                    </div>
+
+                    <div class="query-table-wrapper">
+                        <table class="query-table">
+                            <thead>
+                                <tr>
+                                    <th>Occurrence ID</th>
+                                    <th>Scientific Name</th>
+                                    <th>Common Name</th>
+                                    <th>Reserve</th>
+                                    <th>Event Date</th>
+                                    <th>Year</th>
+                                    <th>Dataset</th>
+                                    <th>Native Flag</th>
+                                    <th>Endangered Status</th>
+                                    <th>Latitude</th>
+                                    <th>Longitude</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for row in results %}
+                                <tr>
+                                    <td>{{ row.occurrence_id or '-' }}</td>
+                                    <td>{{ row.scientific_name or '-' }}</td>
+                                    <td>{{ row.vernacular_name or '-' }}</td>
+                                    <td>{{ row.reserve_name or '-' }}</td>
+                                    <td>{{ row.event_date or '-' }}</td>
+                                    <td>{{ row.year or '-' }}</td>
+                                    <td>{{ row.dataset_name or '-' }}</td>
+                                    <td>{{ row.native_flag or '-' }}</td>
+                                    <td>{{ row.endangered_status_code or '-' }}</td>
+                                    <td>{{ row.decimal_latitude or '-' }}</td>
+                                    <td>{{ row.decimal_longitude or '-' }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 {% else %}
-                <div class="empty-state">
-                    {% if filters.species or filters.vernacular_name or filters.reserve or filters.native or filters.rare or filters.start_year or filters.end_year or filters.dataset or filters.locality or filters.habitat or filters.basis %}
-                        <h3>No results found</h3>
-                        <p>Try adjusting your filters or clearing some criteria.</p>
-                    {% else %}
+                    <div class="empty-state">
                         <h3>Welcome to the Query Builder</h3>
-                        <p>Use the filters on the left to search the observation database.<br>
-                        You can search by species name, reserve, date range, threatened status and more.</p>
-                    {% endif %}
-                </div>
+                        <p>
+                            Use the filters on the left to search the observation database.
+                            The map above shows observation locations from the database.
+                        </p>
+                    </div>
                 {% endif %}
 
-            </div>
+            </section>
+
         </div>
-        <div class="footer-divider"></div>
-        <footer class="app-footer">
-            <div class="footer-right">
-            <a href="/login" class="logout-btn">Log Out</a>
-            </div>
-        <p>Bio Geographic Data Analysts | ABN 579 423 418 07</p>
-        </footer>
+
     </div>
+
+    <footer class="app-footer">
+        <div class="footer-right">
+            <a href="/login" class="logout-btn">Log Out</a>
+        </div>
+        <p>Bio Geographic Data Analysts | ABN 579 423 418 07</p>
+    </footer>
+
+</div>
+
+<script>
+    const mapPoints = {{ map_points | tojson }};
+
+    const queryMap = L.map("query-map").setView([-33.92, 151.05], 11);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(queryMap);
+
+    const markers = [];
+
+    mapPoints.forEach(function(point) {
+        const marker = L.marker([
+            point.decimal_latitude,
+            point.decimal_longitude
+        ]).addTo(queryMap);
+
+        marker.bindPopup(`
+            <strong>${point.scientific_name}</strong><br>
+            ${point.vernacular_name ? point.vernacular_name + "<br>" : ""}
+            Reserve: ${point.reserve_name}<br>
+            Dataset: ${point.dataset_name}<br>
+            Event Date: ${point.event_date}
+        `);
+
+        markers.push(marker);
+    });
+
+    if (markers.length > 0) {
+        const group = L.featureGroup(markers);
+        queryMap.fitBounds(group.getBounds().pad(0.15));
+    }
+</script>
+
 </body>
 </html>

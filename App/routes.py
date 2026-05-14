@@ -4,10 +4,12 @@ import socket
 from urllib.parse import urlencode
 import csv
 import io
+from io import StringIO, BytesIO
 from flask import Response, send_file
 from flask import session, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
+from openpyxl import Workbook
 import pandas as pd
 
 from flask import Blueprint, redirect, render_template, request, url_for
@@ -631,7 +633,83 @@ def species_detail():
 
 @main.route("/observations")
 def observations():
-    return render_template("observations.html")
+    search = request.args.get("q", "").strip()
+
+    rows = []
+    observation_options = []
+    error = None
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT DISTINCT scientific_name
+                FROM occurrences
+                WHERE scientific_name IS NOT NULL
+                ORDER BY scientific_name
+                LIMIT 2000
+                """
+            )
+            observation_options = cursor.fetchall()
+
+            params = []
+            where_clause = ""
+
+            if search:
+                where_clause = """
+                    WHERE (
+                        o.scientific_name LIKE %s
+                        OR sp.vernacular_name LIKE %s
+                        OR r.asset_name LIKE %s
+                        OR d.dataset_name LIKE %s
+                    )
+                """
+                params = [
+                    f"%{search}%",
+                    f"%{search}%",
+                    f"%{search}%",
+                    f"%{search}%"
+                ]
+
+            cursor.execute(
+                f"""
+                SELECT
+                    o.occurrence_id,
+                    o.scientific_name,
+                    sp.vernacular_name,
+                    r.asset_name AS reserve_name,
+                    o.event_date,
+                    YEAR(o.event_date) AS year,
+                    d.dataset_name,
+                    o.decimal_latitude,
+                    o.decimal_longitude
+                FROM occurrences o
+                LEFT JOIN species sp ON o.species_id = sp.species_id
+                LEFT JOIN reserves r ON o.reserve_id = r.reserve_id
+                LEFT JOIN datasets d ON o.dataset_id = d.dataset_id
+                {where_clause}
+                ORDER BY o.event_date DESC, o.scientific_name
+                LIMIT 500
+                """,
+                params,
+            )
+
+            rows = cursor.fetchall()
+
+        conn.close()
+
+    except Exception as exc:
+        error = str(exc)
+
+    return render_template(
+        "observations.html",
+        observations=rows,
+        observation_options=observation_options,
+        search=search,
+        error=error,
+    )
 
 
 @main.route("/observations_new")
@@ -1675,34 +1753,42 @@ def traits_detail():
 def query_builder():
     filters = {key: "" for key in QUERY_FILTERS}
 
-    if request.method == "POST":
-        for key in filters:
-            filters[key] = request.form.get(key, "")
+    for key in filters:
+        filters[key] = request.args.get(key, "").strip()
 
-    per_page = int(request.args.get("per_page", 25))
-    page_num = int(request.args.get("page", 1))
+    try:
+        per_page = int(request.args.get("per_page", 25))
+    except ValueError:
+        per_page = 25
+
+    try:
+        page_num = int(request.args.get("page", 1))
+    except ValueError:
+        page_num = 1
+
+    page_num = max(1, page_num)
     offset = (page_num - 1) * per_page
 
+    results = []
+    map_points = []
+    total_results = 0
+    total_pages = 1
+    error = None
+
+    has_filters = any(value for value in filters.values())
+
     context = {
-        "results": [],
+        "results": results,
+        "map_points": map_points,
         "filters": filters,
-        "total_results": 0,
+        "total_results": total_results,
         "page_num": page_num,
-        "total_pages": 1,
+        "total_pages": total_pages,
         "per_page": per_page,
-        "species_options": [],
-        "reserve_options": [],
-        "dataset_options": [],
-        "vernacular_options": [],
-        "locality_options": [],
-        "habitat_options": [],
-        "basis_options": [],
         "username": "Development user",
         "is_admin": False,
+        "error": error,
     }
-
-    if not database_port_open():
-        return render_template("query_builder.html", **context)
 
     try:
         conn = get_connection()
@@ -1728,7 +1814,7 @@ def query_builder():
             params.append(filters["native"])
 
         if filters["rare"]:
-            where.append("sp.threatened_species_status LIKE %s")
+            where.append("sp.endangered_status_code LIKE %s")
             params.append(f"%{filters['rare']}%")
 
         if filters["start_year"]:
@@ -1743,122 +1829,104 @@ def query_builder():
             where.append("d.dataset_name LIKE %s")
             params.append(f"%{filters['dataset']}%")
 
-        if filters["locality"]:
-            where.append("o.locality LIKE %s")
-            params.append(f"%{filters['locality']}%")
-
-        if filters["habitat"]:
-            where.append("o.habitat LIKE %s")
-            params.append(f"%{filters['habitat']}%")
-
-        if filters["basis"]:
-            where.append("o.basis_of_record LIKE %s")
-            params.append(f"%{filters['basis']}%")
-
         where_clause = "WHERE " + " AND ".join(where) if where else ""
 
-        cursor.execute(
-            f"""
-            SELECT COUNT(*) AS total
-            FROM occurrences o
-            LEFT JOIN species sp ON o.species_id = sp.species_id
-            LEFT JOIN reserves r ON o.reserve_id = r.reserve_id
-            LEFT JOIN datasets d ON o.dataset_id = d.dataset_id
-            {where_clause}
-            """,
-            params,
-        )
-        total_results = cursor.fetchone()["total"]
-
+        # Map points should show even before searching
         cursor.execute(
             f"""
             SELECT
                 o.scientific_name,
                 sp.vernacular_name,
                 r.asset_name AS reserve_name,
-                YEAR(o.event_date) AS year,
-                MONTH(o.event_date) AS month,
-                DAY(o.event_date) AS day,
                 d.dataset_name,
+                o.event_date,
                 o.decimal_latitude,
-                o.decimal_longitude,
-                o.locality,
-                o.habitat,
-                o.basis_of_record,
-                o.recorded_by,
-                o.occurrence_remarks,
-                sp.native_flag = 'Exotic' AS exotic,
-                sp.threatened_species_status
+                o.decimal_longitude
             FROM occurrences o
             LEFT JOIN species sp ON o.species_id = sp.species_id
             LEFT JOIN reserves r ON o.reserve_id = r.reserve_id
             LEFT JOIN datasets d ON o.dataset_id = d.dataset_id
             {where_clause}
-            LIMIT %s OFFSET %s
+            {"AND" if where_clause else "WHERE"} o.decimal_latitude IS NOT NULL
+            AND o.decimal_longitude IS NOT NULL
+            LIMIT 500
             """,
-            params + [per_page, offset],
+            params,
         )
-        results = cursor.fetchall()
 
-        cursor.execute(
-            """
-            SELECT DISTINCT scientific_name
-            FROM occurrences
-            WHERE scientific_name IS NOT NULL
-            ORDER BY scientific_name
-            LIMIT 2000
-            """
-        )
-        species_options = [row["scientific_name"] for row in cursor.fetchall()]
+        map_rows = cursor.fetchall()
 
-        cursor.execute(
-            """
-            SELECT DISTINCT asset_name
-            FROM reserves
-            WHERE asset_name IS NOT NULL
-            ORDER BY asset_name
-            """
-        )
-        reserve_options = [row["asset_name"] for row in cursor.fetchall()]
+        for row in map_rows:
+            map_points.append({
+                "scientific_name": row["scientific_name"] or "Unknown species",
+                "vernacular_name": row["vernacular_name"] or "",
+                "reserve_name": row["reserve_name"] or "N/A",
+                "dataset_name": row["dataset_name"] or "N/A",
+                "event_date": str(row["event_date"] or "N/A"),
+                "decimal_latitude": float(row["decimal_latitude"]),
+                "decimal_longitude": float(row["decimal_longitude"]),
+            })
 
-        cursor.execute(
-            """
-            SELECT DISTINCT dataset_name
-            FROM datasets
-            WHERE dataset_name IS NOT NULL
-            ORDER BY dataset_name
-            """
-        )
-        dataset_options = [row["dataset_name"] for row in cursor.fetchall()]
+        if has_filters:
+            cursor.execute(
+                f"""
+                SELECT COUNT(*) AS total
+                FROM occurrences o
+                LEFT JOIN species sp ON o.species_id = sp.species_id
+                LEFT JOIN reserves r ON o.reserve_id = r.reserve_id
+                LEFT JOIN datasets d ON o.dataset_id = d.dataset_id
+                {where_clause}
+                """,
+                params,
+            )
 
-        cursor.execute(
-            """
-            SELECT DISTINCT vernacular_name
-            FROM species
-            WHERE vernacular_name IS NOT NULL
-            ORDER BY vernacular_name
-            LIMIT 2000
-            """
-        )
-        vernacular_options = [row["vernacular_name"] for row in cursor.fetchall()]
+            total_results = cursor.fetchone()["total"]
+            total_pages = max(1, -(-total_results // per_page))
+            page_num = min(page_num, total_pages)
+            offset = (page_num - 1) * per_page
+
+            cursor.execute(
+                f"""
+                SELECT
+                    o.occurrence_id,
+                    o.scientific_name,
+                    sp.vernacular_name,
+                    r.asset_name AS reserve_name,
+                    YEAR(o.event_date) AS year,
+                    o.event_date,
+                    d.dataset_name,
+                    o.decimal_latitude,
+                    o.decimal_longitude,
+                    sp.native_flag,
+                    sp.endangered_status_code
+                FROM occurrences o
+                LEFT JOIN species sp ON o.species_id = sp.species_id
+                LEFT JOIN reserves r ON o.reserve_id = r.reserve_id
+                LEFT JOIN datasets d ON o.dataset_id = d.dataset_id
+                {where_clause}
+                ORDER BY o.event_date DESC, o.scientific_name
+                LIMIT %s OFFSET %s
+                """,
+                params + [per_page, offset],
+            )
+
+            results = cursor.fetchall()
 
         cursor.close()
         conn.close()
 
-        context.update(
-            {
-                "results": results,
-                "total_results": total_results,
-                "total_pages": max(1, -(-total_results // per_page)),
-                "species_options": species_options,
-                "reserve_options": reserve_options,
-                "dataset_options": dataset_options,
-                "vernacular_options": vernacular_options,
-            }
-        )
+        context.update({
+            "results": results,
+            "map_points": map_points,
+            "total_results": total_results,
+            "page_num": page_num,
+            "total_pages": total_pages,
+            "per_page": per_page,
+            "error": None,
+        })
 
-    except Exception:
-        pass
+    except Exception as exc:
+        context["error"] = str(exc)
 
     return render_template("query_builder.html", **context)
 
@@ -2518,130 +2586,88 @@ def export_species_xlsx():
     
 # Species New Page Export CSV
 
-@main.route("/species_new/export/csv")
-def export_species_new_csv():
-
-    search = request.args.get("q", "").strip()
-    family_filter = request.args.get("family", "").strip()
+@main.route("/query_builder/export/csv")
+def export_query_builder_csv():
 
     conn = get_connection()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
 
-    sql = """
-        SELECT
-            sp.species_id,
-            sp.taxonomy_id,
-            sp.scientific_name,
-            sp.vernacular_name,
-            sp.native_flag,
-            sp.endangered_status_code,
-            tx.family
-        FROM species sp
-        LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
+    species = request.args.get("species", "").strip()
+    vernacular_name = request.args.get("vernacular_name", "").strip()
+    reserve = request.args.get("reserve", "").strip()
+    native = request.args.get("native", "").strip()
+    rare = request.args.get("rare", "").strip()
+    start_year = request.args.get("start_year", "").strip()
+    end_year = request.args.get("end_year", "").strip()
+    dataset = request.args.get("dataset", "").strip()
+
+    query = """
+SELECT
+            o.occurrence_id,
+            s.scientific_name,
+            s.vernacular_name,
+            r.asset_name AS reserve_name,
+            o.event_date,
+            YEAR(o.event_date) AS year,
+            d.dataset_name,
+            CASE
+                WHEN s.native_flag = 1 THEN 'Native'
+                WHEN s.native_flag = 0 THEN 'Exotic'
+                ELSE 'Unknown'
+            END AS native_flag,
+            s.endangered_status_code,
+            o.decimal_latitude,
+            o.decimal_longitude
+        FROM occurrences o
+        LEFT JOIN species s
+            ON o.species_id = s.species_id
+        LEFT JOIN reserves r
+            ON o.reserve_id = r.reserve_id
+        LEFT JOIN datasets d
+            ON o.dataset_id = d.dataset_id
         WHERE 1=1
     """
 
     params = []
 
-    if search:
-        sql += """
-            AND (
-                sp.scientific_name LIKE %s
-                OR sp.vernacular_name LIKE %s
-            )
-        """
-        params.extend([f"%{search}%", f"%{search}%"])
+    if species:
+        query += " AND s.scientific_name LIKE %s"
+        params.append(f"%{species}%")
 
-    if family_filter:
-        sql += " AND tx.family = %s"
-        params.append(family_filter)
+    if vernacular_name:
+        query += " AND s.vernacular_name LIKE %s"
+        params.append(f"%{vernacular_name}%")
 
-    # 🔥 KEY DIFFERENCE: newest first
-    sql += " ORDER BY sp.species_id DESC"
+    if reserve:
+        query += " AND r.reserve_name LIKE %s"
+        params.append(f"%{reserve}%")
 
-    cursor.execute(sql, params)
-    rows = cursor.fetchall()
+    if native == "Native":
+        query += " AND s.native_flag = 1"
 
-    cursor.close()
-    conn.close()
+    elif native == "Exotic":
+        query += " AND s.native_flag = 0"
 
-    output = io.StringIO()
-    writer = csv.writer(output)
+    if rare:
+        query += " AND s.endangered_status_code = %s"
+        params.append(rare)
 
-    writer.writerow([
-        "Species ID",
-        "Taxonomy ID",
-        "Scientific Name",
-        "Vernacular Name",
-        "Native Flag",
-        "Endangered Status",
-        "Family"
-    ])
+    if start_year:
+        query += " AND YEAR(o.event_date) >= %s"
+        params.append(start_year)
 
-    for row in rows:
-        writer.writerow([
-            row["species_id"],
-            row["taxonomy_id"],
-            row["scientific_name"],
-            row["vernacular_name"],
-            row["native_flag"],
-            row["endangered_status_code"],
-            row["family"],
-        ])
+    if end_year:
+        query += " AND YEAR(o.event_date) <= %s"
+        params.append(end_year)
 
-    output.seek(0)
+    if dataset:
+        query += " AND d.dataset_name LIKE %s"
+        params.append(f"%{dataset}%")
 
-    return Response(
-        output.getvalue(),
-        mimetype="text/csv",
-        headers={
-            "Content-Disposition": "attachment; filename=species_new_export.csv"
-        }
-    )
+    query += " ORDER BY o.event_date DESC"
 
-#Species New Page Export XLSX
-@main.route("/species_new/export/xlsx")
-def export_species_new_xlsx():
+    cursor.execute(query, params)
 
-    search = request.args.get("q", "").strip()
-    family_filter = request.args.get("family", "").strip()
-
-    conn = get_connection()
-    cursor = conn.cursor(pymysql.cursors.DictCursor)
-
-    sql = """
-        SELECT
-            sp.species_id,
-            sp.taxonomy_id,
-            sp.scientific_name,
-            sp.vernacular_name,
-            sp.native_flag,
-            sp.endangered_status_code,
-            tx.family
-        FROM species sp
-        LEFT JOIN taxonomy tx ON tx.taxonomy_id = sp.taxonomy_id
-        WHERE 1=1
-    """
-
-    params = []
-
-    if search:
-        sql += """
-            AND (
-                sp.scientific_name LIKE %s
-                OR sp.vernacular_name LIKE %s
-            )
-        """
-        params.extend([f"%{search}%", f"%{search}%"])
-
-    if family_filter:
-        sql += " AND tx.family = %s"
-        params.append(family_filter)
-
-    # 🔥 KEY DIFFERENCE: newest first
-    sql += " ORDER BY sp.species_id DESC"
-
-    cursor.execute(sql, params)
     rows = cursor.fetchall()
 
     cursor.close()
@@ -2649,66 +2675,165 @@ def export_species_new_xlsx():
 
     df = pd.DataFrame(rows)
 
-    df.columns = [
-        "Species ID",
-        "Taxonomy ID",
-        "Scientific Name",
-        "Vernacular Name",
-        "Native Flag",
-        "Endangered Status",
-        "Family"
-    ]
+    return Response(
+        df.to_csv(index=False),
+        mimetype="text/csv",
+        headers={
+            "Content-Disposition":
+            "attachment; filename=query_builder_export.csv"
+        }
+    )
+    
+@main.route("/query_builder/export/xlsx")
+def export_query_builder_xlsx():
 
-    output = io.BytesIO()
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    species = request.args.get("species", "").strip()
+    vernacular_name = request.args.get("vernacular_name", "").strip()
+    reserve = request.args.get("reserve", "").strip()
+    native = request.args.get("native", "").strip()
+    rare = request.args.get("rare", "").strip()
+    start_year = request.args.get("start_year", "").strip()
+    end_year = request.args.get("end_year", "").strip()
+    dataset = request.args.get("dataset", "").strip()
+
+    query = """
+        SELECT
+            o.occurrence_id,
+            s.scientific_name,
+            s.vernacular_name,
+            r.asset_name AS reserve_name,
+            o.event_date,
+            YEAR(o.event_date) AS year,
+            d.dataset_name,
+            CASE
+                WHEN s.native_flag = 1 THEN 'Native'
+                WHEN s.native_flag = 0 THEN 'Exotic'
+                ELSE 'Unknown'
+            END AS native_flag,
+            s.endangered_status_code,
+            o.decimal_latitude,
+            o.decimal_longitude
+        FROM occurrences o
+        LEFT JOIN species s
+            ON o.species_id = s.species_id
+        LEFT JOIN reserves r
+            ON o.reserve_id = r.reserve_id
+        LEFT JOIN datasets d
+            ON o.dataset_id = d.dataset_id
+        WHERE 1=1
+    """
+
+    params = []
+
+    if species:
+        query += " AND s.scientific_name LIKE %s"
+        params.append(f"%{species}%")
+
+    if vernacular_name:
+        query += " AND s.vernacular_name LIKE %s"
+        params.append(f"%{vernacular_name}%")
+
+    if reserve:
+        query += " AND r.reserve_name LIKE %s"
+        params.append(f"%{reserve}%")
+
+    if native == "Native":
+        query += " AND s.native_flag = 1"
+
+    elif native == "Exotic":
+        query += " AND s.native_flag = 0"
+
+    if rare:
+        query += " AND s.endangered_status_code = %s"
+        params.append(rare)
+
+    if start_year:
+        query += " AND YEAR(o.event_date) >= %s"
+        params.append(start_year)
+
+    if end_year:
+        query += " AND YEAR(o.event_date) <= %s"
+        params.append(end_year)
+
+    if dataset:
+        query += " AND d.dataset_name LIKE %s"
+        params.append(f"%{dataset}%")
+
+    query += " ORDER BY o.event_date DESC"
+
+    cursor.execute(query, params)
+
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    df = pd.DataFrame(rows)
+
+    output = BytesIO()
 
     with pd.ExcelWriter(output, engine="openpyxl") as writer:
-        df.to_excel(writer, index=False, sheet_name="New Species")
+        df.to_excel(writer, index=False, sheet_name="Query Results")
 
     output.seek(0)
 
     return send_file(
         output,
         as_attachment=True,
-        download_name="species_new_export.xlsx",
+        download_name="query_builder_export.xlsx",
         mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
     
-# At Risk Page Export CSV
-
-@main.route("/at_risk/export/csv")
-def export_at_risk_csv():
-
+# Observations Exports
+@main.route("/observations/export/csv")
+def export_observations_csv():
     search = request.args.get("q", "").strip()
-    priority_filter = request.args.get("priority", "").strip()
-
-    recent_year_cutoff = 2015
 
     conn = get_connection()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
 
-    cursor.execute(
-        """
-        SELECT
-            sp.species_id,
-            sp.scientific_name,
-            sp.vernacular_name,
-            COUNT(o.occurrence_id) AS obs_count,
-            COUNT(DISTINCT o.reserve_id) AS reserve_count,
-            MAX(YEAR(o.event_date)) AS latest_year
-        FROM species sp
-        LEFT JOIN occurrences o
-            ON o.species_id = sp.species_id
-        GROUP BY sp.species_id, sp.scientific_name, sp.vernacular_name
-        HAVING
-            obs_count > 0
-            AND (
-                reserve_count = 1
-                OR obs_count <= 3
-                OR latest_year < %s
+    params = []
+    where_clause = ""
+
+    if search:
+        where_clause = """
+            WHERE (
+                o.scientific_name LIKE %s
+                OR sp.vernacular_name LIKE %s
+                OR r.asset_name LIKE %s
+                OR d.dataset_name LIKE %s
             )
-        ORDER BY sp.scientific_name
+        """
+        params = [
+            f"%{search}%",
+            f"%{search}%",
+            f"%{search}%",
+            f"%{search}%"
+        ]
+
+    cursor.execute(
+        f"""
+        SELECT
+            o.occurrence_id,
+            o.scientific_name,
+            sp.vernacular_name,
+            r.asset_name AS reserve_name,
+            o.event_date,
+            YEAR(o.event_date) AS year,
+            d.dataset_name,
+            o.decimal_latitude,
+            o.decimal_longitude
+        FROM occurrences o
+        LEFT JOIN species sp ON o.species_id = sp.species_id
+        LEFT JOIN reserves r ON o.reserve_id = r.reserve_id
+        LEFT JOIN datasets d ON o.dataset_id = d.dataset_id
+        {where_clause}
+        ORDER BY o.event_date DESC, o.scientific_name
         """,
-        [recent_year_cutoff],
+        params,
     )
 
     rows = cursor.fetchall()
@@ -2720,50 +2845,28 @@ def export_at_risk_csv():
     writer = csv.writer(output)
 
     writer.writerow([
+        "Occurrence ID",
         "Scientific Name",
         "Common Name",
-        "Alert Reason",
-        "Priority"
+        "Reserve",
+        "Event Date",
+        "Year",
+        "Dataset",
+        "Latitude",
+        "Longitude"
     ])
 
     for row in rows:
-
-        reasons = []
-        criteria = 0
-
-        if row["reserve_count"] == 1:
-            reasons.append("Only 1 reserve")
-            criteria += 1
-
-        if row["obs_count"] <= 3:
-            reasons.append("Low observations")
-            criteria += 1
-
-        if row["latest_year"] and row["latest_year"] < recent_year_cutoff:
-            reasons.append("No recent observations")
-            criteria += 1
-
-        if criteria >= 3:
-            priority = "High"
-        elif criteria == 2:
-            priority = "Medium"
-        else:
-            priority = "Low"
-
-        # apply filters
-        if search:
-            text = f"{row['scientific_name']} {row['vernacular_name'] or ''}".lower()
-            if search.lower() not in text:
-                continue
-
-        if priority_filter and priority != priority_filter:
-            continue
-
         writer.writerow([
+            row["occurrence_id"],
             row["scientific_name"],
             row["vernacular_name"],
-            "; ".join(reasons),
-            priority
+            row["reserve_name"],
+            row["event_date"],
+            row["year"],
+            row["dataset_name"],
+            row["decimal_latitude"],
+            row["decimal_longitude"],
         ])
 
     output.seek(0)
@@ -2772,45 +2875,57 @@ def export_at_risk_csv():
         output.getvalue(),
         mimetype="text/csv",
         headers={
-            "Content-Disposition": "attachment; filename=at_risk_species.csv"
+            "Content-Disposition": "attachment; filename=observations_export.csv"
         }
     )
 
-#At Risk Species Page Export XLSX
-@main.route("/at_risk/export/xlsx")
-def export_at_risk_xlsx():
 
+@main.route("/observations/export/xlsx")
+def export_observations_xlsx():
     search = request.args.get("q", "").strip()
-    priority_filter = request.args.get("priority", "").strip()
-
-    recent_year_cutoff = 2015
 
     conn = get_connection()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
 
-    cursor.execute(
-        """
-        SELECT
-            sp.species_id,
-            sp.scientific_name,
-            sp.vernacular_name,
-            COUNT(o.occurrence_id) AS obs_count,
-            COUNT(DISTINCT o.reserve_id) AS reserve_count,
-            MAX(YEAR(o.event_date)) AS latest_year
-        FROM species sp
-        LEFT JOIN occurrences o
-            ON o.species_id = sp.species_id
-        GROUP BY sp.species_id, sp.scientific_name, sp.vernacular_name
-        HAVING
-            obs_count > 0
-            AND (
-                reserve_count = 1
-                OR obs_count <= 3
-                OR latest_year < %s
+    params = []
+    where_clause = ""
+
+    if search:
+        where_clause = """
+            WHERE (
+                o.scientific_name LIKE %s
+                OR sp.vernacular_name LIKE %s
+                OR r.asset_name LIKE %s
+                OR d.dataset_name LIKE %s
             )
-        ORDER BY sp.scientific_name
+        """
+        params = [
+            f"%{search}%",
+            f"%{search}%",
+            f"%{search}%",
+            f"%{search}%"
+        ]
+
+    cursor.execute(
+        f"""
+        SELECT
+            o.occurrence_id,
+            o.scientific_name,
+            sp.vernacular_name,
+            r.asset_name AS reserve_name,
+            o.event_date,
+            YEAR(o.event_date) AS year,
+            d.dataset_name,
+            o.decimal_latitude,
+            o.decimal_longitude
+        FROM occurrences o
+        LEFT JOIN species sp ON o.species_id = sp.species_id
+        LEFT JOIN reserves r ON o.reserve_id = r.reserve_id
+        LEFT JOIN datasets d ON o.dataset_id = d.dataset_id
+        {where_clause}
+        ORDER BY o.event_date DESC, o.scientific_name
         """,
-        [recent_year_cutoff],
+        params,
     )
 
     rows = cursor.fetchall()
@@ -2818,60 +2933,31 @@ def export_at_risk_xlsx():
     cursor.close()
     conn.close()
 
-    export_data = []
+    df = pd.DataFrame(rows)
 
-    for row in rows:
-
-        reasons = []
-        criteria = 0
-
-        if row["reserve_count"] == 1:
-            reasons.append("Only 1 reserve")
-            criteria += 1
-
-        if row["obs_count"] <= 3:
-            reasons.append("Low observations")
-            criteria += 1
-
-        if row["latest_year"] and row["latest_year"] < recent_year_cutoff:
-            reasons.append("No recent observations")
-            criteria += 1
-
-        if criteria >= 3:
-            priority = "High"
-        elif criteria == 2:
-            priority = "Medium"
-        else:
-            priority = "Low"
-
-        # filters
-        if search:
-            text = f"{row['scientific_name']} {row['vernacular_name'] or ''}".lower()
-            if search.lower() not in text:
-                continue
-
-        if priority_filter and priority != priority_filter:
-            continue
-
-        export_data.append({
-            "Scientific Name": row["scientific_name"],
-            "Common Name": row["vernacular_name"],
-            "Alert Reason": "; ".join(reasons),
-            "Priority": priority
-        })
-
-    df = pd.DataFrame(export_data)
+    if not df.empty:
+        df.columns = [
+            "Occurrence ID",
+            "Scientific Name",
+            "Common Name",
+            "Reserve",
+            "Event Date",
+            "Year",
+            "Dataset",
+            "Latitude",
+            "Longitude"
+        ]
 
     output = io.BytesIO()
 
     with pd.ExcelWriter(output, engine="openpyxl") as writer:
-        df.to_excel(writer, index=False, sheet_name="At Risk Species")
+        df.to_excel(writer, index=False, sheet_name="Observations")
 
     output.seek(0)
 
     return send_file(
         output,
         as_attachment=True,
-        download_name="at_risk_species.xlsx",
+        download_name="observations_export.xlsx",
         mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )

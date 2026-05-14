@@ -404,7 +404,6 @@
         <div class="results-info">
             Showing {{ (page_num - 1) * per_page + 1 }}–{{ (page_num - 1) * per_page + species_list|length }} of {{ total_count }} species
         </div>
-
         <div class="per-page-dropdown">
             Show
             <select onchange="window.location.href='?q={{ search }}&family={{ family_filter }}&per_page=' + this.value + '&page=1'">
@@ -435,8 +434,7 @@
 
     {{ pagination_controls() }}
     
-
-
+    <div class="page-divider"></div>
 
     <table class="species-table">
         <thead>
