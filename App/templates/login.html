@@ -6,7 +6,173 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
 </head>
+<style>
+    /* ===== LOGIN PAGE (UPDATED TO MATCH HOME THEME) ===== */
+
+body {
+    margin: 0;
+    background: #e8eee6;
+    color: #123b20;
+    font-family: "Inter", Arial, sans-serif;
+}
+
+
+/* ===== LAYOUT ===== */
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    gap: 70px;
+    flex: 1;
+}
+
+/* ===== LEFT PANEL TEXT ===== */
+
+.left-panel h3,
+.objectives h4 {
+    font-family: "Playfair Display", Georgia, serif;
+    color: #40623f;
+}
+
+/* ===== CONTACT BUTTON (MATCH QUICK LINKS STYLE) ===== */
+
+.contact-bubble {
+    display: inline-block;
+    margin-top: 44px;
+    padding: 12px 20px;
+    border-radius: 8px;
+
+    background-color: #40623f;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.contact-bubble:hover {
+    background-color: #2f4d2e;
+}
+
+.contact-bubble a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-family: "Inter", Arial, sans-serif;
+}
+
+/* ===== LOGIN BOX (NOW MATCHES QUICK LINKS PANEL) ===== */
+
+.login-box {
+    width: 430px;
+    margin: 0;
+    padding: 20px;
+
+    border: 1px solid #d6ddd2;
+    border-radius: 12px;
+
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* inputs */
+.login-box input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+
+    border: 1px solid #d6ddd2;
+    border-radius: 8px;
+
+    font-size: 15px;
+    margin-bottom: 12px;
+
+    background: white;
+    font-family: "Inter", Arial, sans-serif;
+}
+
+/* password row */
+.password-area {
+    display: flex;
+    align-items: center;
+
+    border: 1px solid #d6ddd2;
+    border-radius: 8px;
+    background: white;
+
+    margin-bottom: 14px;
+}
+
+.password-area input {
+    border: none;
+    margin: 0;
+    flex: 1;
+}
+
+.toggle-password {
+    padding: 0 14px;
+    cursor: pointer;
+
+    font-size: 13px;
+    font-weight: 600;
+    color: #40623f;
+}
+
+/* links */
+.small-links a {
+    color: #e7ede7;
+    font-size: 13px;
+}
+
+/* LOGIN BUTTON (MATCH NAV STYLE) */
+
+.login-box button {
+    width: 100%;
+    height: 48px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-weight: 600;
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+
+/* ===== FLORA BLOCK (MATCH PANEL STYLE) ===== */
+
+.flora-block {
+    width: 430px;
+    display: flex;
+    gap: 14px;
+
+    margin-top: 5px;
+    padding: 16px;
+
+    background: rgba(250, 251, 247, 0.95);
+    border: 1px solid #d6ddd2;
+    border-radius: 12px;
+
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.top-image img {
+    width: 200px;
+    border-radius: 10px;
+}
+
+.text-card p {
+    margin: 0;
+    font-size: 16.5px;
+    color: #123b20;
+    line-height: 1.5;
+}
+
+.app-title {
+    font-size: 35px;
+    margin-bottom: 30px;
+    color: #2a4929;
+}
+
+</style>
 
 <body>
 
@@ -29,30 +195,21 @@
         <main class="content">
 
             <section class="left-panel">
-
                 <div class="section-title">
-                    <div class="title-icon">🌿</div>
-                    <div>
-                        <h3>Native Flora and Fauna Dynamics System</h3>
-                        <div class="small-line"></div>
-                    </div>
+                    <h1 class="app-title">BioGeo DA Flora Database</h1>
                 </div>
-
                 <div class="objectives">
                     <h4>Our objectives:</h4>
 
                     <div class="objective-item">
-                        <span>🌱</span>
                         <p>To manage bushland beyond weed control and bush fire risk.</p>
                     </div>
 
                     <div class="objective-item">
-                        <span>👥</span>
                         <p>To ensure viability of populations of all native species.</p>
                     </div>
 
                     <div class="objective-item">
-                        <span>✓</span>
                         <p>To promote long-term ecological resilience and biodiversity conservation.</p>
                     </div>
                 </div>
@@ -74,50 +231,37 @@
                 <form action="{{ url_for('main.login') }}" method="POST" class="login-box">
 
                     <input type="email" name="email" placeholder="Username" required>
-                
+
                     <div class="password-area">
                         <input type="password" name="password" placeholder="Password" required>
-                        <span>VIEW</span>
+                        <span class="toggle-password" onclick="togglePassword()">VIEW</span>
                     </div>
 
                     <div class="small-links">
-                        <!-- Register link removed - admin creates users -->
-                        <div class="link-divider"></div>
-                        <a href="#">Forgot my Password</a>
+                        <a href="/forgot_password">Forgot my Password</a>
                     </div>
 
                     <button type="submit">LOGIN</button>
 
                 </form>
 
+                <div class="flora-block">
+
+                    <div class="top-image">
+                        <img src="{{ url_for('static', filename='bushland.png') }}" alt="Bushland">
+                    </div>
+
+                    <div class="text-card">
+                        <p>
+                            A lone <em>Dillwynia sieberi</em> individual, a common species. Many species are overlooked as they are not considered significant.
+                        </p>
+                    </div>
+
+                </div>
+
             </section>
-
         </main>
-
-        <div class="flora-layout">
-
-            <div class="left-image">
-                <img src="{{ url_for('static', filename='flower.png') }}" alt="Flower">
-            </div>
-
-            <div class="right-content">
-
-                <div class="top-image">
-                    <img src="{{ url_for('static', filename='bushland.png') }}" alt="Bushland">
-                </div>
-
-                <div class="text-card">
-                    <ul>
-                        <li>A lone individual of <em>Dillwynia sieberi</em>, a relatively common species.</li>
-                        <li>Regeneration and recruitment is dependent on a sympathetic fire regime.</li>
-                        <li>Sadly, many more species are overlooked because they are not considered special.</li>
-                    </ul>
-                </div>
-
-            </div>
-
-        </div>
-        <footer class="footer">
+        <footer class="app-footer">
             <p>Contact Number: +61 000 000 000</p>
             <p>Email: info@biogeoda.au</p>
             <p>Bio Geographic Data Analysts © 2026</p>
@@ -125,6 +269,19 @@
 
     
     </div>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.querySelector('input[name="password"]');
+            const toggle = document.querySelector('.toggle-password');
 
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggle.textContent = "HIDE";
+            } else {
+                passwordInput.type = "password";
+                toggle.textContent = "VIEW";
+            }
+        }
+    </script>
 </body>
 </html>

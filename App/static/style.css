@@ -50,7 +50,7 @@ body {
 }
 
 .logo-box img {
-    width: 200px;   /* 控制大小 */
+    width: 200px;   
     height: auto;
     display: block;
 }
@@ -58,21 +58,19 @@ body {
 .header-text h1 {
     margin: 0;
     font-family: "MingLiU-ExtB", "PMingLiU", serif;
-    font-size: 60px;
-    line-height: 1.05;
+    font-size: 30px;
     color: #103b20;
     font-weight: bold;
 }
 
 .header-text p {
-    margin: 10px 0 0;
     font-size: 17px;
     color: #6d6d67;
 }
 
 .header-text h2 {
-    margin: 14px 0 0;
-    font-size: 20px;
+    margin-top: 14px;
+    font-size: 15px;
     font-weight: 500;
     color: #376f3d;
 }
@@ -80,7 +78,7 @@ body {
 .header-divider {
     height: 1px;
     background: #c4cbbf;
-    margin: 42px 0 45px;
+    margin: 10px 0 45px;
     position: relative;
     z-index: 2;
 }
@@ -100,15 +98,11 @@ body {
     padding-left: 10px;
 }
 
-.right-panel {
-    width: 44%;
-}
-
 .section-title {
     display: flex;
     align-items: center;
     gap: 18px;
-    margin-bottom: 58px;
+    margin-bottom: 10px;
 }
 
 .title-icon {
@@ -142,7 +136,7 @@ body {
 .objectives h4 {
     font-family: "Playfair Display", Georgia, serif;
     font-size: 27px;
-    margin: 0 0 22px;
+    margin: 0 0 0px;
     color: #12351d;
 }
 
@@ -185,12 +179,25 @@ body {
     box-shadow: 0 8px 18px rgba(0,0,0,0.18);
 }
 
+.contact-bubble:hover {
+    background: #0d2f17
+}
+
 .contact-bubble a {
     color: white;
     text-decoration: none;
     font-family: "Playfair Display", Georgia, serif;
     font-weight: 700;
     font-size: 20px;
+}
+
+.toggle-password {
+    cursor: pointer;
+    padding: 0 18px;
+    color: #3f7a39;
+    font-weight: 700;
+    font-size: 14px;
+    user-select: none;
 }
 
 .login-box {
@@ -278,57 +285,85 @@ body {
     background: #e3eadf;
 }
 
-.flora-layout {
-    width: 100%;
-    display: flex;
-    gap: 28px;
-    margin-top: 20px;
-    align-items: flex-start;
-}
-
 .left-image img {
-    width: 620px;
-    height: 300px;
+    width: 300px;
+    height: 150px;
     object-fit: cover;
     border-radius: 14px;
     box-shadow: 0 8px 18px rgba(0,0,0,0.18);
 }
 
-.right-content {
-    width: 430px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-
-
 .top-image img {
-    width: 410px;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 3px;
-    box-shadow: 0 7px 16px rgba(0,0,0,0.15);
-
-    transform: translateY(-250px);
+    width: 250px;
+    border-radius: 12px;
+    display: block;
 }
 
-
-.text-card {
-    width: 430px;
-    background: rgba(250, 251, 247, 0.95);
-    padding: 18px 22px;
-    border: 1px solid #d6ddd2;
-    border-radius: 13px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-
-    margin-top: -250px;
-}
 .text-card ul {
     margin: 0;
     padding-left: 20px;
     font-size: 15px;
     line-height: 1.5;
     color: #202720;
+}
+
+
+.top-image,
+.text-card {
+    width: 430px;
+}
+
+.right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+.right-panel .flora-row {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.flora-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;   /* THIS centres the whole block */
+    margin-top: 15px;
+}
+
+.flora-block {
+    display: flex;
+    flex-direction: row;   /* 👈 THIS is the key */
+    gap: 18px;
+    margin-top: 5px;
+    width: 430px;          /* keeps alignment with login box */
+    align-items: flex-start;
+
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid #d6ddd2;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    backdrop-filter: blur(4px);
+}
+
+.top-image img {
+    width: 220px;
+    height: 163px;
+    display: block;
+}
+
+.text-card {
+    width: 100%;
+}
+
+/* LEFT column = login */
+.login-box {
+    width: 430px;
+    margin: 0;
 }
 
 .text-card li {
@@ -997,4 +1032,17 @@ body {
     margin: 42px 0 85px;
     position: relative;
     z-index: 2;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.footer-logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
 }
