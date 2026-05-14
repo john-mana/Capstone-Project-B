@@ -53,7 +53,6 @@
                     <button class="nav-btn">Observations ▾</button>
                     <div class="dropdown-content">
                         <a href="/observations">View All</a>
-                        <a href="/observations_new">New Observations</a>
                     </div>
                 </div>
 
@@ -110,20 +109,31 @@
             <p>
                 Welcome to the Flora Database, your central hub for exploring plant species,
                 traits, and ecological data. Use the navigation buttons above to browse key
-                sections, or access the quick links on the right to jump straight into your analysis.
+                sections and jump straight into your analysis.
             </p>
         </div>
     </div>
 
     <!-- RIGHT SIDE -->
-    <div class="quick-links-panel">
-        <h3>Quick Links</h3>
+        <div class="stats-panel">
+            <h3>Database Statistics</h3>
 
-        <div class="quick-links">
-            <a href="/observation_new" class="quick-btn">New Observations</a>
-            <a href="/species_new" class="quick-btn">New Species</a>
+            <div class="stats-links">
+
+                <div class="stats-card">
+                    <div class="stats-number">{{ stats.total_records }}</div>
+                    <div class="stats-label">total records in database</div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-number">{{ stats.latest_date_count }}</div>
+                    <div class="stats-label">
+                        records added on <span class="stats-date">{{ stats.latest_date }}</span>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
 
 </div>
 

@@ -75,15 +75,50 @@ def admin_required(view_func):
 # Home
 # =========================
 
-@main.route("/")
-def index():
-    return redirect(url_for("main.home"))
-
-
 @main.route("/home")
 def home():
-    return render_template("home.html")
 
+    stats = {
+        "total_records": 0,
+        "latest_date": None,
+        "latest_date_count": 0
+    }
+
+    try:
+        conn = get_connection()
+
+        with conn.cursor() as cursor:
+
+            # 1. total records
+            cursor.execute("""
+                SELECT COUNT(*)
+                FROM occurrences
+            """)
+            stats["total_records"] = cursor.fetchone()["COUNT(*)"]
+
+            # 2. latest date (strip time)
+            cursor.execute("""
+                SELECT DATE(MAX(event_date)) AS latest_date
+                FROM occurrences
+            """)
+            stats["latest_date"] = cursor.fetchone()["latest_date"]
+
+            # 3. how many records were added on that latest date
+            cursor.execute("""
+                SELECT COUNT(*) AS cnt
+                FROM occurrences
+                WHERE DATE(event_date) = (
+                    SELECT DATE(MAX(event_date)) FROM occurrences
+                )
+            """)
+            stats["latest_date_count"] = cursor.fetchone()["cnt"]
+
+        conn.close()
+
+    except Exception as e:
+        print("HOME STATS ERROR:", e)
+
+    return render_template("home.html", stats=stats)
 
 # =========================
 # Authentication
@@ -639,10 +674,18 @@ def observations():
     observation_options = []
     error = None
 
+    # NEW STATS
+    total_records = 0
+    latest_date = None
+
     try:
         conn = get_connection()
 
         with conn.cursor() as cursor:
+
+            # ---------------------------
+            # dropdown search options
+            # ---------------------------
             cursor.execute(
                 """
                 SELECT DISTINCT scientific_name
@@ -654,6 +697,22 @@ def observations():
             )
             observation_options = cursor.fetchall()
 
+            # ---------------------------
+            # STATS (NEW)
+            # ---------------------------
+            cursor.execute("SELECT COUNT(*) AS total FROM occurrences")
+            total_records = cursor.fetchone()["total"]
+
+            cursor.execute("""
+                SELECT MAX(event_date) AS latest_date
+                FROM occurrences
+                WHERE event_date IS NOT NULL
+            """)
+            latest_date = cursor.fetchone()["latest_date"]
+
+            # ---------------------------
+            # main table query
+            # ---------------------------
             params = []
             where_clause = ""
 
@@ -709,14 +768,12 @@ def observations():
         observation_options=observation_options,
         search=search,
         error=error,
+
+        # NEW PASSED VARIABLES
+        total_records=total_records,
+        latest_date=latest_date
     )
-
-
-@main.route("/observations_new")
-def observations_new():
-    return render_template("observations_new.html")
-
-
+    
 # =========================
 # Reserves
 # =========================
