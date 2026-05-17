@@ -18,6 +18,10 @@ from .db import get_connection
 
 main = Blueprint("main", __name__)
 
+@main.route("/")
+def index():
+    return redirect(url_for("main.login"))
+
 QUERY_FILTERS = (
     "species",
     "vernacular_name",
