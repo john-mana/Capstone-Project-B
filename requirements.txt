@@ -4,3 +4,4 @@ PyMySQL
 mysql-connector-python
 pandas
 openpyxl
+gunicorn

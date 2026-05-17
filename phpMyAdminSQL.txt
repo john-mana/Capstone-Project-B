@@ -145,3 +145,17 @@ CREATE TABLE user (
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     role ENUM('admin','viewer') NOT NULL DEFAULT 'viewer'
 );
+
+*** occurrences.most_recent_flag update (look for the latest dates for each species_id)
+UPDATE occurrences o #update target
+JOIN (
+    SELECT #look for latest event_date
+    	species_id, 
+    	MAX(event_date) AS latest_event_date #MAX looks for the biggest value
+    	FROM occurrences
+    	WHERE event_date IS NOT NULL #if event_date is null, pass
+    	GROUP BY species_id #group by species_id. Only look for one latest record for each species
+   	) latest #name SELECT statement as latest
+    	ON o.species_id = latest.species_id #
+        AND o.event_date = latest.latest_event_date
+        SET o.most_recetn_flag =1; #convert joined values to 1
