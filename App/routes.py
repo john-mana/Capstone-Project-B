@@ -80,6 +80,7 @@ def admin_required(view_func):
 # =========================
 
 @main.route("/home")
+@login_required
 def home():
 
     stats = {
@@ -208,6 +209,7 @@ def logout():
 # =========================
 
 @main.route("/species")
+@login_required
 def species():
     species_list = []
     error = None
@@ -339,6 +341,7 @@ def species():
 
 
 @main.route("/species_new")
+@login_required
 def species_new():
     species_list = []
     error = None
@@ -469,6 +472,7 @@ def species_new():
 
 
 @main.route("/species_detail")
+@login_required
 def species_detail():
     """
     Show full detail of one species:
@@ -671,6 +675,7 @@ def species_detail():
 # =========================
 
 @main.route("/observations")
+@login_required
 def observations():
     search = request.args.get("q", "").strip()
 
@@ -783,6 +788,7 @@ def observations():
 # =========================
 
 @main.route("/reserves")
+@login_required
 def reserves():
     """
     Show all reserves with summary info and filtering.
@@ -936,6 +942,7 @@ def reserves():
 # =========================
 
 @main.route("/at_risk")
+@login_required
 def at_risk():
     """
     Show species flagged as at-risk based on observation data.
@@ -1102,6 +1109,7 @@ def at_risk():
 # =========================
 
 @main.route("/taxonomy_detail")
+@login_required
 def taxonomy_detail():
     """
     Show taxonomy hierarchy and all species sharing this taxonomy_id.
@@ -1393,6 +1401,7 @@ def admin_delete_user(user_id):
 @main.route("/fauna_dashboard")
 @main.route("/report")
 @main.route("/settings")
+@login_required
 def placeholder_page():
     return render_template("home.html")
 
@@ -1476,6 +1485,7 @@ def db_test():
 # =========================
 
 @main.route("/traits_findby")
+@login_required
 def traits_findby():
     selected_groups = [
         value.strip()
@@ -1766,6 +1776,7 @@ def traits_findby():
 
 
 @main.route("/traits")
+@login_required
 def traits():
     search = request.args.get("q", "").strip()
     rows = []
@@ -1826,6 +1837,7 @@ def traits():
 
 
 @main.route("/traits_detail")
+@login_required
 def traits_detail():
     trait_name = request.args.get("trait", "").strip()
     trait = None
@@ -1955,6 +1967,7 @@ def traits_detail():
 # =========================
 
 @main.route("/query_builder", methods=["GET", "POST"])
+@login_required
 def query_builder():
     filters = {key: "" for key in QUERY_FILTERS}
 
@@ -2140,6 +2153,7 @@ def query_builder():
 # =========================
 
 @main.route("/traits/export/xlsx")
+@login_required
 def export_traits_xlsx():
 
     search = request.args.get("q", "").strip()
@@ -2223,6 +2237,7 @@ def export_traits_xlsx():
 # =========================
 
 @main.route("/traits/export/csv")
+@login_required
 def export_traits_csv():
 
     search = request.args.get("q", "").strip()
@@ -2307,6 +2322,7 @@ def export_traits_csv():
 # =========================
 
 @main.route("/traits_findby/export/csv")
+@login_required
 def export_traits_findby_csv():
 
     selected_traits = request.args.getlist("trait")
@@ -2480,6 +2496,7 @@ def export_traits_findby_csv():
 # =========================
 
 @main.route("/traits_findby/export/xlsx")
+@login_required
 def export_traits_findby_xlsx():
 
     selected_traits = request.args.getlist("trait")
@@ -2642,6 +2659,7 @@ def export_traits_findby_xlsx():
 
 # Species Page Export CSV
 @main.route("/species/export/csv")
+@login_required
 def export_species_csv():
 
     search = request.args.get("q", "").strip()
@@ -2720,6 +2738,7 @@ def export_species_csv():
 
 # Species Page Export XLSX
 @main.route("/species/export/xlsx")
+@login_required
 def export_species_xlsx():
 
     search = request.args.get("q", "").strip()
@@ -2792,6 +2811,7 @@ def export_species_xlsx():
 # Species New Page Export CSV
 
 @main.route("/query_builder/export/csv")
+@login_required
 def export_query_builder_csv():
 
     conn = get_connection()
@@ -2890,6 +2910,7 @@ SELECT
     )
     
 @main.route("/query_builder/export/xlsx")
+@login_required
 def export_query_builder_xlsx():
 
     conn = get_connection()
@@ -2994,6 +3015,7 @@ def export_query_builder_xlsx():
     
 # Observations Exports
 @main.route("/observations/export/csv")
+@login_required
 def export_observations_csv():
     search = request.args.get("q", "").strip()
 
@@ -3086,6 +3108,7 @@ def export_observations_csv():
 
 
 @main.route("/observations/export/xlsx")
+@login_required
 def export_observations_xlsx():
     search = request.args.get("q", "").strip()
 
@@ -3164,5 +3187,171 @@ def export_observations_xlsx():
         output,
         as_attachment=True,
         download_name="observations_export.xlsx",
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+# Reserves Export CSV
+@main.route("/reserves/export/csv")
+@login_required
+def export_reserves_csv():
+
+    search = request.args.get("q", "").strip()
+    suburb_filter = request.args.get("suburb", "").strip()
+    type_filter = request.args.get("type", "").strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    params = []
+    where_parts = []
+
+    if search:
+        where_parts.append("r.asset_name LIKE %s")
+        params.append(f"%{search}%")
+
+    if suburb_filter:
+        where_parts.append("r.suburb = %s")
+        params.append(suburb_filter)
+
+    if type_filter:
+        where_parts.append("r.asset_type = %s")
+        params.append(type_filter)
+
+    where_clause = "WHERE " + " AND ".join(where_parts) if where_parts else ""
+
+    cursor.execute(
+        f"""
+        SELECT
+            r.asset_name,
+            r.location,
+            r.suburb,
+            r.asset_type,
+            COUNT(DISTINCT o.species_id) AS species_count,
+            COUNT(o.occurrence_id) AS observation_count,
+            MAX(o.event_date) AS last_observation
+        FROM reserves r
+        LEFT JOIN occurrences o ON o.reserve_id = r.reserve_id
+        {where_clause}
+        GROUP BY r.reserve_id, r.asset_name, r.location, r.suburb, r.asset_type
+        ORDER BY r.asset_name
+        """,
+        params,
+    )
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow([
+        "Reserve Name",
+        "Address",
+        "Suburb",
+        "Type",
+        "Unique Species",
+        "Observations",
+        "Last Observation"
+    ])
+
+    for row in rows:
+        writer.writerow([
+            row["asset_name"],
+            row["location"],
+            row["suburb"],
+            row["asset_type"],
+            row["species_count"],
+            row["observation_count"],
+            row["last_observation"],
+        ])
+
+    output.seek(0)
+
+    return Response(
+        output.getvalue(),
+        mimetype="text/csv",
+        headers={
+            "Content-Disposition": "attachment; filename=reserves_export.csv"
+        }
+    )
+
+
+# Reserves Export XLSX
+@main.route("/reserves/export/xlsx")
+@login_required
+def export_reserves_xlsx():
+
+    search = request.args.get("q", "").strip()
+    suburb_filter = request.args.get("suburb", "").strip()
+    type_filter = request.args.get("type", "").strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    params = []
+    where_parts = []
+
+    if search:
+        where_parts.append("r.asset_name LIKE %s")
+        params.append(f"%{search}%")
+
+    if suburb_filter:
+        where_parts.append("r.suburb = %s")
+        params.append(suburb_filter)
+
+    if type_filter:
+        where_parts.append("r.asset_type = %s")
+        params.append(type_filter)
+
+    where_clause = "WHERE " + " AND ".join(where_parts) if where_parts else ""
+
+    cursor.execute(
+        f"""
+        SELECT
+            r.asset_name,
+            r.location,
+            r.suburb,
+            r.asset_type,
+            COUNT(DISTINCT o.species_id) AS species_count,
+            COUNT(o.occurrence_id) AS observation_count,
+            MAX(o.event_date) AS last_observation
+        FROM reserves r
+        LEFT JOIN occurrences o ON o.reserve_id = r.reserve_id
+        {where_clause}
+        GROUP BY r.reserve_id, r.asset_name, r.location, r.suburb, r.asset_type
+        ORDER BY r.asset_name
+        """,
+        params,
+    )
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    df = pd.DataFrame(rows)
+
+    if not df.empty:
+        df.columns = [
+            "Reserve Name",
+            "Address",
+            "Suburb",
+            "Type",
+            "Unique Species",
+            "Observations",
+            "Last Observation"
+        ]
+
+    output = io.BytesIO()
+
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+        df.to_excel(writer, index=False, sheet_name="Reserves")
+
+    output.seek(0)
+
+    return send_file(
+        output,
+        as_attachment=True,
+        download_name="reserves_export.xlsx",
         mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )

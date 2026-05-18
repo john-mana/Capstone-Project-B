@@ -378,6 +378,16 @@
             </div>
         </div>
 
+        <div class="filter-bar">
+            <a href="/reserves/export/csv?q={{ search }}&suburb={{ suburb_filter }}&type={{ type_filter }}" class="clear-btn">
+                Export CSV
+            </a>
+
+            <a href="/reserves/export/xlsx?q={{ search }}&suburb={{ suburb_filter }}&type={{ type_filter }}" class="clear-btn">
+                Export Excel
+            </a>
+        </div>
+
         {% if total_pages > 1 %}
         <div class="pagination-controls">
             {% if page_num > 1 %}
@@ -472,7 +482,7 @@
 
     <footer class="app-footer">
         <div class="footer-right">
-            <a href="/login" class="logout-btn">Log Out</a>
+            <a href="/logout" class="logout-btn">Log Out</a>
         </div>
         <p>Bio Geographic Data Analysts | ABN 579 423 418 07</p>
     </footer>
